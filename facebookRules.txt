@@ -1,29 +1,41 @@
 ! =====================================================
-! FACEBOOK CLEANUP — FULLY STABLE (NO GRAY SCREEN)
+! FACEBOOK CLEANUP — ULTRA SAFE (NO GRAY SCREEN)
+! uBlock Origin compatible
 ! =====================================================
 
 ! -----------------------------
-! SIDEBAR / SUGGESTIONS
+! PEOPLE YOU MAY KNOW (static pagelets only)
 ! -----------------------------
 facebook.com##div[data-pagelet^="PeopleYouMayKnow"]
-facebook.com##div[data-pagelet*="PYMK"]
-facebook.com##div:has(a[href*="/friends/suggestions"])
+facebook.com##div[data-pagelet="RightRail"]
 
 ! -----------------------------
-! STORIES
+! STORIES — MAX SAFE COVERAGE
 ! -----------------------------
+
+! Main Stories pagelet
+facebook.com##div[data-pagelet="Stories"]
 facebook.com##div[data-pagelet^="Stories"]
-facebook.com##div[role="region"]:has(a[href*="/stories/"])
-facebook.com##div[role="complementary"] div:has(a[href*="/stories/"])
+
+! Alternate containers Facebook uses during A/B tests
+facebook.com##div[id^="stories"]
+facebook.com##div[id^="Stories"]
+
+! Stories tray (desktop variants)
+facebook.com##div[aria-label="Stories"]
+facebook.com##div[role="region"][aria-label="Stories"]
+
+! Stories in sidebar/right rail (static only)
+facebook.com##div[data-pagelet="RightRail"] div[aria-label="Stories"]
 
 ! -----------------------------
-! REELS / BUTTONS / NAVIGATION
+! REELS — NAVIGATION ONLY
 ! -----------------------------
 facebook.com##div[role="navigation"] a[href*="/reels"]
-facebook.com##a[aria-label="Join Group"]
-facebook.com##div[aria-label="Join Group"]
-facebook.com##a[aria-label="Follow"]
-facebook.com##div[aria-label="Follow"]
-facebook.com##a[aria-label="Reels"]
-facebook.com##div[aria-label="Reels"]
 
+! -----------------------------
+! UI BUTTONS (static)
+! -----------------------------
+facebook.com##a[aria-label="Join Group"]
+facebook.com##a[aria-label="Follow"]
+facebook.com##a[aria-label="Reels"]
