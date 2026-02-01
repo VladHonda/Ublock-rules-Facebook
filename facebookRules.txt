@@ -1,41 +1,57 @@
 ! =====================================================
-! FACEBOOK CLEANUP — ULTRA SAFE (NO GRAY SCREEN)
-! uBlock Origin compatible
+! FACEBOOK CLEANUP — HARD FEED SAFE (RO + EN)
+! uBlock Origin — 2025
+! Omoară People You May Know & Group Suggestions
 ! =====================================================
 
-! -----------------------------
-! PEOPLE YOU MAY KNOW (static pagelets only)
-! -----------------------------
-facebook.com##div[data-pagelet^="PeopleYouMayKnow"]
-facebook.com##div[data-pagelet="RightRail"]
+! -----------------------------------------------------
+! PEOPLE YOU MAY KNOW — STRUCTURAL (RO + EN)
+! Detectat prin butoane Add Friend / Adaugă prieten
+! -----------------------------------------------------
+facebook.com##div[role="feed"] div:has(a[aria-label="Add Friend"])
+facebook.com##div[role="feed"] div:has(a[aria-label="Adaugă prieten"])
+facebook.com##div[role="feed"] div:has(a[aria-label="Confirmă cererea"])
 
-! -----------------------------
-! STORIES — MAX SAFE COVERAGE
-! -----------------------------
+! Variante fără aria-label (FB mai ascunde labelul)
+facebook.com##div[role="feed"] div:has(button):has-text("Add Friend")
+facebook.com##div[role="feed"] div:has(button):has-text("Adaugă prieten")
 
-! Main Stories pagelet
-facebook.com##div[data-pagelet="Stories"]
-facebook.com##div[data-pagelet^="Stories"]
+! -----------------------------------------------------
+! GROUP SUGGESTIONS — STRUCTURAL
+! Detectat prin Join Group / Alătură-te
+! -----------------------------------------------------
+facebook.com##div[role="feed"] div:has(a[aria-label="Join Group"])
+facebook.com##div[role="feed"] div:has(a[aria-label="Alătură-te grupului"])
+facebook.com##div[role="feed"] div:has(a[aria-label="Alătură-te"])
 
-! Alternate containers Facebook uses during A/B tests
-facebook.com##div[id^="stories"]
-facebook.com##div[id^="Stories"]
+facebook.com##div[role="feed"] div:has(button):has-text("Join Group")
+facebook.com##div[role="feed"] div:has(button):has-text("Alătură-te")
 
-! Stories tray (desktop variants)
+! -----------------------------------------------------
+! GENERIC SUGGESTED CARDS (RO + EN)
+! -----------------------------------------------------
+facebook.com##div[role="feed"] div:has-text("Sugerat")
+facebook.com##div[role="feed"] div:has-text("Sugestii")
+facebook.com##div[role="feed"] div:has-text("Suggested")
+
+! -----------------------------------------------------
+! STORIES — ALL
+! -----------------------------------------------------
+facebook.com##div[aria-label="Povești"]
 facebook.com##div[aria-label="Stories"]
-facebook.com##div[role="region"][aria-label="Stories"]
+facebook.com##div[role="region"][aria-label]
+:has-text("Stories")
 
-! Stories in sidebar/right rail (static only)
-facebook.com##div[data-pagelet="RightRail"] div[aria-label="Stories"]
-
-! -----------------------------
-! REELS — NAVIGATION ONLY
-! -----------------------------
-facebook.com##div[role="navigation"] a[href*="/reels"]
-
-! -----------------------------
-! UI BUTTONS (static)
-! -----------------------------
-facebook.com##a[aria-label="Join Group"]
-facebook.com##a[aria-label="Follow"]
+! -----------------------------------------------------
+! REELS — ALL ENTRY POINTS
+! -----------------------------------------------------
 facebook.com##a[aria-label="Reels"]
+facebook.com##a[aria-label="Clipuri"]
+facebook.com##div[aria-label="Reels"]
+facebook.com##div[aria-label="Clipuri"]
+
+! -----------------------------------------------------
+! RIGHT RAIL — RECOMMENDATIONS
+! -----------------------------------------------------
+facebook.com##div[data-pagelet="RightRail"] div:has(a[aria-label="Add Friend"])
+facebook.com##div[data-pagelet="RightRail"] div:has(a[aria-label="Join Group"])
