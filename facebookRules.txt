@@ -1,152 +1,115 @@
 ! =====================================================
-! FACEBOOK CLEANUP — HARD FEED SAFE (RO + EN)
-! uBlock Origin — 2025
-! Omoară People You May Know & Group Suggestions
+! FACEBOOK CLEANUP — SAFE FEED (RO + EN)
+! uBlock Origin — 2026 RETOUCHED
+! Removes:
+! - People You May Know
+! - Group Suggestions
+! - Follow / Page Suggestions
+! - Suggested Posts
+! - Stories
+! - Reels
+! Keeps:
+! - Normal posts
+! - Comments
+! - Messenger UI
 ! =====================================================
 
 ! -----------------------------------------------------
-! PEOPLE YOU MAY KNOW — STRUCTURAL (RO + EN)
-! Detectat prin butoane Add Friend / Adaugă prieten
+! PEOPLE YOU MAY KNOW — HARD BLOCK
 ! -----------------------------------------------------
+
+facebook.com##div[role="feed"] div:has-text("People you may know")
+facebook.com##div[role="feed"] div:has-text("Persoane pe care s-ar putea să le cunoști")
+
 facebook.com##div[role="feed"] div:has(a[aria-label="Add Friend"])
 facebook.com##div[role="feed"] div:has(a[aria-label="Adaugă prieten"])
 facebook.com##div[role="feed"] div:has(a[aria-label="Confirmă cererea"])
 
-! Variante fără aria-label (FB mai ascunde labelul)
-facebook.com##div[role="feed"] div:has(button):has-text("Add Friend")
-facebook.com##div[role="feed"] div:has(button):has-text("Adaugă prieten")
+facebook.com##div[role="feed"] div:has(button:has-text(/Add Friend|Adaugă prieten/i))
+
+! Right sidebar PYMK
+facebook.com##div[data-pagelet="RightRail"] div:has(a[aria-label="Add Friend"])
 
 ! -----------------------------------------------------
-! GROUP SUGGESTIONS — STRUCTURAL
-! Detectat prin Join Group / Alătură-te
+! GROUP SUGGESTIONS / JOIN
 ! -----------------------------------------------------
+
+facebook.com##div[role="feed"] div:has-text("Suggested groups")
+facebook.com##div[role="feed"] div:has-text("Grupuri sugerate")
+
 facebook.com##div[role="feed"] div:has(a[aria-label="Join Group"])
 facebook.com##div[role="feed"] div:has(a[aria-label="Alătură-te grupului"])
-facebook.com##div[role="feed"] div:has(a[aria-label="Alătură-te"])
-
-facebook.com##div[role="feed"] div:has(button):has-text("Join Group")
-facebook.com##div[role="feed"] div:has(button):has-text("Alătură-te")
+facebook.com##div[role="feed"] div:has(button:has-text(/Join|Alătură-te/i))
 
 ! -----------------------------------------------------
-! GENERIC SUGGESTED CARDS (RO + EN)
+! PAGE / FOLLOW SUGGESTIONS
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] div:has-text("Sugerat")
-facebook.com##div[role="feed"] div:has-text("Sugestii")
-facebook.com##div[role="feed"] div:has-text("Suggested")
+
+facebook.com##div[role="feed"] div:has(button:has-text(/Follow|Urmărește/i))
+facebook.com##div[role="feed"] div:has-text(/Pages you may like|Pagini sugerate/i)
 
 ! -----------------------------------------------------
-! STORIES — ALL
+! GENERIC SUGGESTED / DISCOVERY POSTS
 ! -----------------------------------------------------
-facebook.com##div[aria-label="Povești"]
+
+facebook.com##div[role="feed"] div:has-text(/Suggested for you|Sugerat pentru tine/i)
+facebook.com##div[role="feed"] div:has-text(/Recommended|Recomandat/i)
+facebook.com##div[role="feed"] div:has-text(/Pentru tine/i)
+
+! -----------------------------------------------------
+! STORIES — TOP BAR
+! -----------------------------------------------------
+
 facebook.com##div[aria-label="Stories"]
-facebook.com##div[role="region"][aria-label]
-:has-text("Stories")
+facebook.com##div[aria-label="Povești"]
 
 ! -----------------------------------------------------
-! REELS — ALL ENTRY POINTS
+! REELS / WATCH ENTRY POINTS
 ! -----------------------------------------------------
+
 facebook.com##a[aria-label="Reels"]
 facebook.com##a[aria-label="Clipuri"]
 facebook.com##div[aria-label="Reels"]
 facebook.com##div[aria-label="Clipuri"]
 
 ! -----------------------------------------------------
-! RIGHT RAIL — RECOMMENDATIONS
-! -----------------------------------------------------
-facebook.com##div[data-pagelet="RightRail"] div:has(a[aria-label="Add Friend"])
-facebook.com##div[data-pagelet="RightRail"] div:has(a[aria-label="Join Group"])
-! -----------------------------------------------------
-! MESSENGER — HIDE NEW MESSAGE INDICATORS
+! DISCOVERY / RECOMMENDATION PAGELETS
 ! -----------------------------------------------------
 
-! Red / blue notification badge on Messenger icon
-facebook.com##a[aria-label="Messenger"] span
-facebook.com##a[aria-label="Mesaje"] span
+facebook.com##div[data-pagelet*="Discovery"]
+facebook.com##div[data-pagelet*="discover"]
+facebook.com##div[data-pagelet*="Recommendation"]
+facebook.com##div[data-pagelet*="Recommendations"]
 
-! Notification bubbles (global)
-facebook.com##span[role="status"]
-facebook.com##span[aria-live="polite"]
-facebook.com##span[aria-live="assertive"]
+! -----------------------------------------------------
+! RIGHT SIDEBAR SUGGESTIONS
+! -----------------------------------------------------
 
-! Blue dot / unread indicators in chat list
-facebook.com##div[aria-label="Chats"] div[aria-live]
-facebook.com##div[aria-label="Conversații"] div[aria-live]
+facebook.com##div[data-pagelet="RightRail"] div:has-text(/Add Friend|Join|Follow|Adaugă|Alătură|Urmărește/i)
 
-! Bold / highlighted unread chats
-facebook.com##div[aria-label="Chats"] strong
-facebook.com##div[aria-label="Conversații"] strong
+! -----------------------------------------------------
+! ANTI-GREY GAPS (SAFE)
+! -----------------------------------------------------
 
-! Feb 4, 2026 https://www.facebook.com
-www.facebook.com##.x1y1aw1k.xwib8y2 > div > div > .x1lliihq.x15x8krk.xde0f50.x5a5i1n.x1obq294.x1a2a7pz.x1lku1pv.x87ps6o.x1q0g3np.x1t137rt.x1ja2u2z.xggy1nq.x1hl2dhg.x16tdsg8.x1n2onr6.x1c1uobl.x18d9i69.xyri2b.xexx8yu.xeuugli.x2lwn1j.x1lziwak.xat24cr.x14z9mp.xdj266r.x3ct3a4.x2lah0s.xdl72j9.x1ypdohk.x9f619.x14e42zd.x1qhh985.x10w94by.x972fbf.x1t7ytsu.x1q0q8m5.x18b5jzi.x13fuv20.x1phubyo.xqeqjp1.xc5r6h4.xjqpnuy.xjbqb8w.x1qjc9v5.x1i10hfl > .x1gg8mnh.x1ja2u2z.x1n2onr6.xexx8yu.xmzvs34.xf159sx.x18d9i69.xeuugli.xdj266r.x1lziwak.x14z9mp.xat24cr.x1qughib.xs83m0k.x1iyjqo2.x1q0g3np.x78zum5.x9f619.x972fbf.x13fuv20.x14e42zd.x1t7ytsu.x10w94by.x18b5jzi.x1qhh985.x1q0q8m5.x6s0dn4
+facebook.com##div[role="feed"] > div:empty
 
-! =========================================================
-! FEB 6 2026 — FB FOLLOW / JOIN / GROUPS — HARD WIPE v3
-! Structure-agnostic — kills new injected units
-! No grey boxes
-! =========================================================
+! =====================================================
+! PATCH — YOUR GROUP SUGGESTIONS (RO + EN)
+! Blocks “Your group suggestions” module
+! =====================================================
 
-! ---------------- FOLLOW / JOIN BUTTON UNITS ----------------
+! English
+facebook.com##div[role="feed"] div:has-text("Your group suggestions")
 
-facebook.com##div[role="feed"] > div:has([role="button"]:has-text(/Follow|Urmărește/i)):remove()
-facebook.com##div[role="feed"] > div:has([role="button"]:has-text(/Join|Alătură-te/i)):remove()
+! Romanian
+facebook.com##div[role="feed"] div:has-text("Sugestiile tale de grupuri")
+facebook.com##div[role="feed"] div:has-text("Sugestii de grupuri pentru tine")
 
-facebook.com##div[role="article"]:has([role="button"]:has-text(/Follow|Urmărește/i)):remove()
-facebook.com##div[role="article"]:has([role="button"]:has-text(/Join|Alătură-te/i)):remove()
+! Structural fallback (Join button inside module)
+facebook.com##div[role="feed"] div:has(a[href*="/groups/"]):has-text("Join")
+facebook.com##div[role="feed"] div:has(a[href*="/groups/"]):has-text("Alătură-te")
 
-! ---------------- GROUP / PAGE CARDS ----------------
-
-facebook.com##div[role="feed"] > div:has(a[href*="/groups/"]):remove()
-facebook.com##div[role="feed"] > div:has(a[href*="/pages/"]):remove()
-
-facebook.com##div[role="article"]:has(a[href*="/groups/"]):remove()
-facebook.com##div[role="article"]:has(a[href*="/pages/"]):remove()
-
-! ---------------- SUGGESTED / DISCOVERY TEXT ----------------
-
-facebook.com##div[role="feed"] > div:has-text(/Suggested|Sugerat|Recommended|Pentru tine/i):remove()
-facebook.com##div[role="article"]:has-text(/Suggested|Sugerat|Recommended|Pentru tine/i):remove()
-
-! ---------------- DISCOVERY PAGELETS ----------------
-
-facebook.com##div[data-pagelet*="Discovery"]:remove()
-facebook.com##div[data-pagelet*="discover"]:remove()
-facebook.com##div[data-pagelet*="Recommendation"]:remove()
-facebook.com##div[data-pagelet*="Recommendations"]:remove()
-
-! ---------------- GROUP / PAGE RAILS ----------------
-
-facebook.com##div[data-pagelet*="GroupsRail"]:remove()
-facebook.com##div[data-pagelet*="PageRecommendations"]:remove()
-facebook.com##div[data-pagelet*="GroupRecommendations"]:remove()
-
-! ---------------- RIGHT SIDEBAR ----------------
-
-facebook.com##div[data-pagelet="RightRail"]:has-text(/Follow|Join|Urmărește|Alătură-te/i):remove()
-
-! ---------------- REELS / WATCH CROSS SUGGEST ----------------
-
-facebook.com##div[data-pagelet*="Reels"]:remove()
-facebook.com##div[data-pagelet*="WatchFeedUnit"]:remove()
-
-! ---------------- NUCLEAR FALLBACK ----------------
-! If FB injects suggestions without labels
-
-facebook.com##div[role="feed"] > div:has(svg):has(a[href*="/groups/"]):remove()
-facebook.com##div[role="feed"] > div:has(svg):has(a[href*="/pages/"]):remove()
-
-! ---------------- ANTI-GREY GAP ----------------
-
-facebook.com##div[role="feed"] > div:style(display:none !important;)
-
-! =========================================================
-! END — HARD CLEAN FEED
-! =========================================================
-
-
-
-
-
-
-
-
+! Sidebar version
+facebook.com##div[data-pagelet="RightRail"] div:has-text("Your group suggestions")
+facebook.com##div[data-pagelet="RightRail"] div:has-text("Sugestii de grupuri")
 
