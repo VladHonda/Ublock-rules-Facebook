@@ -1,77 +1,15 @@
-! =====================================================
-! FACEBOOK CLEANUP — FEED SAFE (EN ONLY)
-! uBlock Origin / Stylus — 2026
-! Removes:
-! - People You May Know
-! - Your Group Suggestions / Suggested Groups
-! - Suggested Posts
-! - Page / Follow Suggestions
-! - Stories + Reels entry points
-! Keeps:
-! - Feed posts
-! - Comments
-! - Messenger UI
-! =====================================================
-
-! -----------------------------------------------------
-! PEOPLE YOU MAY KNOW
-! -----------------------------------------------------
-
-facebook.com##div[role="feed"] > div:has-text("People you may know")
+```
 facebook.com##div[data-pagelet*="PeopleYouMayKnow"]
-facebook.com##div[data-pagelet="RightRail"] div:has-text("People you may know")
-
-! -----------------------------------------------------
-! YOUR GROUP SUGGESTIONS / SUGGESTED GROUPS
-! -----------------------------------------------------
-
-facebook.com##div[role="feed"] > div:has-text("Your group suggestions")
-facebook.com##div[role="feed"] > div:has-text("Suggested groups")
 facebook.com##div[data-pagelet*="GroupRecommendations"]
-facebook.com##div[data-pagelet="RightRail"] div:has-text("Your group suggestions")
+
+facebook.com##div[data-pagelet="RightRail"] div:has-text("People you may know")
 facebook.com##div[data-pagelet="RightRail"] div:has-text("Suggested groups")
-
-! Fallback — blocks any “Join” group card container in feed
-facebook.com##div[role="feed"] div:has(a[href*="/groups/"]):has-text("Join")
-
-! -----------------------------------------------------
-! PAGE / FOLLOW SUGGESTIONS
-! -----------------------------------------------------
-
-facebook.com##div[role="feed"] > div:has-text("Pages you may like")
-facebook.com##div[role="feed"] > div:has-text("Suggested Pages")
-facebook.com##div[data-pagelet="RightRail"] div:has-text(/Follow|Suggested/i)
-
-! -----------------------------------------------------
-! GENERIC SUGGESTED / DISCOVERY POSTS
-! -----------------------------------------------------
-
-facebook.com##div[role="feed"] > div:has-text("Suggested for you")
-facebook.com##div[role="feed"] > div:has-text("Recommended for you")
-facebook.com##div[data-pagelet*="Discovery"]
-facebook.com##div[data-pagelet*="discover"]
-facebook.com##div[data-pagelet*="Recommendation"]
-facebook.com##div[data-pagelet*="Recommendations"]
-
-! -----------------------------------------------------
-! STORIES BAR (TOP FEED)
-! -----------------------------------------------------
+facebook.com##div[data-pagelet="RightRail"] div:has-text("Your group suggestions")
+facebook.com##div[data-pagelet="RightRail"] div:has-text("Pages you may like")
+facebook.com##div[data-pagelet="RightRail"] div:has-text("Suggested Pages")
 
 facebook.com##div[aria-label="Stories"]
 
-! -----------------------------------------------------
-! REELS ENTRY POINTS
-! -----------------------------------------------------
-
-facebook.com##a[aria-label="Reels"]
+facebook.com##a[aria-label="Reels"],
 facebook.com##div[aria-label="Reels"]
-
-! -----------------------------------------------------
-! ANTI-GREY GAPS (SAFE)
-! -----------------------------------------------------
-
-facebook.com##div[role="feed"] > div:empty
-
-! =====================================================
-! END — FACEBOOK CLEAN FEED (EN ONLY)
-! =====================================================
+```
