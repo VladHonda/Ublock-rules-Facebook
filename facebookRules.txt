@@ -1,91 +1,70 @@
 ! =====================================================
-! FACEBOOK CLEANUP — SAFE FEED (RO + EN)
-! uBlock Origin — 2026 RETOUCHED
+! FACEBOOK CLEANUP — FEED SAFE (EN ONLY)
+! uBlock Origin / Stylus — 2026
 ! Removes:
 ! - People You May Know
-! - Group Suggestions
-! - Follow / Page Suggestions
+! - Your Group Suggestions / Suggested Groups
 ! - Suggested Posts
-! - Stories
-! - Reels
+! - Page / Follow Suggestions
+! - Stories + Reels entry points
 ! Keeps:
-! - Normal posts
+! - Feed posts
 ! - Comments
 ! - Messenger UI
 ! =====================================================
 
 ! -----------------------------------------------------
-! PEOPLE YOU MAY KNOW — HARD BLOCK
+! PEOPLE YOU MAY KNOW
 ! -----------------------------------------------------
 
-facebook.com##div[role="feed"] div:has-text("People you may know")
-facebook.com##div[role="feed"] div:has-text("Persoane pe care s-ar putea să le cunoști")
-
-facebook.com##div[role="feed"] div:has(a[aria-label="Add Friend"])
-facebook.com##div[role="feed"] div:has(a[aria-label="Adaugă prieten"])
-facebook.com##div[role="feed"] div:has(a[aria-label="Confirmă cererea"])
-
-facebook.com##div[role="feed"] div:has(button:has-text(/Add Friend|Adaugă prieten/i))
-
-! Right sidebar PYMK
-facebook.com##div[data-pagelet="RightRail"] div:has(a[aria-label="Add Friend"])
+facebook.com##div[role="feed"] > div:has-text("People you may know")
+facebook.com##div[data-pagelet*="PeopleYouMayKnow"]
+facebook.com##div[data-pagelet="RightRail"] div:has-text("People you may know")
 
 ! -----------------------------------------------------
-! GROUP SUGGESTIONS / JOIN
+! YOUR GROUP SUGGESTIONS / SUGGESTED GROUPS
 ! -----------------------------------------------------
 
-facebook.com##div[role="feed"] div:has-text("Suggested groups")
-facebook.com##div[role="feed"] div:has-text("Grupuri sugerate")
+facebook.com##div[role="feed"] > div:has-text("Your group suggestions")
+facebook.com##div[role="feed"] > div:has-text("Suggested groups")
+facebook.com##div[data-pagelet*="GroupRecommendations"]
+facebook.com##div[data-pagelet="RightRail"] div:has-text("Your group suggestions")
+facebook.com##div[data-pagelet="RightRail"] div:has-text("Suggested groups")
 
-facebook.com##div[role="feed"] div:has(a[aria-label="Join Group"])
-facebook.com##div[role="feed"] div:has(a[aria-label="Alătură-te grupului"])
-facebook.com##div[role="feed"] div:has(button:has-text(/Join|Alătură-te/i))
+! Fallback — blocks any “Join” group card container in feed
+facebook.com##div[role="feed"] div:has(a[href*="/groups/"]):has-text("Join")
 
 ! -----------------------------------------------------
 ! PAGE / FOLLOW SUGGESTIONS
 ! -----------------------------------------------------
 
-facebook.com##div[role="feed"] div:has(button:has-text(/Follow|Urmărește/i))
-facebook.com##div[role="feed"] div:has-text(/Pages you may like|Pagini sugerate/i)
+facebook.com##div[role="feed"] > div:has-text("Pages you may like")
+facebook.com##div[role="feed"] > div:has-text("Suggested Pages")
+facebook.com##div[data-pagelet="RightRail"] div:has-text(/Follow|Suggested/i)
 
 ! -----------------------------------------------------
 ! GENERIC SUGGESTED / DISCOVERY POSTS
 ! -----------------------------------------------------
 
-facebook.com##div[role="feed"] div:has-text(/Suggested for you|Sugerat pentru tine/i)
-facebook.com##div[role="feed"] div:has-text(/Recommended|Recomandat/i)
-facebook.com##div[role="feed"] div:has-text(/Pentru tine/i)
-
-! -----------------------------------------------------
-! STORIES — TOP BAR
-! -----------------------------------------------------
-
-facebook.com##div[aria-label="Stories"]
-facebook.com##div[aria-label="Povești"]
-
-! -----------------------------------------------------
-! REELS / WATCH ENTRY POINTS
-! -----------------------------------------------------
-
-facebook.com##a[aria-label="Reels"]
-facebook.com##a[aria-label="Clipuri"]
-facebook.com##div[aria-label="Reels"]
-facebook.com##div[aria-label="Clipuri"]
-
-! -----------------------------------------------------
-! DISCOVERY / RECOMMENDATION PAGELETS
-! -----------------------------------------------------
-
+facebook.com##div[role="feed"] > div:has-text("Suggested for you")
+facebook.com##div[role="feed"] > div:has-text("Recommended for you")
 facebook.com##div[data-pagelet*="Discovery"]
 facebook.com##div[data-pagelet*="discover"]
 facebook.com##div[data-pagelet*="Recommendation"]
 facebook.com##div[data-pagelet*="Recommendations"]
 
 ! -----------------------------------------------------
-! RIGHT SIDEBAR SUGGESTIONS
+! STORIES BAR (TOP FEED)
 ! -----------------------------------------------------
 
-facebook.com##div[data-pagelet="RightRail"] div:has-text(/Add Friend|Join|Follow|Adaugă|Alătură|Urmărește/i)
+facebook.com##div[aria-label="Stories"]
+
+! -----------------------------------------------------
+! REELS ENTRY POINTS
+! -----------------------------------------------------
+
+facebook.com##a[aria-label="Reels"]
+facebook.com##div[aria-label="Reels"]
 
 ! -----------------------------------------------------
 ! ANTI-GREY GAPS (SAFE)
@@ -94,22 +73,5 @@ facebook.com##div[data-pagelet="RightRail"] div:has-text(/Add Friend|Join|Follow
 facebook.com##div[role="feed"] > div:empty
 
 ! =====================================================
-! PATCH — YOUR GROUP SUGGESTIONS (RO + EN)
-! Blocks “Your group suggestions” module
+! END — FACEBOOK CLEAN FEED (EN ONLY)
 ! =====================================================
-
-! English
-facebook.com##div[role="feed"] div:has-text("Your group suggestions")
-
-! Romanian
-facebook.com##div[role="feed"] div:has-text("Sugestiile tale de grupuri")
-facebook.com##div[role="feed"] div:has-text("Sugestii de grupuri pentru tine")
-
-! Structural fallback (Join button inside module)
-facebook.com##div[role="feed"] div:has(a[href*="/groups/"]):has-text("Join")
-facebook.com##div[role="feed"] div:has(a[href*="/groups/"]):has-text("Alătură-te")
-
-! Sidebar version
-facebook.com##div[data-pagelet="RightRail"] div:has-text("Your group suggestions")
-facebook.com##div[data-pagelet="RightRail"] div:has-text("Sugestii de grupuri")
-
