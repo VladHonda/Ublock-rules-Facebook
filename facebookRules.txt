@@ -5,7 +5,6 @@ facebook.com##div[role="article"]:has-text("People you may know")
 facebook.com##div:has-text("People you may know"):has(a[aria-label="Add friend"])
 
 ! Catch PYMK cards grid style
-facebook.com##div[data-pagelet*="PYMK"]
 facebook.com##div:has-text("Add Friend"):has-text("People you may know")
 
 ! ==== RIGHT RAIL SUGGESTIONS ====
