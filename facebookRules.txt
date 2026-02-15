@@ -1,28 +1,28 @@
-
+! ==== PEOPLE YOU MAY KNOW (Feed + Modules) ====
 facebook.com##div[data-pagelet*="PeopleYouMayKnow"]
-facebook.com##div[data-pagelet*="GroupRecommendations"]
+facebook.com##div[data-pagelet="FeedUnit_{n}"]:has-text("People you may know")
+facebook.com##div[role="article"]:has-text("People you may know")
+facebook.com##div:has-text("People you may know"):has(a[aria-label="Add friend"])
 
+! Catch PYMK cards grid style
+facebook.com##div[data-pagelet*="PYMK"]
+facebook.com##div:has-text("Add Friend"):has-text("People you may know")
+
+! ==== RIGHT RAIL SUGGESTIONS ====
 facebook.com##div[data-pagelet="RightRail"] div:has-text("People you may know")
 facebook.com##div[data-pagelet="RightRail"] div:has-text("Suggested groups")
 facebook.com##div[data-pagelet="RightRail"] div:has-text("Your group suggestions")
 facebook.com##div[data-pagelet="RightRail"] div:has-text("Pages you may like")
 facebook.com##div[data-pagelet="RightRail"] div:has-text("Suggested Pages")
 
-facebook.com##div[aria-label="Stories"]
-
-facebook.com##a[aria-label="Reels"],
-facebook.com##div[aria-label="Reels"]
-
+! ==== GROUP RECOMMENDATIONS ====
 facebook.com##div[data-pagelet*="GroupRecommendations"]
 
-facebook.com##div[data-pagelet="RightRail"] div:has-text("Suggested groups")
-facebook.com##div[data-pagelet="RightRail"] div:has-text("Your group suggestions")
-facebook.com##div[data-pagelet="RightRail"] div:has-text("Pages you may like")
-facebook.com##div[data-pagelet="RightRail"] div:has-text("Suggested Pages")
-
+! ==== STORIES / REELS ====
 facebook.com##div[aria-label="Stories"]
-
-facebook.com##a[aria-label="Reels"],
+facebook.com##a[aria-label="Reels"]
 facebook.com##div[aria-label="Reels"]
-
+facebook.com##div:has(a[href*="/friends/suggestions/"])
+facebook.com##div:has-text("Mutual friends"):has(button:has-text("Add Friend"))
+facebook.com##div:has-text("Friend suggestion")
 
