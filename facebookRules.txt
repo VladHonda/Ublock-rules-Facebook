@@ -1,27 +1,27 @@
-! ==== PEOPLE YOU MAY KNOW (Feed + Modules) ====
-facebook.com##div[data-pagelet*="PeopleYouMayKnow"]
-facebook.com##div[data-pagelet="FeedUnit_{n}"]:has-text("People you may know")
-facebook.com##div[role="article"]:has-text("People you may know")
-facebook.com##div:has-text("People you may know"):has(a[aria-label="Add friend"])
+! ==== FACEBOOK CLEAN FEED – NO JOIN / FOLLOW ====
 
-! Catch PYMK cards grid style
-facebook.com##div:has-text("Add Friend"):has-text("People you may know")
+! --- All actionable Join / Follow buttons anywhere ---
+facebook.com##button:has-text("Join")
+facebook.com##button:has-text("Follow")
+facebook.com##button:has-text("Follow Page")
+facebook.com##button:has-text("Join Group")
+facebook.com##a:has-text("Join")
+facebook.com##a:has-text("Follow")
+facebook.com##a:has-text("Follow Page")
+facebook.com##a:has-text("Join Group")
 
-! ==== RIGHT RAIL SUGGESTIONS ====
-facebook.com##div[data-pagelet="RightRail"] div:has-text("People you may know")
-facebook.com##div[data-pagelet="RightRail"] div:has-text("Suggested groups")
-facebook.com##div[data-pagelet="RightRail"] div:has-text("Your group suggestions")
-facebook.com##div[data-pagelet="RightRail"] div:has-text("Pages you may like")
-facebook.com##div[data-pagelet="RightRail"] div:has-text("Suggested Pages")
+! --- People You May Know ---
+facebook.com##div[role="article"]:has(a[aria-label*="Add Friend"])
+facebook.com##div[data-pagelet^="FeedUnit_"]:has(a[aria-label*="Add Friend"])
 
-! ==== GROUP RECOMMENDATIONS ====
+! --- Group Recommendations ---
 facebook.com##div[data-pagelet*="GroupRecommendations"]
 
-! ==== STORIES / REELS ====
-facebook.com##div[aria-label="Stories"]
-facebook.com##a[aria-label="Reels"]
-facebook.com##div[aria-label="Reels"]
-facebook.com##div:has(a[href*="/friends/suggestions/"])
-facebook.com##div:has-text("Mutual friends"):has(button:has-text("Add Friend"))
-facebook.com##div:has-text("Friend suggestion")
-
+! --- Stories / Reels ---
+facebook.com##div[aria-label^="Story"]
+facebook.com##div[aria-label^="Stories"]
+facebook.com##div[aria-label*="Stories tray"]
+facebook.com##div[data-pagelet^="Stories"]
+facebook.com##a[aria-label^="Reel"]
+facebook.com##div[aria-label^="Reel"]
+facebook.com##div[data-pagelet^="Reels"]
