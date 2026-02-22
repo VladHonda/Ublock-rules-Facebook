@@ -1,27 +1,27 @@
-! ==== FACEBOOK CLEAN FEED – NO JOIN / FOLLOW ====
+! =========================================
+! ==== FACEBOOK SAFE CTA CLEANER (2026) ====
+! =========================================
 
-! --- All actionable Join / Follow buttons anywhere ---
-facebook.com##button:has-text("Join")
-facebook.com##button:has-text("Follow")
-facebook.com##button:has-text("Follow Page")
-facebook.com##button:has-text("Join Group")
-facebook.com##a:has-text("Join")
-facebook.com##a:has-text("Follow")
-facebook.com##a:has-text("Follow Page")
-facebook.com##a:has-text("Join Group")
+! FOLLOW / JOIN BUTTONS
+facebook.com##button[aria-label*="Follow" i]
+facebook.com##button[aria-label*="Join" i]
+facebook.com##a:has-text(/^\s*(Follow|Join)\b/i)
+facebook.com##span:has-text(/^\s*(Follow|Join)\b/i)
 
-! --- People You May Know ---
-facebook.com##div[role="article"]:has(a[aria-label*="Add Friend"])
-facebook.com##div[data-pagelet^="FeedUnit_"]:has(a[aria-label*="Add Friend"])
+! REELS
+facebook.com##div[aria-label*="Reels" i]
+facebook.com##a:has-text(/Reels/i)
+facebook.com##span:has-text(/Reels/i)
 
-! --- Group Recommendations ---
-facebook.com##div[data-pagelet*="GroupRecommendations"]
+! STORIES (CREATE + OTHER PEOPLE)
+facebook.com##div[aria-label*="Create story" i]
+facebook.com##div[aria-label*="Stories" i]
+facebook.com##a:has-text(/Create (a )?story/i)
+facebook.com##span:has-text(/Create (a )?story/i)
 
-! --- Stories / Reels ---
-facebook.com##div[aria-label^="Story"]
-facebook.com##div[aria-label^="Stories"]
-facebook.com##div[aria-label*="Stories tray"]
-facebook.com##div[data-pagelet^="Stories"]
-facebook.com##a[aria-label^="Reel"]
-facebook.com##div[aria-label^="Reel"]
-facebook.com##div[data-pagelet^="Reels"]
+! SIDEBAR / STICKY PANELS
+facebook.com##[role="complementary"] div:has-text(/Reels|Story/i)
+
+! REMOVE PSEUDO ELEMENTS THAT MAY CAUSE GRAY
+facebook.com##div::before:style(content:none!important)
+facebook.com##div::after:style(content:none!important)
