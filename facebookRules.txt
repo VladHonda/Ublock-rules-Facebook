@@ -1,27 +1,43 @@
-! =========================================
-! ==== FACEBOOK SAFE CTA CLEANER (2026) ====
-! =========================================
+! =====================================================
+! ===== FACEBOOK CLEAN FRIENDS-FIRST FEED – 2026 =====
+! =====================================================
 
-! FOLLOW / JOIN BUTTONS
-facebook.com##button[aria-label*="Follow" i]
-facebook.com##button[aria-label*="Join" i]
-facebook.com##a:has-text(/^\s*(Follow|Join)\b/i)
-facebook.com##span:has-text(/^\s*(Follow|Join)\b/i)
+! ------------------------------
+! 1) REMOVE STORIES TRAY / TOP STORIES SECTION
+! ------------------------------
+facebook.com##div[data-pagelet*="Stories"],
+facebook.com##div[aria-label*="story" i],
+facebook.com##div[aria-label*="Create story" i],
+facebook.com##div[role="region"]:has(a[href*="/stories/"])
 
-! REELS
+! ------------------------------
+! 2) REMOVE REELS / SHORT VIDEO MODULES
+! ------------------------------
+facebook.com##div[data-pagelet*="Reels"],
 facebook.com##div[aria-label*="Reels" i]
-facebook.com##a:has-text(/Reels/i)
-facebook.com##span:has-text(/Reels/i)
 
-! STORIES (CREATE + OTHER PEOPLE)
-facebook.com##div[aria-label*="Create story" i]
-facebook.com##div[aria-label*="Stories" i]
-facebook.com##a:has-text(/Create (a )?story/i)
-facebook.com##span:has-text(/Create (a )?story/i)
+! ------------------------------
+! 3) REMOVE PEOPLE YOU MAY KNOW / SUGGESTIONS
+! ------------------------------
+facebook.com##div[role="feed"] > div:has-text(/People you may know|Suggested|Recommended|Because you/i)
 
-! SIDEBAR / STICKY PANELS
-facebook.com##[role="complementary"] div:has-text(/Reels|Story/i)
+! ------------------------------
+! 4) REMOVE RIGHT SIDEBAR / COMPLEMENTARY PANELS
+! ------------------------------
+facebook.com##[role="complementary"],
+facebook.com##div[data-pagelet*="RightRail"]
 
-! REMOVE PSEUDO ELEMENTS THAT MAY CAUSE GRAY
+! ------------------------------
+! 5) CLEAN EMPTY / GHOST FEED CONTAINERS
+! ------------------------------
+facebook.com##div[role="feed"] > div:empty
 facebook.com##div::before:style(content:none!important)
 facebook.com##div::after:style(content:none!important)
+
+! ------------------------------
+! 6) OPTIONAL: HIDE FOLLOW / JOIN BUTTONS (partial, CSS only)
+! ------------------------------
+facebook.com##button[aria-label*="Follow" i],
+facebook.com##button[aria-label*="Join" i],
+facebook.com##a:has-text(/Follow|Join/i),
+facebook.com##span:has-text(/Follow|Join/i)
