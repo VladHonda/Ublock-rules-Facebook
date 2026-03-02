@@ -1,47 +1,34 @@
 ! =====================================================
 ! ===== FACEBOOK CLEAN FRIENDS-FIRST FEED – 2026 =====
-! ===== ZERO-FLASH WITH SCRIPTLETS + CSS ============
+! ===== Optimized for uBlock Origin ===================
 ! =====================================================
 
 ! ------------------------------
-! 1) BLOCK STORIES TRAY / TOP STORIES SECTION
+! 1) HIDE STORIES TRAY / TOP STORIES
 ! ------------------------------
-! Abort scripts that load stories
 facebook.com##+js(abort-current-inline-script.js, data-pagelet, Stories)
-facebook.com##+js(aopr, div[data-pagelet*="Stories"])
-! Hide any remaining stories containers
 facebook.com##div[data-pagelet*="Stories"]:style(display:none!important)
 facebook.com##div[aria-label*="story" i]:style(display:none!important)
 facebook.com##div[aria-label*="Create story" i]:style(display:none!important)
 facebook.com##div[role="region"]:has(a[href*="/stories/"]):style(display:none!important)
 
 ! ------------------------------
-! 2) BLOCK REELS / SHORT VIDEO MODULES
+! 2) HIDE REELS / SHORT VIDEOS
 ! ------------------------------
-! Abort scripts that load Reels
 facebook.com##+js(abort-current-inline-script.js, data-pagelet, Reels)
-facebook.com##+js(aopr, div[data-pagelet*="Reels"])
-! Hide any remaining reels containers
 facebook.com##div[data-pagelet*="Reels"]:style(display:none!important)
 facebook.com##div[aria-label*="Reels" i]:style(display:none!important)
 
 ! ------------------------------
-! 3) BLOCK PEOPLE YOU MAY KNOW / SUGGESTIONS
+! 3) HIDE PEOPLE YOU MAY KNOW / SUGGESTIONS
 ! ------------------------------
-! Abort scripts that inject suggestions
-facebook.com##+js(aopr, div[role="feed"] > div:has-text(/People you may know|Suggested|Recommended|Because you/i))
-! Hide suggestion containers
 facebook.com##div[role="feed"] > div:has-text(/People you may know|Suggested|Recommended|Because you/i):style(display:none!important)
 
 ! ------------------------------
-! 4) BLOCK RIGHT SIDEBAR / COMPLEMENTARY PANELS
+! 4) HIDE RIGHT SIDEBAR / COMPLEMENTARY PANELS
 ! ------------------------------
-! Abort scripts injecting right rail panels
-facebook.com##+js(aopr, div[data-pagelet*="RightRail"])
-facebook.com##+js(aopr, [role="complementary"])
-! Hide any remaining sidebar panels
-facebook.com##[role="complementary"]:style(display:none!important)
 facebook.com##div[data-pagelet*="RightRail"]:style(display:none!important)
+facebook.com##[role="complementary"]:style(display:none!important)
 
 ! ------------------------------
 ! 5) CLEAN EMPTY / GHOST FEED CONTAINERS
