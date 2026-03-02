@@ -1,43 +1,59 @@
 ! =====================================================
 ! ===== FACEBOOK CLEAN FRIENDS-FIRST FEED – 2026 =====
+! ===== ZERO-FLASH WITH SCRIPTLETS + CSS ============
 ! =====================================================
 
 ! ------------------------------
-! 1) REMOVE STORIES TRAY / TOP STORIES SECTION
+! 1) BLOCK STORIES TRAY / TOP STORIES SECTION
 ! ------------------------------
-facebook.com##div[data-pagelet*="Stories"],
-facebook.com##div[aria-label*="story" i],
-facebook.com##div[aria-label*="Create story" i],
-facebook.com##div[role="region"]:has(a[href*="/stories/"])
+! Abort scripts that load stories
+facebook.com##+js(abort-current-inline-script.js, data-pagelet, Stories)
+facebook.com##+js(aopr, div[data-pagelet*="Stories"])
+! Hide any remaining stories containers
+facebook.com##div[data-pagelet*="Stories"]:style(display:none!important)
+facebook.com##div[aria-label*="story" i]:style(display:none!important)
+facebook.com##div[aria-label*="Create story" i]:style(display:none!important)
+facebook.com##div[role="region"]:has(a[href*="/stories/"]):style(display:none!important)
 
 ! ------------------------------
-! 2) REMOVE REELS / SHORT VIDEO MODULES
+! 2) BLOCK REELS / SHORT VIDEO MODULES
 ! ------------------------------
-facebook.com##div[data-pagelet*="Reels"],
-facebook.com##div[aria-label*="Reels" i]
+! Abort scripts that load Reels
+facebook.com##+js(abort-current-inline-script.js, data-pagelet, Reels)
+facebook.com##+js(aopr, div[data-pagelet*="Reels"])
+! Hide any remaining reels containers
+facebook.com##div[data-pagelet*="Reels"]:style(display:none!important)
+facebook.com##div[aria-label*="Reels" i]:style(display:none!important)
 
 ! ------------------------------
-! 3) REMOVE PEOPLE YOU MAY KNOW / SUGGESTIONS
+! 3) BLOCK PEOPLE YOU MAY KNOW / SUGGESTIONS
 ! ------------------------------
-facebook.com##div[role="feed"] > div:has-text(/People you may know|Suggested|Recommended|Because you/i)
+! Abort scripts that inject suggestions
+facebook.com##+js(aopr, div[role="feed"] > div:has-text(/People you may know|Suggested|Recommended|Because you/i))
+! Hide suggestion containers
+facebook.com##div[role="feed"] > div:has-text(/People you may know|Suggested|Recommended|Because you/i):style(display:none!important)
 
 ! ------------------------------
-! 4) REMOVE RIGHT SIDEBAR / COMPLEMENTARY PANELS
+! 4) BLOCK RIGHT SIDEBAR / COMPLEMENTARY PANELS
 ! ------------------------------
-facebook.com##[role="complementary"],
-facebook.com##div[data-pagelet*="RightRail"]
+! Abort scripts injecting right rail panels
+facebook.com##+js(aopr, div[data-pagelet*="RightRail"])
+facebook.com##+js(aopr, [role="complementary"])
+! Hide any remaining sidebar panels
+facebook.com##[role="complementary"]:style(display:none!important)
+facebook.com##div[data-pagelet*="RightRail"]:style(display:none!important)
 
 ! ------------------------------
 ! 5) CLEAN EMPTY / GHOST FEED CONTAINERS
 ! ------------------------------
-facebook.com##div[role="feed"] > div:empty
+facebook.com##div[role="feed"] > div:empty:style(display:none!important)
 facebook.com##div::before:style(content:none!important)
 facebook.com##div::after:style(content:none!important)
 
 ! ------------------------------
-! 6) OPTIONAL: HIDE FOLLOW / JOIN BUTTONS (partial, CSS only)
+! 6) OPTIONAL: HIDE FOLLOW / JOIN BUTTONS
 ! ------------------------------
-facebook.com##button[aria-label*="Follow" i],
-facebook.com##button[aria-label*="Join" i],
-facebook.com##a:has-text(/Follow|Join/i),
-facebook.com##span:has-text(/Follow|Join/i)
+facebook.com##button[aria-label*="Follow" i]:style(display:none!important)
+facebook.com##button[aria-label*="Join" i]:style(display:none!important)
+facebook.com##a:has-text(/Follow|Join/i):style(display:none!important)
+facebook.com##span:has-text(/Follow|Join/i):style(display:none!important)
