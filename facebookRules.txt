@@ -1,46 +1,49 @@
 ! =====================================================
-! ===== FACEBOOK CLEAN FRIENDS-FIRST FEED – 2026 =====
-! ===== Optimized for uBlock Origin ===================
+! ===== FACEBOOK FRIENDS-ONLY FEED – STRICT 2026 =====
+! ===== Stable + Anti-Suggestions =====================
 ! =====================================================
 
-! ------------------------------
-! 1) HIDE STORIES TRAY / TOP STORIES
-! ------------------------------
-facebook.com##+js(abort-current-inline-script.js, data-pagelet, Stories)
-facebook.com##div[data-pagelet*="Stories"]:style(display:none!important)
-facebook.com##div[aria-label*="story" i]:style(display:none!important)
-facebook.com##div[aria-label*="Create story" i]:style(display:none!important)
-facebook.com##div[role="region"]:has(a[href*="/stories/"]):style(display:none!important)
+! -----------------------------------------------------
+! 1) HIDE STORIES
+! -----------------------------------------------------
+facebook.com##div[data-pagelet*="Stories"]
+facebook.com##a[href*="/stories/"]:upward(3)
 
-! ------------------------------
-! 2) HIDE REELS / SHORT VIDEOS
-! ------------------------------
-facebook.com##+js(abort-current-inline-script.js, data-pagelet, Reels)
-facebook.com##div[data-pagelet*="Reels"]:style(display:none!important)
-facebook.com##div[aria-label*="Reels" i]:style(display:none!important)
+! -----------------------------------------------------
+! 2) HIDE REELS SECTIONS (NOT FRIEND VIDEOS)
+! -----------------------------------------------------
+facebook.com##div[data-pagelet*="Reels"]
+facebook.com##a[href*="/reel/"]:upward(3)
 
-! ------------------------------
-! 3) HIDE PEOPLE YOU MAY KNOW / SUGGESTIONS
-! ------------------------------
-facebook.com##div[role="feed"] > div:has-text(/People you may know|Suggested|Recommended|Because you/i):style(display:none!important)
+! -----------------------------------------------------
+! 3) HIDE "FOLLOW" SUGGESTION CARDS
+! -----------------------------------------------------
+facebook.com##div[role="feed"] > div:has(button[aria-label*="Follow" i])
+facebook.com##div[role="feed"] > div:has(a[href*="/follow/"])
+facebook.com##div[role="feed"] > div:has(a[href*="/pages/"])
 
-! ------------------------------
-! 4) HIDE RIGHT SIDEBAR / COMPLEMENTARY PANELS
-! ------------------------------
-facebook.com##div[data-pagelet*="RightRail"]:style(display:none!important)
-facebook.com##[role="complementary"]:style(display:none!important)
+! -----------------------------------------------------
+! 4) HIDE "SUGGESTED FOR YOU" BLOCKS (STRUCTURAL)
+! -----------------------------------------------------
+facebook.com##div[role="feed"] > div:has(h3:has-text(/Suggested|Recommended/i))
+facebook.com##div[role="feed"] > div:has(span:has-text(/Suggested|Recommended/i))
 
-! ------------------------------
-! 5) CLEAN EMPTY / GHOST FEED CONTAINERS
-! ------------------------------
-facebook.com##div[role="feed"] > div:empty:style(display:none!important)
-facebook.com##div::before:style(content:none!important)
-facebook.com##div::after:style(content:none!important)
+! -----------------------------------------------------
+! 5) HIDE PEOPLE YOU MAY KNOW
+! -----------------------------------------------------
+facebook.com##div[role="feed"] > div:has-text(/People you may know/i)
 
-! ------------------------------
-! 6) OPTIONAL: HIDE FOLLOW / JOIN BUTTONS
-! ------------------------------
-facebook.com##button[aria-label*="Follow" i]:style(display:none!important)
-facebook.com##button[aria-label*="Join" i]:style(display:none!important)
-facebook.com##a:has-text(/Follow|Join/i):style(display:none!important)
-facebook.com##span:has-text(/Follow|Join/i):style(display:none!important)
+! -----------------------------------------------------
+! 6) HIDE SPONSORED POSTS (MORE RELIABLE)
+! -----------------------------------------------------
+facebook.com##div[role="feed"] > div:has(span:has-text(/Sponsored/i))
+
+! -----------------------------------------------------
+! 7) HIDE RIGHT SIDEBAR ONLY
+! -----------------------------------------------------
+facebook.com##div[data-pagelet*="RightRail"]
+
+! -----------------------------------------------------
+! 8) CLEAN EMPTY FEED CELLS
+! -----------------------------------------------------
+facebook.com##div[role="feed"] > div:empty
