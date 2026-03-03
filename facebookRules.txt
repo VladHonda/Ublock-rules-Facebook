@@ -1,47 +1,60 @@
 ! =====================================================
 ! ===== FACEBOOK FRIENDS-ONLY FEED – STRICT 2026 =====
-! ===== Stable + Anti-Suggestions =====================
+! ===== Desktop – Stable Structural Version ==========
 ! =====================================================
+
 
 ! -----------------------------------------------------
 ! 1) HIDE STORIES
 ! -----------------------------------------------------
 facebook.com##div[data-pagelet*="Stories"]
-facebook.com##a[href*="/stories/"]:upward(3)
+facebook.com##a[href*="/stories/"]:upward(4)
+
 
 ! -----------------------------------------------------
 ! 2) HIDE REELS SECTIONS (NOT FRIEND VIDEOS)
 ! -----------------------------------------------------
 facebook.com##div[data-pagelet*="Reels"]
-facebook.com##a[href*="/reel/"]:upward(3)
+facebook.com##a[href*="/reel/"]:upward(4)
+
 
 ! -----------------------------------------------------
-! 3) HIDE "FOLLOW" SUGGESTION CARDS
+! 3) REMOVE FOLLOW / JOIN SUGGESTION CARDS
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has(button[aria-label*="Follow" i])
-facebook.com##div[role="feed"] > div:has(a[href*="/follow/"])
+facebook.com##div[role="feed"] > div:has(button:has-text(/Follow|Join/i))
+facebook.com##div[role="feed"] > div:has(a:has-text(/Follow|Join/i))
+facebook.com##div[role="feed"] > div:has(a[href*="/groups/"])
 facebook.com##div[role="feed"] > div:has(a[href*="/pages/"])
+facebook.com##div[role="feed"] > div:has(a[href*="category="])
+
 
 ! -----------------------------------------------------
-! 4) HIDE "SUGGESTED FOR YOU" BLOCKS (STRUCTURAL)
+! 4) REMOVE SUGGESTED / RECOMMENDED POSTS
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has(h3:has-text(/Suggested|Recommended/i))
-facebook.com##div[role="feed"] > div:has(span:has-text(/Suggested|Recommended/i))
+facebook.com##div[role="feed"] > div:has-text(/Suggested for you/i)
+facebook.com##div[role="feed"] > div:has-text(/Because you follow/i)
+facebook.com##div[role="feed"] > div:has-text(/You might like/i)
+facebook.com##div[role="feed"] > div:has-text(/Recommended/i)
+
 
 ! -----------------------------------------------------
-! 5) HIDE PEOPLE YOU MAY KNOW
+! 5) REMOVE PEOPLE YOU MAY KNOW
 ! -----------------------------------------------------
 facebook.com##div[role="feed"] > div:has-text(/People you may know/i)
 
-! -----------------------------------------------------
-! 6) HIDE SPONSORED POSTS (MORE RELIABLE)
-! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has(span:has-text(/Sponsored/i))
 
 ! -----------------------------------------------------
-! 7) HIDE RIGHT SIDEBAR ONLY
+! 6) REMOVE SPONSORED POSTS (ROBUST)
+! -----------------------------------------------------
+facebook.com##div[role="feed"] > div:has(span:has-text(/Sponsored/i))
+facebook.com##div[role="feed"] > div:has(a[aria-label="Sponsored"])
+
+
+! -----------------------------------------------------
+! 7) REMOVE RIGHT SIDEBAR
 ! -----------------------------------------------------
 facebook.com##div[data-pagelet*="RightRail"]
+
 
 ! -----------------------------------------------------
 ! 8) CLEAN EMPTY FEED CELLS
