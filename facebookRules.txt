@@ -1,62 +1,82 @@
 ! =====================================================
-! ===== FACEBOOK FRIENDS-ONLY FEED – STRICT 2026 =====
-! ===== Desktop – Stable Structural Version ==========
+! FACEBOOK CLEAN FEED – WORKING VERSION (2026)
 ! =====================================================
 
 
 ! -----------------------------------------------------
-! 1) HIDE STORIES
+! Remove Stories
 ! -----------------------------------------------------
-facebook.com##div[data-pagelet*="Stories"]
-facebook.com##a[href*="/stories/"]:upward(4)
+
+facebook.com##div[role="region"]:has(a[href^="/stories/create"])
+facebook.com##div[role="region"]:has(a[href*="/stories/"] img)
 
 
 ! -----------------------------------------------------
-! 2) HIDE REELS SECTIONS (NOT FRIEND VIDEOS)
+! Remove Reels
 ! -----------------------------------------------------
+
+facebook.com##div[role="feed"] > div:has(a[href*="/reel/"])
 facebook.com##div[data-pagelet*="Reels"]
-facebook.com##a[href*="/reel/"]:upward(4)
 
 
 ! -----------------------------------------------------
-! 3) REMOVE FOLLOW / JOIN SUGGESTION CARDS
+! Remove Sponsored posts
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has(button:has-text(/Follow|Join/i))
-facebook.com##div[role="feed"] > div:has(a:has-text(/Follow|Join/i))
-facebook.com##div[role="feed"] > div:has(a[href*="/groups/"])
-facebook.com##div[role="feed"] > div:has(a[href*="/pages/"])
-facebook.com##div[role="feed"] > div:has(a[href*="category="])
+
+facebook.com##div[role="feed"] > div:has-text(/Sponsored/i)
+facebook.com##div[role="feed"] > div:has(a[href*="/ads/"])
+facebook.com##div[role="feed"] > div:has(span[aria-label="Sponsored"])
 
 
 ! -----------------------------------------------------
-! 4) REMOVE SUGGESTED / RECOMMENDED POSTS
+! Remove Suggested / Recommended
 ! -----------------------------------------------------
+
 facebook.com##div[role="feed"] > div:has-text(/Suggested for you/i)
-facebook.com##div[role="feed"] > div:has-text(/Because you follow/i)
-facebook.com##div[role="feed"] > div:has-text(/You might like/i)
+facebook.com##div[role="feed"] > div:has-text(/Suggested post/i)
 facebook.com##div[role="feed"] > div:has-text(/Recommended/i)
+facebook.com##div[role="feed"] > div:has-text(/Because you follow/i)
 
 
 ! -----------------------------------------------------
-! 5) REMOVE PEOPLE YOU MAY KNOW
+! Remove Join / Follow recommendation modules
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has-text(/People you may know/i)
+
+facebook.com##div:has(a[href*="/groups/"]):has(button)
+facebook.com##div:has(a[href*="/pages/"]):has(button)
+
+facebook.com##div:has(button[aria-label*="Join"])
+facebook.com##div:has(button[aria-label*="Follow"])
+
+facebook.com##div:has(div[role="button"][aria-label*="Join"])
+facebook.com##div:has(div[role="button"][aria-label*="Follow"])
 
 
 ! -----------------------------------------------------
-! 6) REMOVE SPONSORED POSTS (ROBUST)
+! Remove Suggested Groups / Pages modules
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has(span:has-text(/Sponsored/i))
-facebook.com##div[role="feed"] > div:has(a[aria-label="Sponsored"])
+
+facebook.com##div:has-text(/Suggested groups/i)
+facebook.com##div:has-text(/Suggested pages/i)
 
 
 ! -----------------------------------------------------
-! 7) REMOVE RIGHT SIDEBAR
+! Remove People You May Know
 ! -----------------------------------------------------
+
+facebook.com##div:has-text(/People you may know/i)
+
+
+! -----------------------------------------------------
+! Remove Marketplace spam
+! -----------------------------------------------------
+
+facebook.com##div[role="feed"] > div:has(a[href*="/marketplace/"])
+
+
+! -----------------------------------------------------
+! Remove right sidebar
+! -----------------------------------------------------
+
 facebook.com##div[data-pagelet*="RightRail"]
-
-
-! -----------------------------------------------------
-! 8) CLEAN EMPTY FEED CELLS
-! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:empty
+facebook.com##div[data-pagelet*="RightColumn"]
