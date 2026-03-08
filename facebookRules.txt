@@ -39,18 +39,17 @@ facebook.com##div[role="feed"] > div:has-text(/Because you follow/i)
 
 
 ! -----------------------------------------------------
-! Remove Join / Follow recommendation modules
+! Remove Join / Follow recommendation modules (SAFE)
 ! -----------------------------------------------------
 
-facebook.com##div:has(a[href*="/groups/"]):has(button)
-facebook.com##div:has(a[href*="/pages/"]):has(button)
+facebook.com##div[role="feed"] > div:has(a[href*="/groups/"]):has(button)
+facebook.com##div[role="feed"] > div:has(a[href*="/pages/"]):has(button)
 
-facebook.com##div:has(button[aria-label*="Join"])
-facebook.com##div:has(button[aria-label*="Follow"])
+facebook.com##div[role="feed"] > div:has(button[aria-label*="Join"])
+facebook.com##div[role="feed"] > div:has(button[aria-label*="Follow"])
 
-facebook.com##div:has(div[role="button"][aria-label*="Join"])
-facebook.com##div:has(div[role="button"][aria-label*="Follow"])
-
+facebook.com##div[role="feed"] > div:has(div[role="button"][aria-label*="Join"])
+facebook.com##div[role="feed"] > div:has(div[role="button"][aria-label*="Follow"])
 
 ! -----------------------------------------------------
 ! Remove Suggested Groups / Pages modules
@@ -66,17 +65,3 @@ facebook.com##div:has-text(/Suggested pages/i)
 
 facebook.com##div:has-text(/People you may know/i)
 
-
-! -----------------------------------------------------
-! Remove Marketplace spam
-! -----------------------------------------------------
-
-facebook.com##div[role="feed"] > div:has(a[href*="/marketplace/"])
-
-
-! -----------------------------------------------------
-! Remove right sidebar
-! -----------------------------------------------------
-
-facebook.com##div[data-pagelet*="RightRail"]
-facebook.com##div[data-pagelet*="RightColumn"]
