@@ -1,64 +1,56 @@
 ! =====================================================
-! FACEBOOK CLEAN FEED – FULL OPTIMIZED VERSION (2026)
+! FACEBOOK CLEAN FEED – 2026 ULTRA CLEAN (NO REELS)
 ! =====================================================
 
 ! -----------------------------------------------------
-! Remove Stories
+! 1. Remove any feed card that contains buttons (Join / Follow / Suggested)
 ! -----------------------------------------------------
-facebook.com##div[role="region"]:has(a[href^="/stories/create"])
-facebook.com##div[role="region"]:has(a[href*="/stories/"] img)
+facebook.com##div[role="feed"] > div:has(div[role="button"]):remove()
+facebook.com##div[role="feed"] > div:has(button):remove()
 
 ! -----------------------------------------------------
-! Remove Reels / Watch videos
+! 2. Remove feed cards linking to groups or pages
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has(a[href*="/reel/"])
-facebook.com##div[data-pagelet*="Reels"]
-facebook.com##div[role="feed"] > div:has(a[href*="/watch/?v="])
+facebook.com##div[role="feed"] > div:has(a[href*="/groups/"]):remove()
+facebook.com##div[role="feed"] > div:has(a[href*="/pages/"]):remove()
 
 ! -----------------------------------------------------
-! Remove Sponsored posts / ads
+! 3. Remove Stories
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has-text(/Sponsored/i)
-facebook.com##div[role="feed"] > div:has(span[aria-label="Sponsored"])
-facebook.com##div[role="feed"] > div:has(span:has-text(Sponsored))
-facebook.com##div[role="feed"] > div:has(a[href*="/ads/"])
+facebook.com##div[aria-label="Stories"]:remove()
 
 ! -----------------------------------------------------
-! Remove Suggested / Recommended posts
+! 4. Remove Reels / Watch videos completely
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested post/i)
-facebook.com##div[role="feed"] > div:has-text(/Recommended/i)
-facebook.com##div[role="feed"] > div:has-text(/Because you follow/i)
+facebook.com##div[role="feed"] > div:has(a[href*="/reel/"]):remove()
+facebook.com##div[role="feed"] > div:has(a[href*="/watch/"]):remove()
+facebook.com##div[data-pagelet*="Reels"]:remove()
+facebook.com##div[data-pagelet*="Watch"]:remove()
+facebook.com##div[role="region"] > div:has(a[href*="/reel/"]):remove()
+facebook.com##div[role="region"] > div:has(a[href*="/watch/"]):remove()
 
 ! -----------------------------------------------------
-! Remove Join / Follow recommendation modules
+! 5. Remove Sponsored posts
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has(button[aria-label*="Join"])
-facebook.com##div[role="feed"] > div:has(button[aria-label*="Follow"])
-facebook.com##div[role="feed"] > div:has(div[role="button"][aria-label*="Join"])
-facebook.com##div[role="feed"] > div:has(div[role="button"][aria-label*="Follow"])
-facebook.com##div[role="feed"] > div:has-text(/Join group/i)
-facebook.com##div[role="feed"] > div:has-text(/Follow page/i)
-facebook.com##div[role="feed"] > div:has-text(/Follow/i)
-facebook.com##div[role="feed"] > div:has(button):has(a[href*="/groups/"])
-facebook.com##div[role="feed"] > div:has(button):has(a[href*="/pages/"])
-facebook.com##div[role="feed"] > div:has(a[href*="/groups/?ref="])
-facebook.com##div[role="feed"] > div:has(a[href*="/pages/?ref="])
+facebook.com##div[role="feed"] > div:has(span[aria-label="Sponsored"]):remove()
+facebook.com##div[role="feed"] > div:has-text(/Sponsored/i):remove()
+facebook.com##div[role="feed"] > div:has(a[href*="/ads/"]):remove()
 
 ! -----------------------------------------------------
-! Remove Suggested Groups / Pages modules
+! 6. Remove Suggested / Recommended posts
 ! -----------------------------------------------------
-facebook.com##div:has-text(/Suggested groups/i)
-facebook.com##div:has-text(/Suggested pages/i)
+facebook.com##div[role="feed"] > div:has-text(/Suggested for you/i):remove()
+facebook.com##div[role="feed"] > div:has-text(/Suggested post/i):remove()
+facebook.com##div[role="feed"] > div:has-text(/Recommended/i):remove()
+facebook.com##div[role="feed"] > div:has-text(/Because you follow/i):remove()
 
 ! -----------------------------------------------------
-! Remove People You May Know
+! 7. Remove People You May Know
 ! -----------------------------------------------------
-facebook.com##div:has-text(/People you may know/i)
+facebook.com##div[role="feed"] > div:has-text(/People you may know/i):remove()
 
 ! -----------------------------------------------------
-! Optional: Remove Marketplace / Event suggestions
+! 8. Remove Marketplace / Event suggestions
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has-text(/Marketplace/i)
-facebook.com##div[role="feed"] > div:has-text(/Events/i)
+facebook.com##div[role="feed"] > div:has-text(/Marketplace/i):remove()
+facebook.com##div[role="feed"] > div:has-text(/Events/i):remove()
