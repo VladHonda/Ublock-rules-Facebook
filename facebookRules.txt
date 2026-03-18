@@ -1,5 +1,5 @@
 ! =====================================================
-! FACEBOOK CLEAN FEED – 2026 SAFE WALL-PRESERVING
+! FACEBOOK CLEAN FEED – 2026 REFACTORED
 ! =====================================================
 
 ! -----------------------------------------------------
@@ -8,65 +8,57 @@
 @@||facebook.com/spurcat$document
 
 ! -----------------------------------------------------
-! 1. Remove Stories bar
+! 1. Remove Stories
 ! -----------------------------------------------------
 facebook.com##div[aria-label="Stories"]
 
 ! -----------------------------------------------------
-! 2. Remove Reels / Watch / Video sections (all locations outside your wall)
+! 2. Remove Reels / Video / Watch (global)
 ! -----------------------------------------------------
 facebook.com##div[data-pagelet*="Reels"]
 facebook.com##div[data-pagelet*="Watch"]
-facebook.com##div[data-pagelet*="VideoChatHomeUnit"]
-facebook.com##div[data-pagelet*="VideoReels"]
-facebook.com##div[data-pagelet*="ReelsTray"]
-facebook.com##div[role="feed"] > div:has-text(/Reels|Watch this video/i)
-facebook.com##div[role="feed"] > div:has(a[href*="/reel/"])
-facebook.com##div[role="feed"] > div:has(a[href*="/reels/"])
-facebook.com##div[role="feed"] > div:has(a[href*="video_reels"])
-facebook.com##div[role="feed"] video:upward(3):has(a[href*="/reel/"])
-facebook.com##div[role="feed"] video:upward(3):has(a[href*="/reels/"])
-facebook.com##div[role="complementary"] > div:has-text(/Reels/i)
+facebook.com##div[data-pagelet*="Video"]
+
+facebook.com##div[role="feed"] > div:has(
+  a[href*="/reel/"],
+  a[href*="/reels/"],
+  a[href*="video_reels"]
+)
+
+facebook.com##div:has(video):has(a[href*="/reel/"])
+
+! Sidebar / extra regions
+facebook.com##div[role="complementary"] div:has-text(/Reels/i)
+facebook.com##div[role="region"] div:has(a[href*="/reel/"])
 
 ! -----------------------------------------------------
-! 3. Remove Sponsored posts (outside your wall)
+! 3. Feed noise filters (grouped)
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has-text(/Sponsored/i)
+facebook.com##div[role="feed"] > div:has-text(
+  /Sponsored|
+   Suggested|
+   Recommended|
+   Because you follow|
+   Marketplace|
+   Events|
+   Join group|
+   Follow page/i
+)
 
 ! -----------------------------------------------------
-! 4. Remove Suggested / Recommended posts (outside your wall)
+! 4. People You May Know (all languages safe)
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you/i)
+facebook.com##div:has-text(/People you may know/i)
+facebook.com##div:has-text(/Persoane pe care s-ar putea să le cunoști/i)
+
+! -----------------------------------------------------
+! 5. Remove generic suggestion containers
+! -----------------------------------------------------
 facebook.com##div[role="feed"] > div:has-text(/Suggested post/i)
-facebook.com##div[role="feed"] > div:has-text(/Recommended/i)
-facebook.com##div[role="feed"] > div:has-text(/Because you follow/i)
 
 ! -----------------------------------------------------
-! 5. Remove People You May Know (outside your wall)
+! 6. Remove fragile class-based leftovers (minimized)
+! (Keep only if still needed – Facebook changes these often)
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has-text(/People you may know/i)
-
-! -----------------------------------------------------
-! 6. Remove Marketplace / Events cards (outside your wall)
-! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has-text(/Marketplace/i)
-facebook.com##div[role="feed"] > div:has-text(/Events/i)
-
-! -----------------------------------------------------
-! 7. Remove group / page promotion posts (outside your wall)
-! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has-text(/Join group/i)
-facebook.com##div[role="feed"] > div:has-text(/Follow page/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested group/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested page/i)
-
-! -----------------------------------------------------
-! 8. Wall-safe sidebar / region Reels & video modules
-! -----------------------------------------------------
-facebook.com##div[data-pagelet*="ReelsTray"]
-facebook.com##div[data-pagelet*="VideoReels"]
-facebook.com##div[role="complementary"] > div:has-text(/Reels/i)
-facebook.com##div[role="region"] > div:has(a[href*="/reel/"])
-facebook.com##div[role="region"] > div:has(a[href*="/reels/"])
-facebook.com##div[role="region"] video:upward(3):has(a[href*="/reel/"])
-facebook.com##div[role="region"] video:upward(3):has(a[href*="/reels/"])
+! Example fallback (can be removed if stable)
+! facebook.com##div[class*="x"][class*="y"]:has-text(/Reels|Sponsored/i)
