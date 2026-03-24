@@ -9,7 +9,7 @@ www.facebook.com##.x10l6tqk.xtijo5x.x1ey2m1c.x14atkfc.xf7dkkf.xx6bls6.xv54qhq.x1
 ! -----------------------------------------------------
 ! 0. Never touch your own profile page
 ! -----------------------------------------------------
-@@||facebook.com/spurcat$document
+@@||facebook.com/USERNAME$document
 
 ! -----------------------------------------------------
 ! 1. Remove Stories bar
