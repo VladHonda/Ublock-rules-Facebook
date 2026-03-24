@@ -1,5 +1,9 @@
+! Mar 12, 2026 https://www.facebook.com
+www.facebook.com##.x100vrsf.xl56j7k.x1vqgdyp.x78zum5.xurzqwv.x1ertn4p.x1pahc9y.xeusxvb.x1c9tyrk.x1l31dnx.x6s0dn4.x1a2a7pz.x1lku1pv.x87ps6o.x1q0g3np.x1t137rt.x1ja2u2z.xggy1nq.x1hl2dhg.x16tdsg8.x1n2onr6.x1c1uobl.x18d9i69.xyri2b.xexx8yu.xeuugli.x2lwn1j.x1lziwak.xat24cr.x14z9mp.xdj266r.x3ct3a4.x2lah0s.xdl72j9.x1ypdohk.x9f619.x14e42zd.x1qhh985.x10w94by.x972fbf.x1t7ytsu.x1q0q8m5.x18b5jzi.x13fuv20.x1phubyo.xqeqjp1.xc5r6h4.xjqpnuy.x1i10hfl
+www.facebook.com##.x10l6tqk.xtijo5x.x1ey2m1c.x14atkfc.xf7dkkf.xx6bls6.xv54qhq.x1cnzs8.x1uj5trd.xl11dzl.x9f619.x1vjfegm.x2b8uid.xl56j7k.x1rfu9hk.x13xmedi.xz7t8uv.x19t5iym.x1rl75mt.x6s0dn4.x1v94e7o
+
 ! =====================================================
-! FACEBOOK CLEAN FEED – 2026 REFACTORED
+! FACEBOOK CLEAN FEED – 2026 SAFE WALL-PRESERVING
 ! =====================================================
 
 ! -----------------------------------------------------
@@ -8,57 +12,117 @@
 @@||facebook.com/spurcat$document
 
 ! -----------------------------------------------------
-! 1. Remove Stories
+! 1. Remove Stories bar
 ! -----------------------------------------------------
 facebook.com##div[aria-label="Stories"]
 
 ! -----------------------------------------------------
-! 2. Remove Reels / Video / Watch (global)
+! 2. Remove Reels / Watch / Video sections (all locations outside your wall)
 ! -----------------------------------------------------
 facebook.com##div[data-pagelet*="Reels"]
 facebook.com##div[data-pagelet*="Watch"]
-facebook.com##div[data-pagelet*="Video"]
-
-facebook.com##div[role="feed"] > div:has(
-  a[href*="/reel/"],
-  a[href*="/reels/"],
-  a[href*="video_reels"]
-)
-
-facebook.com##div:has(video):has(a[href*="/reel/"])
-
-! Sidebar / extra regions
-facebook.com##div[role="complementary"] div:has-text(/Reels/i)
-facebook.com##div[role="region"] div:has(a[href*="/reel/"])
+facebook.com##div[data-pagelet*="VideoChatHomeUnit"]
+facebook.com##div[data-pagelet*="VideoReels"]
+facebook.com##div[data-pagelet*="ReelsTray"]
+facebook.com##div[role="feed"] > div:has-text(/Reels|Watch this video/i)
+facebook.com##div[role="feed"] > div:has(a[href*="/reel/"])
+facebook.com##div[role="feed"] > div:has(a[href*="/reels/"])
+facebook.com##div[role="feed"] > div:has(a[href*="video_reels"])
+facebook.com##div[role="feed"] video:upward(3):has(a[href*="/reel/"])
+facebook.com##div[role="feed"] video:upward(3):has(a[href*="/reels/"])
+facebook.com##div[role="complementary"] > div:has-text(/Reels/i)
 
 ! -----------------------------------------------------
-! 3. Feed noise filters (grouped)
+! 3. Remove Sponsored posts (outside your wall)
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has-text(
-  /Sponsored|
-   Suggested|
-   Recommended|
-   Because you follow|
-   Marketplace|
-   Events|
-   Join group|
-   Follow page/i
-)
+facebook.com##div[role="feed"] > div:has-text(/Sponsored/i)
+
 
 ! -----------------------------------------------------
-! 4. People You May Know (all languages safe)
+! 5. Remove People You May Know (outside your wall)
 ! -----------------------------------------------------
-facebook.com##div:has-text(/People you may know/i)
-facebook.com##div:has-text(/Persoane pe care s-ar putea să le cunoști/i)
+facebook.com##div[role="feed"] > div:has-text(People you may know)
+facebook.com##div:has(span:has-text(People you may know))
+facebook.com##div:has(span:has-text(Persoane pe care s-ar putea să le cunoști))
 
 ! -----------------------------------------------------
-! 5. Remove generic suggestion containers
+! 6. Remove Marketplace / Events cards (outside your wall)
 ! -----------------------------------------------------
-facebook.com##div[role="feed"] > div:has-text(/Suggested post/i)
+facebook.com##div[role="feed"] > div:has-text(/Marketplace/i)
+facebook.com##div[role="feed"] > div:has-text(/Events/i)
 
 ! -----------------------------------------------------
-! 6. Remove fragile class-based leftovers (minimized)
-! (Keep only if still needed – Facebook changes these often)
+! 7. Wall-safe sidebar / region Reels & video modules
 ! -----------------------------------------------------
-! Example fallback (can be removed if stable)
-! facebook.com##div[class*="x"][class*="y"]:has-text(/Reels|Sponsored/i)
+facebook.com##div[data-pagelet*="ReelsTray"]
+facebook.com##div[data-pagelet*="VideoReels"]
+facebook.com##div[role="complementary"] > div:has-text(/Reels/i)
+facebook.com##div[role="region"] > div:has(a[href*="/reel/"])
+facebook.com##div[role="region"] > div:has(a[href*="/reels/"])
+facebook.com##div[role="region"] video:upward(3):has(a[href*="/reel/"])
+facebook.com##div[role="region"] video:upward(3):has(a[href*="/reels/"])
+
+! Mar 20, 2026 https://it.pinterest.com
+it.pinterest.com##.zEVE_X.sSBu24.kF2VEF.b6DHg3._tKaHB.CQ1_jt.ADXRXN
+
+! Mar 22, 2026 https://op.gg
+op.gg##.n76wqr71s4xt
+
+! Mar 24, 2026 https://op.gg
+op.gg##.lv7n68ewmjdm
+
+
+
+! =============================================================================
+! Facebook Feed Cleaner – FINAL (clean + strong + low breakage)
+! =============================================================================
+
+
+
+! --- Core: remove posts with Follow / Join buttons (most reliable) ---
+facebook.com##div[role="feed"] div[aria-posinset]:has([role="button"][aria-label^="Follow"])
+facebook.com##div[role="feed"] div[aria-posinset]:has([role="button"][aria-label^="Join"])
+
+! --- Extra: Follow Page variations ---
+facebook.com##div[role="feed"] div[aria-posinset]:has([role="button"][aria-label^="Follow Page"])
+
+! --- Fallback: exact button text (edge cases) ---
+facebook.com##div[role="feed"] div[aria-posinset]:has([role="button"]:has-text(/^Follow$/i))
+facebook.com##div[role="feed"] div[aria-posinset]:has([role="button"]:has-text(/^Join$/i))
+
+! --- OPTIONAL: remove Sponsored ---
+! facebook.com##div[role="feed"] div[aria-posinset]:has-text(/^Sponsored$/i)
+
+
+
+! =============================================================================
+! Facebook – FINAL feed cleaner (March 2026)
+! Removes: Follow/Join buttons, group suggestions, “Your group suggestions”, Sponsored
+! =============================================================================
+
+! --- Core: remove posts with Follow / Join buttons (most stable) ---
+facebook.com##div[role="feed"] div[aria-posinset]:has([role="button"][aria-label^="Follow"])
+facebook.com##div[role="feed"] div[aria-posinset]:has([role="button"][aria-label^="Join"])
+facebook.com##div[role="feed"] div[aria-posinset]:has([role="button"][aria-label^="Follow Page"])
+
+! --- Fallback: exact button text (edge cases) ---
+facebook.com##div[role="feed"] div[aria-posinset]:has([role="button"]:has-text(/^Follow$/i))
+facebook.com##div[role="feed"] div[aria-posinset]:has([role="button"]:has-text(/^Join$/i))
+
+! --- Remove group suggestions (Join button + groups link) ---
+facebook.com##div[role="feed"] div[aria-posinset]:has(a[href*="/groups/"]):has([role="button"])
+
+! --- Fallback for group suggestions without Join button ---
+facebook.com##div[role="feed"] div[aria-posinset]:has(a[href*="/groups/"]):has-text(/Your|Suggest|Discover/i)
+
+! --- FINAL fix: remove leftover “Your group suggestions” header + container ---
+facebook.com##div[role="feed"] div[aria-posinset]:has-text(/Your group suggestions/i)
+facebook.com##div[role="feed"] div[aria-posinset]:has(a[href*="/groups/"]):not(:has([role="button"][aria-label^="Join"]))
+
+! --- Sponsored removal (structure-based) ---
+facebook.com##div[role="feed"] div[aria-posinset]:has([aria-label="Sponsored"])
+facebook.com##div[role="feed"] div[aria-posinset]:has(span[dir="auto"]:has-text(/^Sponsored$/i))
+facebook.com##div[role="feed"] div[aria-posinset]:has(a[href*="/ads/"])
+facebook.com##div[role="feed"] div[aria-posinset]:has(a[href*="ad_id="])
+facebook.com##div[role="feed"] div[aria-posinset]:has(a[href*="sponsored"])
+
