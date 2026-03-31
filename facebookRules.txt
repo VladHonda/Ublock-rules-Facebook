@@ -1,100 +1,34 @@
-! === STORIES TRAY (top bar) ===
+! ==========================
+! FACEBOOK SAFE CLEAN FEED 2026 - FULLY FUNCTIONAL
+! ==========================
+
+! --- Stories Tray ---
 www.facebook.com##div[role="region"]:has([aria-label*="Stories" i])
 www.facebook.com##div[aria-label="Stories" i]
 www.facebook.com##div[role="feed"] > div:first-child:has(a[href*="stories/create"])
 
-! === BROADER CLEANUP (helps with random junk) ===
-
-
-
-! --- Follow / Join / People You May Know ---
-www.facebook.com##div[role="feed"] > div:has(button:has-text(/Follow/i))
-
-
-www.facebook.com##div[role="feed"] > div:has-text(/People you may know/i)
-
-
-! ==========================
-! FACEBOOK CLEAN FEED - ULTRA STRUCTURAL
-! ==========================
-
 ! --- Sponsored / Ads ---
-www.facebook.com##div[role="feed"] > div:has(a[href*="/ads/"])
-www.facebook.com##div[role="feed"] > div:has(a[href*="sponsored"])
-www.facebook.com##div[role="feed"] > div:has([aria-label*="Sponsored"])
-www.facebook.com##div[role="feed"] > div:has(canvas) 
+www.facebook.com##div[role="feed"] div:has-text(/Sponsored|Sponsorizat/i)
+www.facebook.com##div[role="feed"] div:has(a[href*="/ads/"])
+www.facebook.com##div[role="feed"] div:has([aria-label*="Sponsored"])
 
-
-
-www.facebook.com##div[role="feed"] > div:has(button:has-text(/Join/i))
-www.facebook.com##div[role="feed"] > div:has(button:has-text(/Add Friend/i))
-
-! ==========================
-! FACEBOOK SUPER CLEAN FEED (2026)
-! Removes: Reels, Watch videos, People You May Know,
-!  , Groups, Pages
-! ==========================
-
-
-! ==========================
-! 🔴 REELS / WATCH VIDEOS (DEEP BLOCK)
-! ==========================
-
+! --- Reels / Watch Videos ---
 www.facebook.com##div[role="feed"] div:has(a[href*="/reel"])
 www.facebook.com##div[role="feed"] div:has(a[href*="/reels/"])
 www.facebook.com##div[role="feed"] div:has(a[href*="/watch/"])
+www.facebook.com##span:has-text(/^Reels$/i)
 
-! Video-based reels (new FB structure)
-www.facebook.com##div[role="feed"] div:has(video)
-www.facebook.com##div[role="feed"] div:has(canvas)
-
-
-! ==========================
-! 🟡 PEOPLE YOU MAY KNOW (LANGUAGE-INDEPENDENT)
-! ==========================
-
+! --- People You May Know ---
 www.facebook.com##div[role="feed"] div:has(a[href*="/friends/suggestions"])
-www.facebook.com##div[role="feed"] div:has(a[href*="/friends/"])
-www.facebook.com##div[role="feed"] div:has(a[href*="/friends/suggestions"])
+www.facebook.com##div[role="feed"] div:has(div:has-text(/People you may know/i))
 
+! --- Group / Page Suggestions ---
+www.facebook.com##div[role="feed"] div:has(a[href*="/groups_suggestion/"])
+www.facebook.com##div[role="feed"] div:has(div:has-text(/Your group suggestions|Grupuri recomandate/i))
 
-! ==========================
-! 🔴 FACEBOOK 2026 - uBlock Only Feed Cleanup
-! Hides Reels, Suggested posts, Friend & Group Suggestions
-! ==========================
-
-! Suggested posts (general)
-www.facebook.com##div[role="feed"] div:has-text(/Suggested for you|Recommended for you|Imprimescu|Sugestii|Recomandat/i):upward(5)
-
-! Friend Suggestions (People You May Know)
-www.facebook.com##div[role="feed"] div:has(a[href*="/friends_suggestion/"]):upward(5)
-www.facebook.com##div[role="feed"] div:has(div:has-text(/People you may know|Persoane pe care le-ai putea cunoaște/i)):upward(5)
-
-! Group Suggestions
-www.facebook.com##div[role="feed"] div:has(a[href*="/groups_suggestion/"]):upward(5)
-www.facebook.com##div[role="feed"] div:has(div:has-text(/Your group suggestions|Grupuri recomandate/i)):upward(5)
-
+! --- Suggested Posts ---
+www.facebook.com##div[role="feed"] div:has-text(/Suggested for you|Recommended for you|Recomandat/i)
 
 ! ==========================
-! 🔴 FACEBOOK CLEAN (REELS + SPONSORED)
+! END OF SAFE FILTER
 ! ==========================
-
-! --- SPONSORED POSTS ---
-www.facebook.com##div[role="feed"] div:has-text(/Sponsored|Sponsorizat/i):upward(5)
-
-! sponsored fallback (no visible text - Facebook trick)
-www.facebook.com##div[role="feed"] div:has(a[aria-label="Sponsored"]):upward(6)
-www.facebook.com##div[role="feed"] div:has(span[aria-label="Sponsored"]):upward(6)
-
-! ==========================
-! 🔴 REELS (CLEAN FINAL)
-! ==========================
-
-! Kill Reels shelf (carousel row)
-www.facebook.com##span:has-text(/^Reels$/i):upward(10)
-
-! Kill Reel posts (structure-based)
-www.facebook.com##div[role="feed"] div:has(video):has(div[style*="aspect-ratio"]):upward(8)
-
-! Catch remaining Reel links
-www.facebook.com##div[role="feed"] div:has(a[href*="/reel"]):upward(6)
