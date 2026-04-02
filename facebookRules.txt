@@ -1,34 +1,29 @@
 ! ==========================
-! FACEBOOK SAFE CLEAN FEED 2026 - FULLY FUNCTIONAL
+! FACEBOOK CLEAN FEED 2026 (SAFE & STABLE)
 ! ==========================
 
 ! --- Stories Tray ---
 www.facebook.com##div[role="region"]:has([aria-label*="Stories" i])
 www.facebook.com##div[aria-label="Stories" i]
-www.facebook.com##div[role="feed"] > div:first-child:has(a[href*="stories/create"])
 
-! --- Sponsored / Ads ---
-www.facebook.com##div[role="feed"] div:has-text(/Sponsored|Sponsorizat/i)
-www.facebook.com##div[role="feed"] div:has(a[href*="/ads/"])
-www.facebook.com##div[role="feed"] div:has([aria-label*="Sponsored"])
 
-! --- Reels / Watch Videos ---
-www.facebook.com##div[role="feed"] div:has(a[href*="/reel"])
-www.facebook.com##div[role="feed"] div:has(a[href*="/reels/"])
-www.facebook.com##div[role="feed"] div:has(a[href*="/watch/"])
-www.facebook.com##span:has-text(/^Reels$/i)
-
-! --- People You May Know ---
-www.facebook.com##div[role="feed"] div:has(a[href*="/friends/suggestions"])
-www.facebook.com##div[role="feed"] div:has(div:has-text(/People you may know/i))
 
 ! --- Group / Page Suggestions ---
-www.facebook.com##div[role="feed"] div:has(a[href*="/groups_suggestion/"])
-www.facebook.com##div[role="feed"] div:has(div:has-text(/Your group suggestions|Grupuri recomandate/i))
+www.facebook.com##div[role="feed"] > div:has(a[href*="/groups_suggestion/"])
+www.facebook.com##div[role="feed"] > div:has(span:has-text(/Your group suggestions|Grupuri recomandate/i))
 
 ! --- Suggested Posts ---
-www.facebook.com##div[role="feed"] div:has-text(/Suggested for you|Recommended for you|Recomandat/i)
+www.facebook.com##div[role="feed"] > div:has(span:has-text(/Suggested for you|Recommended for you|Recomandat/i))
 
-! ==========================
-! END OF SAFE FILTER
-! ==========================
+! --- People You May Know ---
+www.facebook.com##div[role="feed"] > div:has(span:has-text(/People You May Know/i))
+
+! --- Sponsored / Ads ---
+facebook.com##div[role="feed"] > div:has([aria-label*="Sponsored" i])
+facebook.com##div[role="feed"] > div:has(a[href*="/ads/"])
+
+! --- Reels / Watch Videos ---
+facebook.com##div[role="feed"] > div:has(a[href*="/reel"])
+facebook.com##div[role="feed"] > div:has(a[href*="/reels/"])
+facebook.com##div[role="feed"] > div:has(a[href*="/watch/"])
+facebook.com##div[role="feed"] > div:has([aria-label*="Reels" i])
