@@ -18,12 +18,51 @@ www.facebook.com##div[role="feed"] > div:has(span:has-text(/Suggested for you|Re
 ! --- People You May Know ---
 www.facebook.com##div[role="feed"] > div:has(span:has-text(/People You May Know/i))
 
-! --- Sponsored / Ads ---
-facebook.com##div[role="feed"] > div:has([aria-label*="Sponsored" i])
+! ==========================
+! FACEBOOK CLEAN FEED 2026 (REFINED)
+! ==========================
+
+! --- Stories Tray ---
+www.facebook.com##div[role="region"]:has([aria-label*="Stories" i])
+www.facebook.com##div[aria-label="Stories" i]
+
+! --- Group / Page Suggestions ---
+www.facebook.com##div[role="feed"] > div:has(a[href*="/groups_suggestion/"])
+www.facebook.com##div[role="feed"] > div:has(span:has-text(/Your group suggestions|Grupuri recomandate/i))
+
+! --- Suggested Posts ---
+www.facebook.com##div[role="feed"] > div:has(span:has-text(/Suggested for you|Recommended for you|Recomandat/i))
+
+! --- People You May Know ---
+www.facebook.com##div[role="feed"] > div:has(span:has-text(/People You May Know/i))
+
+! ==========================
+! SPONSORED / ADS (FIXED)
+! ==========================
+
+! Obfuscated "Sponsored" text (handles split letters)
+facebook.com##div[role="feed"] > div:has(span:has-text(/S.{0,2}p.{0,2}o.{0,2}n.{0,2}s.{0,2}o.{0,2}r.{0,2}e.{0,2}d/i))
+
+! Sponsored links (very reliable)
+facebook.com##div[role="feed"] > div:has(a[href*="ads/about"])
 facebook.com##div[role="feed"] > div:has(a[href*="/ads/"])
 
-! --- Reels / Watch Videos ---
-facebook.com##div[role="feed"] > div:has(a[href*="/reel"])
-facebook.com##div[role="feed"] > div:has(a[href*="/reels/"])
-facebook.com##div[role="feed"] > div:has(a[href*="/watch/"])
-facebook.com##div[role="feed"] > div:has([aria-label*="Reels" i])
+! Button/label fallback
+facebook.com##div[role="feed"] > div:has(div[aria-label][role="button"]:has-text(/Sponsored/i))
+
+! ==========================
+! ==========================
+! REELS (MAX uBLOCK FILTER - 2026)
+! ==========================
+
+! Feed posts that contain a video element (but exclude photos)
+facebook.com##div[role="feed"] > div:has(video):not(:has(a[href*="photo"]))
+
+! Media-heavy vertical containers (Reels layout)
+facebook.com##div[role="feed"] > div:has(div[data-visualcompletion="media-vc-video"])
+
+! Overlay UI pattern (play button / volume icon)
+facebook.com##div[role="feed"] > div:has(div[role="button"] svg)
+
+! Fallback: posts with video / play overlay and no header
+facebook.com##div[role="feed"] > div:not(:has(h2)):has(div[role="button"] svg)
