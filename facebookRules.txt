@@ -1,6 +1,19 @@
 ! ==========================
-! FACEBOOK CLEAN FEED 2026 (v15 - REFACTORED)
+! FACEBOOK CLEAN FEED 2026 (v20 - NO REELS FLASH)
 ! ==========================
+
+! --------------------------
+! HARD BLOCK REELS CONTAINERS (EARLY)
+! --------------------------
+facebook.com##div[data-pagelet*="Reel"]
+facebook.com##div[data-pagelet*="VideoChatHomeUnit"]
+facebook.com##div[data-pagelet*="WatchFeed"]
+
+! --------------------------
+! BLOCK REELS REGIONS (INSTANT)
+! --------------------------
+facebook.com##div[role="region"][aria-label*="Reels" i]
+facebook.com##div[aria-label*="Reels" i]
 
 ! --------------------------
 ! STORIES
@@ -8,73 +21,37 @@
 facebook.com##div[role="region"][aria-label*="Stories" i]
 
 ! --------------------------
-! SUGGESTIONS / DISCOVERY
-! --------------------------
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Recomandat|People You May Know|Because you watched|Follow/i)
-facebook.com##div[role="feed"] > div:has(a[href*="/groups_suggestion/"])
-
-! --------------------------
-! ADS / SPONSORED (CORE SIGNALS)
-! --------------------------
-facebook.com##div[role="feed"] div[data-pagelet*="FeedUnit_Ad"]
-facebook.com##div[role="feed"] div:has([data-ad-preview])
-facebook.com##div[role="feed"] div:has(a[href*="/ads/"], a[href*="click.php"])
-
-! --------------------------
-! SPONSORED TEXT (OBFUSCATED)
-! --------------------------
-facebook.com##div[role="feed"] div:has-text(/S.{0,4}P.{0,4}O.{0,4}N.{0,4}S.{0,4}O.{0,4}R.{0,4}E.{0,4}D/i)
-facebook.com##div[role="feed"] div:has([aria-hidden="true"]:has-text(/Sponsored|Sponsorizat/i))
-
-! --------------------------
-! TRACKING / OUTBOUND HEURISTICS
-! --------------------------
-facebook.com##div[role="feed"] > div:has(a[href*="utm_"], a[href*="fbad"], a[href*="ad_id"]):not(:has(h2, h3))
-facebook.com##div[role="feed"] > div:not(:has(h2, h3)):has(a[target="_blank"])
-
-! --------------------------
-! CTA-DRIVEN ADS
-! --------------------------
-facebook.com##div[role="feed"] > div:has(a[role="button"][target="_blank"]):not(:has(h2, h3))
-facebook.com##div[role="feed"] div:has-text(/Shop Now|Learn More|Sign Up|Book Now|Download|Buy Now|Order Online|Add to Cart/i)
-
-! --------------------------
-! MEDIA + EXTERNAL LINK COMBO
-! --------------------------
-facebook.com##div[role="feed"] > div:has(img, video):has(a[href^="http"]):not(:has(a[href*="facebook.com"]))
-
-! --------------------------
-! UPWARD REMOVAL (DEEP ADS)
-! --------------------------
-facebook.com##a[href*="/ads/"]:upward(14)
-facebook.com##a[href*="click.php"]:upward(14)
-
-! --------------------------
-! REELS / VIDEO (AGGRESSIVE REMOVAL)
+! FEED: KILL REELS BEFORE RENDER COMPLETES
 ! --------------------------
 
-! Containers
-facebook.com##div[data-pagelet*="Reels"], div[data-pagelet*="ReelUnit"]
+! Any post containing video (fastest trigger)
+facebook.com##div[role="feed"] > div:has(video)
 
-! Feed-level detection
-facebook.com##div[role="feed"] > div:has(a[href*="/reel/"], a[href*="/reels/"])
-facebook.com##div[role="feed"] > div:has(a[href*="/watch/"]):not(:has(h2, h3))
-
-! UI modules
-facebook.com##div[role="region"]:has-text(/^Reels$/i)
-facebook.com##div[role="complementary"]:has-text(/^Reels$/i)
-facebook.com##div:has(> div > span:has-text(/^Reels$/i))
-
-! Deep kill
-facebook.com##a[href*="/reel/"], a[href*="/reels/"], a[href*="/watch/"]:upward(8)
+! Any reel/watch links
+facebook.com##div[role="feed"] > div:has(a[href*="/reel/"], a[href*="/reels/"], a[href*="/watch/"])
 
 ! --------------------------
-! SAFETY (ALLOW REAL POSTS)
+! DEEP EARLY KILL (REDUCED BUT FAST)
 ! --------------------------
-facebook.com#@#div[role="feed"] > div:has(h2)
-facebook.com#@#div[role="feed"] > div:has(video):has(h2)
+facebook.com##a[href*="/reel/"]:upward(4)
+facebook.com##a[href*="/reels/"]:upward(4)
+facebook.com##a[href*="/watch/"]:upward(4)
 
 ! --------------------------
-! EXTERNAL (OP.GG)
+! ADS / SUGGESTIONS (SAFE)
+! --------------------------
+facebook.com##div[role="feed"] > div:has([data-pagelet*="FeedUnit_Ad"])
+facebook.com##div[role="feed"] > div:has([data-ad-preview])
+facebook.com##div[role="feed"] > div:has-text(/Sponsored|Sponsorizat/i)
+facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Recomandat|People You May Know/i)
+
+! --------------------------
+! CLEAN EMPTY (ANTI BLANK)
+! --------------------------
+facebook.com##div[role="feed"] > div:empty
+facebook.com##div[role="feed"] > div:not(:has(*))
+
+! --------------------------
+! EXTERNAL
 ! --------------------------
 op.gg##.pvjxv2qteetn
