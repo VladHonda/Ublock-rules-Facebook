@@ -1,55 +1,45 @@
 ! ==========================
-! FACEBOOK CLEAN FEED 2026 (v20 - NO REELS FLASH)
+! FACEBOOK CLEAN FEED 2026 (SAFE v22)
 ! ==========================
 
 ! --------------------------
-! HARD BLOCK REELS CONTAINERS (EARLY)
+! BLOCK REELS (SAFE)
 ! --------------------------
-facebook.com##div[data-pagelet*="Reel"]
-facebook.com##div[data-pagelet*="VideoChatHomeUnit"]
+facebook.com##div[aria-label*="Reels" i]
+facebook.com##a[href^="/reel/"]
+facebook.com##a[href^="/reels/"]
+
+! --------------------------
+! BLOCK WATCH TAB (SAFE)
+! --------------------------
 facebook.com##div[data-pagelet*="WatchFeed"]
 
 ! --------------------------
-! BLOCK REELS REGIONS (INSTANT)
+! STORIES (SAFE)
 ! --------------------------
-facebook.com##div[role="region"][aria-label*="Reels" i]
-facebook.com##div[aria-label*="Reels" i]
+facebook.com##div[aria-label*="Stories" i]
 
 ! --------------------------
-! STORIES
-! --------------------------
-facebook.com##div[role="region"][aria-label*="Stories" i]
-
-! --------------------------
-! FEED: KILL REELS BEFORE RENDER COMPLETES
+! ADS ONLY (STRONG + SAFE)
 ! --------------------------
 
-! Any post containing video (fastest trigger)
-facebook.com##div[role="feed"] > div:has(video)
-
-! Any reel/watch links
-facebook.com##div[role="feed"] > div:has(a[href*="/reel/"], a[href*="/reels/"], a[href*="/watch/"])
-
-! --------------------------
-! DEEP EARLY KILL (REDUCED BUT FAST)
-! --------------------------
-facebook.com##a[href*="/reel/"]:upward(4)
-facebook.com##a[href*="/reels/"]:upward(4)
-facebook.com##a[href*="/watch/"]:upward(4)
-
-! --------------------------
-! ADS / SUGGESTIONS (SAFE)
-! --------------------------
+! clasic (pagelet ads)
 facebook.com##div[role="feed"] > div:has([data-pagelet*="FeedUnit_Ad"])
-facebook.com##div[role="feed"] > div:has([data-ad-preview])
+
+! text Sponsored / Sponsorizat
 facebook.com##div[role="feed"] > div:has-text(/Sponsored|Sponsorizat/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Recomandat|People You May Know/i)
+
+! aria-label (nou)
+facebook.com##div[aria-label="Sponsored"]
+facebook.com##div[aria-label="Sponsorizat"]
+
+! link-uri sponsor
+facebook.com##a[href*="/ads/"]:upward(3)
 
 ! --------------------------
-! CLEAN EMPTY (ANTI BLANK)
+! SUGGESTIONS (FIXED - NO OVERBLOCK)
 ! --------------------------
-facebook.com##div[role="feed"] > div:empty
-facebook.com##div[role="feed"] > div:not(:has(*))
+facebook.com##div:has-text(/Suggested for you/i):upward(3)
 
 ! --------------------------
 ! EXTERNAL
