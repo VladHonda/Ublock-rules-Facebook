@@ -1,16 +1,16 @@
 ! ==========================
-! FACEBOOK CLEAN FEED 2026 (SAFE v22)
+! FACEBOOK CLEAN FEED 2026 (MOD v2 - STRONG)
 ! ==========================
 
 ! --------------------------
-! BLOCK REELS (SAFE)
+! REELS (SAFE)
 ! --------------------------
-facebook.com##div[aria-label*="Reels" i]
 facebook.com##a[href^="/reel/"]
 facebook.com##a[href^="/reels/"]
+facebook.com##div[aria-label*="Reels" i]
 
 ! --------------------------
-! BLOCK WATCH TAB (SAFE)
+! WATCH TAB (SAFE)
 ! --------------------------
 facebook.com##div[data-pagelet*="WatchFeed"]
 
@@ -20,26 +20,53 @@ facebook.com##div[data-pagelet*="WatchFeed"]
 facebook.com##div[aria-label*="Stories" i]
 
 ! --------------------------
-! ADS ONLY (STRONG + SAFE)
+! SPONSORED POSTS (HARD BLOCK)
 ! --------------------------
 
-! clasic (pagelet ads)
+! Pagelet ads (primary)
 facebook.com##div[role="feed"] > div:has([data-pagelet*="FeedUnit_Ad"])
 
-! text Sponsored / Sponsorizat
+! Text detection (EN + RO)
 facebook.com##div[role="feed"] > div:has-text(/Sponsored|Sponsorizat/i)
 
-! aria-label (nou)
-facebook.com##div[aria-label="Sponsored"]
-facebook.com##div[aria-label="Sponsorizat"]
+! Hidden label fallback (new UI)
+facebook.com##div[role="feed"] span:has-text(/Sponsored|Sponsorizat/i):upward(8)
 
-! link-uri sponsor
-facebook.com##a[href*="/ads/"]:upward(3)
+! Sponsored links
+facebook.com##a[href*="/ads/"]:upward(4)
 
 ! --------------------------
-! SUGGESTIONS (FIXED - NO OVERBLOCK)
+! GROUP / PAGE / PEOPLE SUGGESTIONS (ADVANCED)
 ! --------------------------
-facebook.com##div:has-text(/Suggested for you/i):upward(3)
+
+! Classic group suggestions (join button + group link)
+facebook.com##div[role="feed"] > div:has(a[href*="/groups/"]):has(button)
+
+! Multiple buttons = suggestion cards (very reliable)
+facebook.com##div[role="feed"] > div:has(button:has-text(/Join|Follow/i)):has(button:has-text(/Join|Follow/i))
+
+! Suggested blocks (all languages)
+facebook.com##div[role="feed"] > div:has-text(/Suggested|Sugestii|Recommendations|People you may know|Pages you may like/i)
+
+! Multi-link recommendation layouts
+facebook.com##div[role="feed"] > div:has(a[href]):has(a[href]):has(button)
+
+! Fallback (aggressive but needed for new UI)
+facebook.com##a[href*="/groups/"]:upward(7)
+
+! --------------------------
+! SMART CLEANUP (ANTI-FALSE POSITIVE)
+! --------------------------
+
+! Keep real posts (avoid hiding normal content)
+facebook.com##div[role="feed"] > div:has-text(/comment|like|share/i):style(display:block !important;)
+
+! --------------------------
+! OPTIONAL HARD MODE
+! --------------------------
+
+! Remove anything that looks like recommendation blocks
+facebook.com##div[role="feed"] > div:has(button):not(:has-text(/comment|like|share/i))
 
 ! --------------------------
 ! EXTERNAL
