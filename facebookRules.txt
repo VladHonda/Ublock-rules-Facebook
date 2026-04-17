@@ -1,74 +1,57 @@
 ! ==========================
-! FACEBOOK CLEAN FEED 2026 (MOD v2 - STRONG)
+! FACEBOOK CLEAN FEED 2026 (v6.4 - JOIN TERMINATOR)
 ! ==========================
 
 ! --------------------------
-! REELS (SAFE)
+! REELS / WATCH / STORIES
 ! --------------------------
 facebook.com##a[href^="/reel/"]
 facebook.com##a[href^="/reels/"]
-facebook.com##div[aria-label*="Reels" i]
-
-! --------------------------
-! WATCH TAB (SAFE)
-! --------------------------
 facebook.com##div[data-pagelet*="WatchFeed"]
-
-! --------------------------
-! STORIES (SAFE)
-! --------------------------
 facebook.com##div[aria-label*="Stories" i]
 
 ! --------------------------
-! SPONSORED POSTS (HARD BLOCK)
+! 🔴 SPONSORED
 ! --------------------------
-
-! Pagelet ads (primary)
+facebook.com##div[role="feed"] > div:has-text(/Sponsored|Sponsorizat|Paid for by/i)
+facebook.com##div[role="feed"] > div:has([aria-label="Sponsored"])
+facebook.com##div[role="feed"] > div:has(a[href*="/ads/"])
 facebook.com##div[role="feed"] > div:has([data-pagelet*="FeedUnit_Ad"])
-
-! Text detection (EN + RO)
-facebook.com##div[role="feed"] > div:has-text(/Sponsored|Sponsorizat/i)
-
-! Hidden label fallback (new UI)
-facebook.com##div[role="feed"] span:has-text(/Sponsored|Sponsorizat/i):upward(8)
-
-! Sponsored links
-facebook.com##a[href*="/ads/"]:upward(4)
+facebook.com##div[role="feed"] > div:has([data-ad-preview])
+facebook.com##div[role="feed"] > div:has(button:has-text(/Shop now|Learn more|Sign up|Book now/i))
+facebook.com##div[role="feed"] > div:has-text(/Sponsored|Sponsorizat/i):has(a[href]):has(span)
 
 ! --------------------------
-! GROUP / PAGE / PEOPLE SUGGESTIONS (ADVANCED)
+! 👥 FOLLOW
 ! --------------------------
-
-! Classic group suggestions (join button + group link)
-facebook.com##div[role="feed"] > div:has(a[href*="/groups/"]):has(button)
-
-! Multiple buttons = suggestion cards (very reliable)
-facebook.com##div[role="feed"] > div:has(button:has-text(/Join|Follow/i)):has(button:has-text(/Join|Follow/i))
-
-! Suggested blocks (all languages)
-facebook.com##div[role="feed"] > div:has-text(/Suggested|Sugestii|Recommendations|People you may know|Pages you may like/i)
-
-! Multi-link recommendation layouts
-facebook.com##div[role="feed"] > div:has(a[href]):has(a[href]):has(button)
-
-! Fallback (aggressive but needed for new UI)
-facebook.com##a[href*="/groups/"]:upward(7)
+facebook.com##div[role="feed"] > div:has(:is(button, span, div[role="button"]):has-text(/Follow|Urmărește/i))
+facebook.com##div[role="feed"] > div:has-text(/Follow this page|Follow this profile|Urmărește pagina|Urmărește profilul/i)
+facebook.com##div[role="feed"] > div:has(a[href*="/followers/"])
 
 ! --------------------------
-! SMART CLEANUP (ANTI-FALSE POSITIVE)
+! 💣 JOIN / GROUP (REAL FIX)
 ! --------------------------
 
-! Keep real posts (avoid hiding normal content)
-facebook.com##div[role="feed"] > div:has-text(/comment|like|share/i):style(display:block !important;)
+! 1. ANY group-related post (STRUCTURAL KILL)
+facebook.com##div[role="feed"] > div:has(a[href*="/groups/"])
+
+! 2. group-style cards (FB sometimes hides URL)
+facebook.com##div[role="feed"] > div:has([role="link"][href*="groups"])
+
+! 3. aria-label based join buttons
+facebook.com##div[role="feed"] > div:has([aria-label*="Join" i])
+facebook.com##div[role="feed"] > div:has([aria-label*="Alătură" i])
+
+! 4. role=button join (covers split text cases)
+facebook.com##div[role="feed"] > div:has(div[role="button"])
+
+! 5. last-resort text sweep (only inside feed items)
+facebook.com##div[role="feed"] > div:has-text(/Join|Alătură-te/i)
 
 ! --------------------------
-! OPTIONAL HARD MODE
+! 🤝 PEOPLE / SUGGESTIONS
 ! --------------------------
-
-! Remove anything that looks like recommendation blocks
-facebook.com##div[role="feed"] > div:has(button):not(:has-text(/comment|like|share/i))
-
-! --------------------------
-! EXTERNAL
-! --------------------------
-op.gg##.pvjxv2qteetn
+facebook.com##div[role="feed"] > div:has-text(/People you may know|Persoane pe care s-ar putea să le cunoști/i)
+facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Sugestii pentru tine|Suggested post/i)
+facebook.com##div[role="feed"] > div:has-text(/Suggested|Sugestii|Recommendations/i)
+facebook.com##div[role="feed"] > div:has-text(/Suggested Pages|Pagini sugerate|Discover/i)
