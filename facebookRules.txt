@@ -11,42 +11,47 @@ facebook.com##div[data-pagelet*="WatchFeed"]
 facebook.com##div[aria-label*="Stories" i]
 
 ! --------------------------
-! 🔴 SPONSORED
+! 🔴 SPONSORED (HARD MODE)
 ! --------------------------
-facebook.com##div[role="feed"] > div:has-text(/Sponsored|Sponsorizat|Paid for by/i)
-facebook.com##div[role="feed"] > div:has([aria-label="Sponsored"])
+
+facebook.com##div[role="feed"] > div:has-text(/Sponso|Sponsor|Sponsorizat|Paid for/i)
+facebook.com##div[role="feed"] > div:has([aria-label*="ponsor" i])
 facebook.com##div[role="feed"] > div:has(a[href*="/ads/"])
-facebook.com##div[role="feed"] > div:has([data-pagelet*="FeedUnit_Ad"])
+facebook.com##div[role="feed"] > div:has([data-pagelet*="Ad"])
 facebook.com##div[role="feed"] > div:has([data-ad-preview])
-facebook.com##div[role="feed"] > div:has(button:has-text(/Shop now|Learn more|Sign up|Book now/i))
-facebook.com##div[role="feed"] > div:has-text(/Sponsored|Sponsorizat/i):has(a[href]):has(span)
+facebook.com##div[role="feed"] > div:has(button:has-text(/Shop|Learn|Sign|Book/i))
 
 ! --------------------------
-! 👥 FOLLOW
+! 👥 FOLLOW (PRECISE)
 ! --------------------------
-facebook.com##div[role="feed"] > div:has(:is(button, span, div[role="button"]):has-text(/Follow|Urmărește/i))
-facebook.com##div[role="feed"] > div:has-text(/Follow this page|Follow this profile|Urmărește pagina|Urmărește profilul/i)
+
+facebook.com##div[role="feed"] > div:has(button:has-text(/^Follow$/i))
+facebook.com##div[role="feed"] > div:has(div[role="button"]:has-text(/^Follow$/i))
+
+facebook.com##div[role="feed"] > div:has(button:has-text(/^Urmărește$/i))
+facebook.com##div[role="feed"] > div:has(div[role="button"]:has-text(/^Urmărește$/i))
+
+facebook.com##div[role="feed"] > div:has-text(/Follow this page|Follow this profile/i)
 facebook.com##div[role="feed"] > div:has(a[href*="/followers/"])
 
 ! --------------------------
-! 💣 JOIN / GROUP (REAL FIX)
+! 💣 JOIN / GROUP (HARDENED)
 ! --------------------------
 
-! 1. ANY group-related post (STRUCTURAL KILL)
-facebook.com##div[role="feed"] > div:has(a[href*="/groups/"])
+! Direct group links
+facebook.com##div[role="feed"] > div:has(a[href^="/groups/"])
+facebook.com##div[role="feed"] > div:has(a[href*="facebook.com/groups/"])
 
-! 2. group-style cards (FB sometimes hides URL)
-facebook.com##div[role="feed"] > div:has([role="link"][href*="groups"])
+! Join buttons (all variants)
+facebook.com##div[role="feed"] > div:has(button:has-text(/Join/i))
+facebook.com##div[role="feed"] > div:has(div[role="button"]:has-text(/Join/i))
 
-! 3. aria-label based join buttons
+facebook.com##div[role="feed"] > div:has(button:has-text(/Alătură/i))
+facebook.com##div[role="feed"] > div:has(div[role="button"]:has-text(/Alătură/i))
+
+! aria-label fallback
 facebook.com##div[role="feed"] > div:has([aria-label*="Join" i])
-facebook.com##div[role="feed"] > div:has([aria-label*="Alătură" i])
-
-! 4. role=button join (covers split text cases)
-facebook.com##div[role="feed"] > div:has(div[role="button"])
-
-! 5. last-resort text sweep (only inside feed items)
-facebook.com##div[role="feed"] > div:has-text(/Join|Alătură-te/i)
+facebook.com##div[role="feed"] > div:has([aria-label*="Alătur" i])
 
 ! --------------------------
 ! 🤝 PEOPLE / SUGGESTIONS
@@ -55,3 +60,4 @@ facebook.com##div[role="feed"] > div:has-text(/People you may know|Persoane pe c
 facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Sugestii pentru tine|Suggested post/i)
 facebook.com##div[role="feed"] > div:has-text(/Suggested|Sugestii|Recommendations/i)
 facebook.com##div[role="feed"] > div:has-text(/Suggested Pages|Pagini sugerate|Discover/i)
+
