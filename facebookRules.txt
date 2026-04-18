@@ -10,16 +10,46 @@ facebook.com##a[href^="/reels/"]
 facebook.com##div[data-pagelet*="WatchFeed"]
 facebook.com##div[aria-label*="Stories" i]
 
+
 ! --------------------------
-! 🔴 SPONSORED (HARD MODE)
+! 🔴 FACEBOOK SPONSORED (REFINED + TOP FIX)
 ! --------------------------
 
-facebook.com##div[role="feed"] > div:has-text(/Sponso|Sponsor|Sponsorizat|Paid for/i)
+! === 1. Core keyword detection (EN + RO + obfuscation) ===
+facebook.com##div[role="feed"] > div:has-text(/Sponso|Sponsorizat|Paid for/i)
+facebook.com##div[role="feed"] > div:has-text(/S.*p.*o.*n.*s.*o.*r.*e.*d/i)
+
+! === 2. Accessibility / aria labels ===
 facebook.com##div[role="feed"] > div:has([aria-label*="ponsor" i])
+facebook.com##div[role="feed"] > div:has(span[aria-label="Sponsored"])
+
+! === 3. Ad-related links (high confidence) ===
 facebook.com##div[role="feed"] > div:has(a[href*="/ads/"])
+facebook.com##div[role="feed"] > div:has(a[href*="/about/ads"])
+facebook.com##div[role="feed"] > div:has(a[href*="/ads/preferences"])
+facebook.com##div[role="feed"] > div:has(a[href*="/why_am_i_seeing"])
+facebook.com##div[role="feed"] > div:has(a[href*="facebook.com/business"])
+
+! === 4. Internal ad markers ===
 facebook.com##div[role="feed"] > div:has([data-pagelet*="Ad"])
 facebook.com##div[role="feed"] > div:has([data-ad-preview])
-facebook.com##div[role="feed"] > div:has(button:has-text(/Shop|Learn|Sign|Book/i))
+facebook.com##div[role="feed"] > div:has([id^="fbad"])
+
+! === 5. Nested / split text detection ===
+facebook.com##div[role="feed"] > div:has(span:has-text(/Sponsor|Sponsorizat|Paid/i))
+facebook.com##div[role="feed"] > div:has(div:has-text(/Sponsored/i))
+
+! === 6. Fragmented “Sponsored” text (anti-obfuscation) ===
+facebook.com##div[role="feed"] > div:has(span:has-text(/S/i)):has(span:has-text(/p/i)):has(span:has-text(/o/i)):has(span:has-text(/n/i))
+
+! === 7. 🔝 TOP POST FIX (prime ad slot) ===
+facebook.com##div[role="feed"] > div:first-child:has-text(/Sponso|Sponsored|Sponsorizat/i)
+facebook.com##div[role="feed"] > div:first-child:has(a[href*="/ads/"])
+facebook.com##div[role="feed"] > div:first-child:has([aria-label*="ponsor" i])
+
+! === 8. ⚠️ OPTIONAL (use only if needed — may hide legit posts) ===
+! facebook.com##div[role="feed"] > div:has(a[href*="utm_"])
+! facebook.com##div[role="feed"] > div:first-child
 
 ! --------------------------
 ! 👥 FOLLOW (PRECISE)
@@ -33,6 +63,8 @@ facebook.com##div[role="feed"] > div:has(div[role="button"]:has-text(/^Urmăreș
 
 facebook.com##div[role="feed"] > div:has-text(/Follow this page|Follow this profile/i)
 facebook.com##div[role="feed"] > div:has(a[href*="/followers/"])
+facebook.com##div[role="feed"] > div:has-text(/Follow this page|Follow this profile/i)
+facebook.com##div[role="feed"] > div:has-text(/Urmărește această pagină|Urmărește acest profil/i)
 
 ! --------------------------
 ! 💣 JOIN / GROUP (HARDENED)
@@ -41,6 +73,8 @@ facebook.com##div[role="feed"] > div:has(a[href*="/followers/"])
 ! Direct group links
 facebook.com##div[role="feed"] > div:has(a[href^="/groups/"])
 facebook.com##div[role="feed"] > div:has(a[href*="facebook.com/groups/"])
+facebook.com##div[role="feed"] > div:has-text(/Join group|Alătură-te grupului/i)
+
 
 ! Join buttons (all variants)
 facebook.com##div[role="feed"] > div:has(button:has-text(/Join/i))
@@ -60,4 +94,11 @@ facebook.com##div[role="feed"] > div:has-text(/People you may know|Persoane pe c
 facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Sugestii pentru tine|Suggested post/i)
 facebook.com##div[role="feed"] > div:has-text(/Suggested|Sugestii|Recommendations/i)
 facebook.com##div[role="feed"] > div:has-text(/Suggested Pages|Pagini sugerate|Discover/i)
+facebook.com##div[role="feed"] > div:has-text(/People you may know|Persoane pe care s-ar putea să le cunoști/i)
+facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Sugestii pentru tine|Suggested post/i)
+facebook.com##div[role="feed"] > div:has-text(/Suggested Pages|Pagini sugerate/i)
+
+
+! Apr 18, 2026 https://www.facebook.com
+www.facebook.com##.x1y1aw1k.xwib8y2 > div > .x1lliihq.x15x8krk.xde0f50.x5a5i1n.x1obq294.x1a2a7pz.x1lku1pv.x87ps6o.x1q0g3np.x1t137rt.x1ja2u2z.xggy1nq.x1hl2dhg.x16tdsg8.x1n2onr6.x1c1uobl.x18d9i69.xyri2b.xexx8yu.xeuugli.x2lwn1j.x1lziwak.xat24cr.x14z9mp.xdj266r.x3ct3a4.x2lah0s.xdl72j9.x1ypdohk.x9f619.x14e42zd.x1qhh985.x10w94by.x972fbf.x1t7ytsu.x1q0q8m5.x18b5jzi.x13fuv20.x1phubyo.xqeqjp1.xc5r6h4.xjqpnuy.xjbqb8w.x1qjc9v5.x1i10hfl > .x1gg8mnh.x1ja2u2z.x1n2onr6.xexx8yu.xmzvs34.xf159sx.x18d9i69.xeuugli.xdj266r.x1lziwak.x14z9mp.xat24cr.x1qughib.xs83m0k.x1iyjqo2.x1q0g3np.x78zum5.x9f619.x972fbf.x13fuv20.x14e42zd.x1t7ytsu.x10w94by.x18b5jzi.x1qhh985.x1q0q8m5.x6s0dn4
 
