@@ -12,44 +12,31 @@ facebook.com##div[aria-label*="Stories" i]
 
 
 ! --------------------------
-! 🔴 FACEBOOK SPONSORED (REFINED + TOP FIX)
+! 🔴 FACEBOOK SPONSORED (MINIMAL HARD)
 ! --------------------------
 
-! === 1. Core keyword detection (EN + RO + obfuscation) ===
-facebook.com##div[role="feed"] > div:has-text(/Sponso|Sponsorizat|Paid for/i)
-facebook.com##div[role="feed"] > div:has-text(/S.*p.*o.*n.*s.*o.*r.*e.*d/i)
+! === 1. Ad system links (primary signal) ===
+facebook.com##div[role="feed"] div:has(a[href*="/ads/"])
+facebook.com##div[role="feed"] div:has(a[href*="/ads/preferences"])
+facebook.com##div[role="feed"] div:has(a[href*="why_am_i_seeing"])
+facebook.com##div[role="feed"] div:has(a[href*="business.facebook"])
 
-! === 2. Accessibility / aria labels ===
-facebook.com##div[role="feed"] > div:has([aria-label*="ponsor" i])
-facebook.com##div[role="feed"] > div:has(span[aria-label="Sponsored"])
+! === 2. Hidden labels ===
+facebook.com##div[role="feed"] div:has([aria-label*="ponsor" i])
 
-! === 3. Ad-related links (high confidence) ===
-facebook.com##div[role="feed"] > div:has(a[href*="/ads/"])
-facebook.com##div[role="feed"] > div:has(a[href*="/about/ads"])
-facebook.com##div[role="feed"] > div:has(a[href*="/ads/preferences"])
-facebook.com##div[role="feed"] > div:has(a[href*="/why_am_i_seeing"])
-facebook.com##div[role="feed"] > div:has(a[href*="facebook.com/business"])
+! === 3. Sponsored badge (fallback) ===
+facebook.com##div[role="feed"] div:has([dir="auto"]:has-text(/Sponso|Sponsorizat/i))
 
-! === 4. Internal ad markers ===
-facebook.com##div[role="feed"] > div:has([data-pagelet*="Ad"])
-facebook.com##div[role="feed"] > div:has([data-ad-preview])
-facebook.com##div[role="feed"] > div:has([id^="fbad"])
+! === 4. Structural ad pattern ===
+facebook.com##div[role="feed"] div:has(a[href^="http"]):has(img)
 
-! === 5. Nested / split text detection ===
-facebook.com##div[role="feed"] > div:has(span:has-text(/Sponsor|Sponsorizat|Paid/i))
-facebook.com##div[role="feed"] > div:has(div:has-text(/Sponsored/i))
+! === 5. 🔝 First slot (very common ad) ===
+facebook.com##div[role="feed"] div:first-child:has(a[href*="/ads/"])
+facebook.com##div[role="feed"] div:first-child:has(a[href*="why_am_i_seeing"])
 
-! === 6. Fragmented “Sponsored” text (anti-obfuscation) ===
-facebook.com##div[role="feed"] > div:has(span:has-text(/S/i)):has(span:has-text(/p/i)):has(span:has-text(/o/i)):has(span:has-text(/n/i))
+! === 6. ☢️ Optional nuke ===
+! facebook.com##div[role="feed"] div:has(a[href^="http"])
 
-! === 7. 🔝 TOP POST FIX (prime ad slot) ===
-facebook.com##div[role="feed"] > div:first-child:has-text(/Sponso|Sponsored|Sponsorizat/i)
-facebook.com##div[role="feed"] > div:first-child:has(a[href*="/ads/"])
-facebook.com##div[role="feed"] > div:first-child:has([aria-label*="ponsor" i])
-
-! === 8. ⚠️ OPTIONAL (use only if needed — may hide legit posts) ===
-! facebook.com##div[role="feed"] > div:has(a[href*="utm_"])
-! facebook.com##div[role="feed"] > div:first-child
 
 ! --------------------------
 ! 👥 FOLLOW (PRECISE)
