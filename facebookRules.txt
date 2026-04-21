@@ -10,43 +10,51 @@ facebook.com##a[href^="/reels/"]
 facebook.com##div[data-pagelet*="WatchFeed"]
 facebook.com##div[aria-label*="Stories" i]
 
+! ------------------------------------------------------------
+! 🌌 FB SPONSORED "ABSOLUTE ZERO" (v22 - STRUCTURAL INVERSION)
+! ------------------------------------------------------------
 
-! --------------------------
-! 🔴 FACEBOOK SPONSORED (v11 - LABEL MAX ONLY)
-! --------------------------
+! === 1. THE "ZERO-WIDTH" STRING ATTACK ===
+! FB hides labels by injecting invisible spans. This targets the specific 
+! flex-direction and letter-spacing logic used to reassemble them.
+facebook.com##div[role="feed"] div[role="article"] span[style*="display: flex"] > span[style*="position: relative"]:upward(div[role="feed"] > div)
 
-! =========================================================
-! 1. STRICT LABEL MATCH (CORE TRUTH SIGNAL)
-! =========================================================
+! === 2. THE "NON-POST" EXCLUSION ENGINE ===
+! A genuine post has a timestamp link. Ads use a "fake" timestamp span.
+! This nukes anything in the feed that lacks a valid internal permalink.
+facebook.com##div[role="feed"] div[role="article"]:not(:has(a[href*="/posts/"], a[href*="/videos/"], a[href*="/groups/"], a[href*="permalink"])):upward(div[role="feed"] > div)
 
-facebook.com##div[role="feed"] span:has-text(/^Sponsored$/i)
-facebook.com##div[role="feed"] span:has-text(/^Sponsorizat$/i)
-facebook.com##div[role="feed"] span:has-text(/^Publicidad$/i)
-facebook.com##div[role="feed"] span:has-text(/^Annonce$/i)
-facebook.com##div[role="feed"] span:has-text(/^Patrocinado$/i)
+! === 3. TRACKING-PARAMETER SURVEILLANCE ===
+! Targets the 'fbclid' and 'h' parameters found in the "Learn More" buttons 
+! which are exclusive to the Facebook Ad-Server redirects.
+facebook.com##div[role="feed"] a[role="button"][href*="fbclid="]:upward(div[role="feed"] > div)
+facebook.com##div[role="feed"] a[role="button"][href*="?h="]:upward(div[role="feed"] > div)
 
-! =========================================================
-! 2. CONTAINER ONLY WHEN LABEL EXISTS
-! =========================================================
+! === 4. THE "SHADOW-IMAGE" OVERLAY ===
+! Kills the invisible layer FB places over images to track "hover-intent" on ads.
+facebook.com##div[role="feed"] div[role="article"] div[style*="z-index: 1"]:has(a[target="_blank"]):upward(div[role="feed"] > div)
 
-facebook.com##div[role="feed"] div:has(span:has-text(/^Sponsored$/i))
-facebook.com##div[role="feed"] div:has(span:has-text(/^Sponsorizat$/i))
-facebook.com##div[role="feed"] div:has(span:has-text(/^Publicidad$/i))
+! === 5. DYNAMIC COMPONENT SHREDDER ===
+! Targets the specific 'data-pagelet' and 'data-testid' IDs used for 
+! "Suggested" and "Sponsored" injection points.
+facebook.com##div[role="feed"] [data-testid*="sponsored"]:upward(div[role="feed"] > div)
+facebook.com##div[role="feed"] [data-pagelet*="Ad"]:upward(div[role="feed"] > div)
 
-! =========================================================
-! 3. ACCESSIBILITY LABEL (NO BROAD MATCHING)
-! =========================================================
+! === 6. THE "REELS" & "PEOPLE" MASS-PURGE ===
+! Cleans up the clutter between posts that isn't content from your friends.
+facebook.com##div[role="feed"] > div:has-text(/Reels and short videos|People You May Know|Suggested for you|Discover more/i)
 
-facebook.com##div[role="feed"] [aria-label^="Sponsored" i]
-facebook.com##div[role="feed"] [aria-label^="Sponsorizat" i]
-facebook.com##div[role="feed"] [aria-label^="Publicidad" i]
+! === 7. THE "SVG-ICON" FINGERPRINT ===
+! FB uses a specific SVG 'd' path for the tiny "i" (info) icon on ads.
+! This targets that path regardless of what the text says.
+facebook.com##div[role="feed"] div[role="article"] svg path[d^="M8"]:upward(div[role="feed"] > div)
 
-! =========================================================
-! 4. MINIMAL TRANSPARENCY SIGNAL (ONLY DIRECT LINKS)
-! =========================================================
+! === 8. GLOBAL SIDEBAR & VIDEO MID-ROLL NUKE ===
+facebook.com##div[data-pagelet="RightRail"]
+facebook.com##div[aria-label="Ads by Facebook"]
+facebook.com##div[role="feed"] > div:has(span:has-text(/Follow/i)):not(:has(span:has-text(/Following/i)))
 
-facebook.com##div[role="feed"] a[href*="why_am_i_seeing"]
-facebook.com##div[role="feed"] a[href*="ads/preferences"]
+
 
 
 ! --------------------------
