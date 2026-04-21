@@ -10,36 +10,43 @@ facebook.com##a[href^="/reels/"]
 facebook.com##div[data-pagelet*="WatchFeed"]
 facebook.com##div[aria-label*="Stories" i]
 
+
 ! --------------------------
-! 🔴 FACEBOOK SPONSORED (v12 - CONSOLIDATED MAX CSS)
+! 🔴 FACEBOOK SPONSORED (v11 - LABEL MAX ONLY)
 ! --------------------------
 
-! === 1. Hard system-level ad signals ===
-facebook.com##div[role="feed"] > div:has(a[href*="/ads/"])
-facebook.com##div[role="feed"] > div:has(a[href*="why_am_i_seeing"])
-facebook.com##div[role="feed"] > div:has(a[href*="ads/preferences"])
-facebook.com##div[role="feed"] > div:has(a[href*="business.facebook"])
+! =========================================================
+! 1. STRICT LABEL MATCH (CORE TRUTH SIGNAL)
+! =========================================================
 
-! === 2. Tracking / redirect infrastructure ===
-facebook.com##div[role="feed"] > div:has(a[href*="l.facebook.com"])
-facebook.com##div[role="feed"] > div:has(a[href*="lm.facebook.com"])
-facebook.com##div[role="feed"] > div:has(a[href*="fbclid"])
+facebook.com##div[role="feed"] span:has-text(/^Sponsored$/i)
+facebook.com##div[role="feed"] span:has-text(/^Sponsorizat$/i)
+facebook.com##div[role="feed"] span:has-text(/^Publicidad$/i)
+facebook.com##div[role="feed"] span:has-text(/^Annonce$/i)
+facebook.com##div[role="feed"] span:has-text(/^Patrocinado$/i)
 
-! === 3. Sponsored text (robust fragmentation coverage) ===
-facebook.com##div[role="feed"] > div:has-text(/Sponsored/i)
-facebook.com##div[role="feed"] > div:has-text(/Sponsorizat/i)
-facebook.com##div[role="feed"] > div:has-text(/Sponso/)
-facebook.com##div[role="feed"] > div:has-text(/sor/)
+! =========================================================
+! 2. CONTAINER ONLY WHEN LABEL EXISTS
+! =========================================================
 
-! === 4. Hidden accessibility label ===
-facebook.com##div[role="feed"] > div:has([aria-label*="sponsor" i])
+facebook.com##div[role="feed"] div:has(span:has-text(/^Sponsored$/i))
+facebook.com##div[role="feed"] div:has(span:has-text(/^Sponsorizat$/i))
+facebook.com##div[role="feed"] div:has(span:has-text(/^Publicidad$/i))
 
-! === 5. Ad layout signature (tightened, less spammy) ===
-facebook.com##div[role="feed"] > div:has(img):has(:is(button,div[role="button"])):has(a[href^="http"])
+! =========================================================
+! 3. ACCESSIBILITY LABEL (NO BROAD MATCHING)
+! =========================================================
 
-! === 6. High-density outbound link pattern ===
-facebook.com##div[role="feed"] > div:has(a[href^="http"]):has(a[href^="http"]):has(img)
+facebook.com##div[role="feed"] [aria-label^="Sponsored" i]
+facebook.com##div[role="feed"] [aria-label^="Sponsorizat" i]
+facebook.com##div[role="feed"] [aria-label^="Publicidad" i]
 
+! =========================================================
+! 4. MINIMAL TRANSPARENCY SIGNAL (ONLY DIRECT LINKS)
+! =========================================================
+
+facebook.com##div[role="feed"] a[href*="why_am_i_seeing"]
+facebook.com##div[role="feed"] a[href*="ads/preferences"]
 
 
 ! --------------------------
