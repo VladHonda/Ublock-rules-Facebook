@@ -1,136 +1,32 @@
 ! ------------------------------------------------------------
-! 🌌 FB "ABSOLUTE ZERO" v41 - OMNI-CLEANER (APRIL 22, 2026)
+! 🌌 FB "ABSOLUTE ZERO" v43.3 - REINFORCED (APRIL 2026)
 ! ------------------------------------------------------------
 
-! === 1. THE DATA-STREAM SNIPER (Instant Kill) ===
-! Intercepts ad/suggested data at the network level before rendering.
-facebook.com##+js(jsonl-edit-xhr-response, .data.node[?.*.__typename=="SponsoredData"], propsToMatch, /graphql)
-facebook.com##+js(json-prune, [].sponsored_data, data.node.sponsored_data, .is_sponsored)
+! === 1. SCRIPTLET INJECTION (The Pre-Processor) ===
+! Nukes ad data from the JSON stream before it hits your browser's renderer.
+facebook.com##+js(json-prune, [].sponsored_data [].is_sponsored [].category_name=="SPONSORED", [?.*.__typename=="SponsoredData"])
 facebook.com##+js(set-constant, FB_LINK_SHIM_RE, /^$/)
 
-! === 2. REELS, STORIES, & WATCH (Speed Optimized) ===
-facebook.com##a[href^="/reel/"], a[href^="/reels/"]
-facebook.com##div[data-pagelet*="WatchFeed"]
+! === 2. THE "ARIA-DESCRIPTION" SNIPER ===
+! Meta has shifted the "Sponsored" label to hidden aria attributes to hide from text filters.
+facebook.com##div[role="feed"] div[role="article"]:has([aria-description*="Sponsored" i], [aria-description*="Publicitate" i]):upward(div[role="feed"] > div)
+
+! === 3. HIDDEN DIV SPACER ATTACK ===
+! Targets ads using invisible 0px dividers to break up the "S p o n s o r e d" text.
+facebook.com##div[role="article"]:has(span[style*="display:none"] + span):has(span[style*="position:absolute"]):upward(div[role="feed"] > div)
+facebook.com##div[role="article"]:has(div[style*="width: 0px"]):upward(div[role="feed"] > div)
+
+! === 4. LINK & PERMALINK RE-VALIDATOR ===
+! Any feed item lacking a clean internal FB path (like /posts/) is treated as an ad.
+facebook.com##div[role="feed"] div[role="article"]:not(:has(a[href*="/posts/"], a[href*="/videos/"], a[href*="/groups/"], a[href*="permalink"], a[href*="/photos/"], a[href*="/story.php"], a[href*="/events/"], a[href*="/reel/"])):upward(div[role="feed"] > div)
+
+! === 5. SVG GEOMETRY REFINEMENT ===
+! Targets the specific icon fingerprint Meta places next to the word "Ad" or "Sponsored".
+facebook.com##div[role="article"] svg path[d^="M12 2C6.477"]:upward(div[role="feed"] > div)
+facebook.com##div[role="article"] svg:has(use[*|href]):upward(div[role="feed"] > div)
+
+! === 6. SUGGESTED & REELS CLEANUP ===
+facebook.com##div[role="feed"] > div:has-text(/\b(Suggested|Sugestii|Recommended|Recomandate|People you may know|Persoane pe care|Join group|Alătură-te|Follow|Urmărește)\b/i)
 facebook.com##div[aria-label*="Stories" i]
-
-! === 3. THE "REAL POST" VALIDATOR (Fastest Ad-Killer) ===
-! Nukes anything lacking a valid permalink link (Ads can't fake this).
-facebook.com##div[role="feed"] div[role="article"]:not(:has(a[href*="/posts/"], a[href*="/videos/"], a[href*="/groups/"], a[href*="permalink"], a[href*="/photos/"], a[href*="/story.php"])):upward(div[role="feed"] > div)
-
-! === 4. LEGAL HOOKS (AdChoices / Publicitate) ===
-! Targets the legally required menu that Facebook cannot randomize.
-facebook.com##div[role="article"]:has([aria-label*="AdChoices" i], [aria-label*="Publicitate" i], a[href*="/ads/about"]):upward(div[role="feed"] > div)
-
-! === 5. SVG PATH SNIPER (April 22 Coordinate Update) ===
-facebook.com##div[role="article"] svg path[d^="M12 2C6.477"]:upward(div[role="feed"] > div)
-facebook.com##div[role="article"] svg use[*|href]:upward(div[role="feed"] > div)
-
-! === 6. THE SUGGESTION & JOIN TERMINATOR (Merged) ===
-! Combined regex for speed. Targets Suggestions, PYMK, and Join Groups.
-facebook.com##div[role="feed"] > div:has-text(/\b(Suggested|Sugestii|Recommended|Reels|People you may know|Persoane pe care|Join group|Alătură-te|Follow|Urmărește)\b/i)
-
-! === 7. BUTTON & LINK-SHIM HARDENING ===
-facebook.com##div[role="feed"] a[role="button"][href*="fbclid="]:upward(div[role="feed"] > div)
-facebook.com##div[role="feed"] a[role="button"][href*="L.facebook.com"]:upward(div[role="feed"] > div)
-
-! === 8. GENERAL CLEANUP ===
+facebook.com##a[href^="/reel/"], a[href^="/reels/"]
 facebook.com##div[data-pagelet="RightRail"]
-facebook.com##[data-testid*="sponsored"]
-facebook.com##[data-pagelet*="Ad"]
-
-
-
-! ------------------------------------------------------------
-! 🌌 FB "ABSOLUTE ZERO" v40 - BEHAVIORAL & SSAI HARDENING
-! ------------------------------------------------------------
-
-! === 1. THE DATA-STREAM KILLER (Highest Priority) ===
-! This intercepts the "SponsoredData" object before it even enters the HTML.
-facebook.com##+js(jsonl-edit-xhr-response, .data.node[?.*.__typename=="SponsoredData"], propsToMatch, /graphql)
-facebook.com##+js(json-prune, [].sponsored_data, data.node.sponsored_data, .is_sponsored)
-facebook.com##+js(set-constant, FB_LINK_SHIM_RE, /^$/)
-
-! === 2. THE "NON-ORGANIC" VALIDATOR ===
-! Real posts MUST have a timestamp link. Ads use a "fake" span that looks like a link.
-! This nukes anything lacking a valid permalink to a Post, Video, or Group ID.
-facebook.com##div[role="feed"] div[role="article"]:not(:has(a[href*="/posts/"], a[href*="/videos/"], a[href*="/groups/"], a[href*="permalink"], a[href*="/photos/"], a[href*="/story.php"])):upward(div[role="feed"] > div)
-
-! === 3. THE "LINK-SHIM" TRAP ===
-! Every ad button (Shop Now, Learn More) uses an external redirect. 
-! Real posts (Like/Comment/Share) stay within Facebook's internal routing.
-facebook.com##div[role="article"]:has(a[href*="://facebook.com"]):upward(div[role="feed"] > div)
-facebook.com##div[role="article"]:has(a[href*="fbclid="]):upward(div[role="feed"] > div)
-
-! === 4. THE LEGAL BACKDOOR ===
-! Even with SSAI, Meta must provide an "AdChoices" or "Why am I seeing this?" menu.
-! This targets the hidden aria-labels that screen readers use to identify ads.
-facebook.com##div[role="article"]:has([aria-label*="AdChoices" i]):upward(div[role="feed"] > div)
-facebook.com##div[role="article"]:has([aria-label*="Publicitate" i]):upward(div[role="feed"] > div)
-facebook.com##div[role="article"]:has(a[href*="/ads/about"]):upward(div[role="feed"] > div)
-
-! === 5. SVG COORDINATE SNIPER (APRIL 22 V3) ===
-! New coordinates for the info "i" icon that Meta rotated this morning.
-facebook.com##div[role="article"] svg path[d^="M12 2C6.477"]:upward(div[role="feed"] > div)
-facebook.com##div[role="article"] svg use[*|href]:upward(div[role="feed"] > div)
-
-! === 6. SUGGESTED / REELS / FOLLOW PURGE ===
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Reels and short videos|People You May Know|Follow/i)
-
-! === 7. GENERAL CLEANUP ===
-facebook.com##div[data-pagelet="RightRail"]
-facebook.com##[data-testid*="sponsored"]
-
-
-! --------------------------
-! 👥 FOLLOW (PRECISE)
-! --------------------------
-
-facebook.com##div[role="feed"] > div:has(button:has-text(/^Follow$/i))
-facebook.com##div[role="feed"] > div:has(div[role="button"]:has-text(/^Follow$/i))
-
-facebook.com##div[role="feed"] > div:has(button:has-text(/^Urmărește$/i))
-facebook.com##div[role="feed"] > div:has(div[role="button"]:has-text(/^Urmărește$/i))
-
-facebook.com##div[role="feed"] > div:has-text(/Follow this page|Follow this profile/i)
-facebook.com##div[role="feed"] > div:has(a[href*="/followers/"])
-facebook.com##div[role="feed"] > div:has-text(/Follow this page|Follow this profile/i)
-facebook.com##div[role="feed"] > div:has-text(/Urmărește această pagină|Urmărește acest profil/i)
-
-! ----------------------------------------------------------
-! 💣 FACEBOOK GROUP JOIN SCRUBBER (OPTIMIZED)
-! ----------------------------------------------------------
-
-! 1. Direct Group Links & Recommendations
-facebook.com##div[role="feed"] > div:has(a[href*="/groups/"]):style(display:none !important;)
-
-! 2. Optimized Text Matching (English & Romanian)
-! Matches whole words only to avoid hiding regular posts
-facebook.com##div[role="feed"] > div:has-text(/\b(Join group|Alătură-te grupului)\b/i)
-
-! 3. Button & Role matching
-! Specifically targets the structural elements Facebook uses for 'Suggested' buttons
-facebook.com##div[role="feed"] > div:has(button, div[role="button"]):has-text(/\b(Join|Alătură)\b/i)
-
-! 4. Aria-Label Fallback (Hardened)
-facebook.com##div[role="feed"] > div:has([aria-label*="Join" i])
-facebook.com##div[role="feed"] > div:has([aria-label*="Alătur" i])
-
-! 5. "Suggested for you" Container (Optional: Wipes the entire card)
-facebook.com##div[role="feed"] > div:has(span:has-text(/Suggested for you|Sugestii pentru tine/i))
-
-
-! --------------------------
-! 🤝 PEOPLE / SUGGESTIONS
-! --------------------------
-facebook.com##div[role="feed"] > div:has-text(/People you may know|Persoane pe care s-ar putea să le cunoști/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Sugestii pentru tine|Suggested post/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested|Sugestii|Recommendations/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested Pages|Pagini sugerate|Discover/i)
-facebook.com##div[role="feed"] > div:has-text(/People you may know|Persoane pe care s-ar putea să le cunoști/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Sugestii pentru tine|Suggested post/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested Pages|Pagini sugerate/i)
-
-
-! Apr 18, 2026 https://www.facebook.com
-www.facebook.com##.x1y1aw1k.xwib8y2 > div > .x1lliihq.x15x8krk.xde0f50.x5a5i1n.x1obq294.x1a2a7pz.x1lku1pv.x87ps6o.x1q0g3np.x1t137rt.x1ja2u2z.xggy1nq.x1hl2dhg.x16tdsg8.x1n2onr6.x1c1uobl.x18d9i69.xyri2b.xexx8yu.xeuugli.x2lwn1j.x1lziwak.xat24cr.x14z9mp.xdj266r.x3ct3a4.x2lah0s.xdl72j9.x1ypdohk.x9f619.x14e42zd.x1qhh985.x10w94by.x972fbf.x1t7ytsu.x1q0q8m5.x18b5jzi.x13fuv20.x1phubyo.xqeqjp1.xc5r6h4.xjqpnuy.xjbqb8w.x1qjc9v5.x1i10hfl > .x1gg8mnh.x1ja2u2z.x1n2onr6.xexx8yu.xmzvs34.xf159sx.x18d9i69.xeuugli.xdj266r.x1lziwak.x14z9mp.xat24cr.x1qughib.xs83m0k.x1iyjqo2.x1q0g3np.x78zum5.x9f619.x972fbf.x13fuv20.x14e42zd.x1t7ytsu.x10w94by.x18b5jzi.x1qhh985.x1q0q8m5.x6s0dn4
-
