@@ -1,14 +1,43 @@
-! ==========================
-! FACEBOOK CLEAN FEED 2026 (v6.4 - JOIN TERMINATOR)
-! ==========================
+! ------------------------------------------------------------
+! 🌌 FB "ABSOLUTE ZERO" v41 - OMNI-CLEANER (APRIL 22, 2026)
+! ------------------------------------------------------------
 
-! --------------------------
-! REELS / WATCH / STORIES
-! --------------------------
-facebook.com##a[href^="/reel/"]
-facebook.com##a[href^="/reels/"]
+! === 1. THE DATA-STREAM SNIPER (Instant Kill) ===
+! Intercepts ad/suggested data at the network level before rendering.
+facebook.com##+js(jsonl-edit-xhr-response, .data.node[?.*.__typename=="SponsoredData"], propsToMatch, /graphql)
+facebook.com##+js(json-prune, [].sponsored_data, data.node.sponsored_data, .is_sponsored)
+facebook.com##+js(set-constant, FB_LINK_SHIM_RE, /^$/)
+
+! === 2. REELS, STORIES, & WATCH (Speed Optimized) ===
+facebook.com##a[href^="/reel/"], a[href^="/reels/"]
 facebook.com##div[data-pagelet*="WatchFeed"]
 facebook.com##div[aria-label*="Stories" i]
+
+! === 3. THE "REAL POST" VALIDATOR (Fastest Ad-Killer) ===
+! Nukes anything lacking a valid permalink link (Ads can't fake this).
+facebook.com##div[role="feed"] div[role="article"]:not(:has(a[href*="/posts/"], a[href*="/videos/"], a[href*="/groups/"], a[href*="permalink"], a[href*="/photos/"], a[href*="/story.php"])):upward(div[role="feed"] > div)
+
+! === 4. LEGAL HOOKS (AdChoices / Publicitate) ===
+! Targets the legally required menu that Facebook cannot randomize.
+facebook.com##div[role="article"]:has([aria-label*="AdChoices" i], [aria-label*="Publicitate" i], a[href*="/ads/about"]):upward(div[role="feed"] > div)
+
+! === 5. SVG PATH SNIPER (April 22 Coordinate Update) ===
+facebook.com##div[role="article"] svg path[d^="M12 2C6.477"]:upward(div[role="feed"] > div)
+facebook.com##div[role="article"] svg use[*|href]:upward(div[role="feed"] > div)
+
+! === 6. THE SUGGESTION & JOIN TERMINATOR (Merged) ===
+! Combined regex for speed. Targets Suggestions, PYMK, and Join Groups.
+facebook.com##div[role="feed"] > div:has-text(/\b(Suggested|Sugestii|Recommended|Reels|People you may know|Persoane pe care|Join group|Alătură-te|Follow|Urmărește)\b/i)
+
+! === 7. BUTTON & LINK-SHIM HARDENING ===
+facebook.com##div[role="feed"] a[role="button"][href*="fbclid="]:upward(div[role="feed"] > div)
+facebook.com##div[role="feed"] a[role="button"][href*="L.facebook.com"]:upward(div[role="feed"] > div)
+
+! === 8. GENERAL CLEANUP ===
+facebook.com##div[data-pagelet="RightRail"]
+facebook.com##[data-testid*="sponsored"]
+facebook.com##[data-pagelet*="Ad"]
+
 
 
 ! ------------------------------------------------------------
@@ -67,39 +96,7 @@ facebook.com##div[role="feed"] > div:has(a[href*="/followers/"])
 facebook.com##div[role="feed"] > div:has-text(/Follow this page|Follow this profile/i)
 facebook.com##div[role="feed"] > div:has-text(/Urmărește această pagină|Urmărește acest profil/i)
 
-! ----------------------------------------------------------
-! 💣 FACEBOOK GROUP JOIN SCRUBBER (OPTIMIZED)
-! ----------------------------------------------------------
 
-! 1. Direct Group Links & Recommendations
-facebook.com##div[role="feed"] > div:has(a[href*="/groups/"]):style(display:none !important;)
-
-! 2. Optimized Text Matching (English & Romanian)
-! Matches whole words only to avoid hiding regular posts
-facebook.com##div[role="feed"] > div:has-text(/\b(Join group|Alătură-te grupului)\b/i)
-
-! 3. Button & Role matching
-! Specifically targets the structural elements Facebook uses for 'Suggested' buttons
-facebook.com##div[role="feed"] > div:has(button, div[role="button"]):has-text(/\b(Join|Alătură)\b/i)
-
-! 4. Aria-Label Fallback (Hardened)
-facebook.com##div[role="feed"] > div:has([aria-label*="Join" i])
-facebook.com##div[role="feed"] > div:has([aria-label*="Alătur" i])
-
-! 5. "Suggested for you" Container (Optional: Wipes the entire card)
-facebook.com##div[role="feed"] > div:has(span:has-text(/Suggested for you|Sugestii pentru tine/i))
-
-
-! --------------------------
-! 🤝 PEOPLE / SUGGESTIONS
-! --------------------------
-facebook.com##div[role="feed"] > div:has-text(/People you may know|Persoane pe care s-ar putea să le cunoști/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Sugestii pentru tine|Suggested post/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested|Sugestii|Recommendations/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested Pages|Pagini sugerate|Discover/i)
-facebook.com##div[role="feed"] > div:has-text(/People you may know|Persoane pe care s-ar putea să le cunoști/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Sugestii pentru tine|Suggested post/i)
-facebook.com##div[role="feed"] > div:has-text(/Suggested Pages|Pagini sugerate/i)
 
 
 ! Apr 18, 2026 https://www.facebook.com
