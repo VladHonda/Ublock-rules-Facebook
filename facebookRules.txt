@@ -10,51 +10,43 @@ facebook.com##a[href^="/reels/"]
 facebook.com##div[data-pagelet*="WatchFeed"]
 facebook.com##div[aria-label*="Stories" i]
 
+
 ! ------------------------------------------------------------
-! 🌌 FB SPONSORED "ABSOLUTE ZERO" (v22 - STRUCTURAL INVERSION)
+! 🌌 FB "ABSOLUTE ZERO" v27 - DEEP-SCAN & SCRIPTLET HARDENING
 ! ------------------------------------------------------------
 
-! === 1. THE "ZERO-WIDTH" STRING ATTACK ===
-! FB hides labels by injecting invisible spans. This targets the specific 
-! flex-direction and letter-spacing logic used to reassemble them.
-facebook.com##div[role="feed"] div[role="article"] span[style*="display: flex"] > span[style*="position: relative"]:upward(div[role="feed"] > div)
+! === 1. THE JSON INTERCEPTOR (ROOT LEVEL) ===
+! Intercepts the data feed before it renders. Matches specific ad metadata.
+facebook.com##+js(json-prune, data.node.sponsored_data)
+facebook.com##+js(json-prune, [].sponsored_data)
 
-! === 2. THE "NON-POST" EXCLUSION ENGINE ===
-! A genuine post has a timestamp link. Ads use a "fake" timestamp span.
-! This nukes anything in the feed that lacks a valid internal permalink.
-facebook.com##div[role="feed"] div[role="article"]:not(:has(a[href*="/posts/"], a[href*="/videos/"], a[href*="/groups/"], a[href*="permalink"])):upward(div[role="feed"] > div)
+! === 2. THE "ZERO-WIDTH" CHARACTER BYPASS ===
+! FB hides the word "Sponsored" by putting invisible characters between letters.
+! This targets elements containing those specific flex-scrambled containers.
+facebook.com##div[role="feed"] div[role="article"]:has(span[style*="position: relative"] > span[style*="display: none"]):upward(div[role="feed"] > div)
+facebook.com##div[role="feed"] div[role="article"]:has(div[style*="display: flex"] > span[aria-labelledby]):upward(div[role="feed"] > div)
 
-! === 3. TRACKING-PARAMETER SURVEILLANCE ===
-! Targets the 'fbclid' and 'h' parameters found in the "Learn More" buttons 
-! which are exclusive to the Facebook Ad-Server redirects.
+! === 3. ICON & SVG "FINGERPRINTING" (Refined) ===
+! Targets the exact path data for the 'i' info icon and 'Globe' icon used only in Ads.
+facebook.com##div[role="feed"] div[role="article"]:has(svg path[d^="M12 2C6.477"], svg path[d^="M8"], svg path[d^="M10"]):upward(div[role="feed"] > div)
+
+! === 4. CTA BUTTON & TRACKING CLEANUP ===
+! Real posts rarely use 'Shop Now' buttons with 'fbclid' tracking IDs.
 facebook.com##div[role="feed"] a[role="button"][href*="fbclid="]:upward(div[role="feed"] > div)
-facebook.com##div[role="feed"] a[role="button"][href*="?h="]:upward(div[role="feed"] > div)
+facebook.com##div[role="feed"] a[role="button"][href*="utm_source"]:upward(div[role="feed"] > div)
 
-! === 4. THE "SHADOW-IMAGE" OVERLAY ===
-! Kills the invisible layer FB places over images to track "hover-intent" on ads.
-facebook.com##div[role="feed"] div[role="article"] div[style*="z-index: 1"]:has(a[target="_blank"]):upward(div[role="feed"] > div)
+! === 5. THE "FOLLOW" vs "FRIEND" LOGIC ===
+! Hides anything with a "Follow" button that isn't a confirmed "Following" status.
+facebook.com##div[role="feed"] > div:has(span:has-text(/^Follow$/i)):not(:has(span:has-text(/^Following$/i)))
 
-! === 5. DYNAMIC COMPONENT SHREDDER ===
-! Targets the specific 'data-pagelet' and 'data-testid' IDs used for 
-! "Suggested" and "Sponsored" injection points.
-facebook.com##div[role="feed"] [data-testid*="sponsored"]:upward(div[role="feed"] > div)
-facebook.com##div[role="feed"] [data-pagelet*="Ad"]:upward(div[role="feed"] > div)
+! === 6. SUGGESTED & REELS AUTO-PURGE ===
+facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Reels and short videos|People You May Know|Recommended/i)
 
-! === 6. THE "REELS" & "PEOPLE" MASS-PURGE ===
-! Cleans up the clutter between posts that isn't content from your friends.
-facebook.com##div[role="feed"] > div:has-text(/Reels and short videos|People You May Know|Suggested for you|Discover more/i)
-
-! === 7. THE "SVG-ICON" FINGERPRINT ===
-! FB uses a specific SVG 'd' path for the tiny "i" (info) icon on ads.
-! This targets that path regardless of what the text says.
-facebook.com##div[role="feed"] div[role="article"] svg path[d^="M8"]:upward(div[role="feed"] > div)
-
-! === 8. GLOBAL SIDEBAR & VIDEO MID-ROLL NUKE ===
+! === 7. SIDEBAR & GLOBAL AD-PREFERENCE CLEANUP ===
 facebook.com##div[data-pagelet="RightRail"]
 facebook.com##div[aria-label="Ads by Facebook"]
-facebook.com##div[role="feed"] > div:has(span:has-text(/Follow/i)):not(:has(span:has-text(/Following/i)))
-
-
+facebook.com##[data-testid*="sponsored"]
+facebook.com##[data-pagelet*="Ad"]
 
 
 ! --------------------------
@@ -72,26 +64,28 @@ facebook.com##div[role="feed"] > div:has(a[href*="/followers/"])
 facebook.com##div[role="feed"] > div:has-text(/Follow this page|Follow this profile/i)
 facebook.com##div[role="feed"] > div:has-text(/Urmărește această pagină|Urmărește acest profil/i)
 
-! --------------------------
-! 💣 JOIN / GROUP (HARDENED)
-! --------------------------
+! ----------------------------------------------------------
+! 💣 FACEBOOK GROUP JOIN SCRUBBER (OPTIMIZED)
+! ----------------------------------------------------------
 
-! Direct group links
-facebook.com##div[role="feed"] > div:has(a[href^="/groups/"])
-facebook.com##div[role="feed"] > div:has(a[href*="facebook.com/groups/"])
-facebook.com##div[role="feed"] > div:has-text(/Join group|Alătură-te grupului/i)
+! 1. Direct Group Links & Recommendations
+facebook.com##div[role="feed"] > div:has(a[href*="/groups/"]):style(display:none !important;)
 
+! 2. Optimized Text Matching (English & Romanian)
+! Matches whole words only to avoid hiding regular posts
+facebook.com##div[role="feed"] > div:has-text(/\b(Join group|Alătură-te grupului)\b/i)
 
-! Join buttons (all variants)
-facebook.com##div[role="feed"] > div:has(button:has-text(/Join/i))
-facebook.com##div[role="feed"] > div:has(div[role="button"]:has-text(/Join/i))
+! 3. Button & Role matching
+! Specifically targets the structural elements Facebook uses for 'Suggested' buttons
+facebook.com##div[role="feed"] > div:has(button, div[role="button"]):has-text(/\b(Join|Alătură)\b/i)
 
-facebook.com##div[role="feed"] > div:has(button:has-text(/Alătură/i))
-facebook.com##div[role="feed"] > div:has(div[role="button"]:has-text(/Alătură/i))
-
-! aria-label fallback
+! 4. Aria-Label Fallback (Hardened)
 facebook.com##div[role="feed"] > div:has([aria-label*="Join" i])
 facebook.com##div[role="feed"] > div:has([aria-label*="Alătur" i])
+
+! 5. "Suggested for you" Container (Optional: Wipes the entire card)
+facebook.com##div[role="feed"] > div:has(span:has-text(/Suggested for you|Sugestii pentru tine/i))
+
 
 ! --------------------------
 ! 🤝 PEOPLE / SUGGESTIONS
