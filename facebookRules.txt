@@ -12,41 +12,41 @@ facebook.com##div[aria-label*="Stories" i]
 
 
 ! ------------------------------------------------------------
-! 🌌 FB "ABSOLUTE ZERO" v27 - DEEP-SCAN & SCRIPTLET HARDENING
+! 🌌 FB "ABSOLUTE ZERO" v30 - STRUCTURAL & SHADOW-DOM NUKER
 ! ------------------------------------------------------------
 
-! === 1. THE JSON INTERCEPTOR (ROOT LEVEL) ===
-! Intercepts the data feed before it renders. Matches specific ad metadata.
-facebook.com##+js(json-prune, data.node.sponsored_data)
-facebook.com##+js(json-prune, [].sponsored_data)
+! === 1. PRE-EMPTIVE DATA INTERCEPTOR ===
+! Scriptlets to strip sponsored metadata from background data fetches.
+facebook.com##+js(json-prune, [].sponsored_data, data.node.sponsored_data, .is_sponsored, .sponsored_data)
+facebook.com##+js(set-constant, FB_LINK_SHIM_RE, /^$/)
 
-! === 2. THE "ZERO-WIDTH" CHARACTER BYPASS ===
-! FB hides the word "Sponsored" by putting invisible characters between letters.
-! This targets elements containing those specific flex-scrambled containers.
-facebook.com##div[role="feed"] div[role="article"]:has(span[style*="position: relative"] > span[style*="display: none"]):upward(div[role="feed"] > div)
-facebook.com##div[role="feed"] div[role="article"]:has(div[style*="display: flex"] > span[aria-labelledby]):upward(div[role="feed"] > div)
+! === 2. THE FEEDUNIT CONTAINER NUKER ===
+! Targets the structural ID used for 'Suggested' and 'Sponsored' units.
+facebook.com##div[data-pagelet^="FeedUnit_"]:has(a[href*="/ads/about"]):upward(div[role="feed"] > div)
+facebook.com##div[data-pagelet^="FeedUnit_"]:has([aria-label="AdChoices"]):upward(div[role="feed"] > div)
 
-! === 3. ICON & SVG "FINGERPRINTING" (Refined) ===
-! Targets the exact path data for the 'i' info icon and 'Globe' icon used only in Ads.
-facebook.com##div[role="feed"] div[role="article"]:has(svg path[d^="M12 2C6.477"], svg path[d^="M8"], svg path[d^="M10"]):upward(div[role="feed"] > div)
+! === 3. ICON FINGERPRINTING (V5 - RE-MAPPED) ===
+! New SVG path coordinates for the 'Globe' and 'Info' circle ads use in 2025.
+facebook.com##div[role="article"]:has(svg path[d^="M12 2C6.477"], svg path[d^="M2 12C2 6.477"]):upward(div[role="feed"] > div)
+facebook.com##div[role="article"]:has(svg use[*|href^="#"]):upward(div[role="feed"] > div)
 
-! === 4. CTA BUTTON & TRACKING CLEANUP ===
-! Real posts rarely use 'Shop Now' buttons with 'fbclid' tracking IDs.
+! === 4. THE "GHOST PERMALINK" VALIDATION ===
+! Real posts have timestamp IDs. This nukes anything lacking an organic link.
+facebook.com##div[role="feed"] div[role="article"]:not(:has(a[href*="/posts/"], a[href*="/videos/"], a[href*="/groups/"], a[href*="permalink"], a[href*="/photos/"], a[href*="/story.php"])):upward(div[role="feed"] > div)
+
+! === 5. CTA & TRACKING SHIM DETECTION ===
+! Targets "Shop Now" and "Sign Up" buttons that use the tracking 'fbclid' parameter.
 facebook.com##div[role="feed"] a[role="button"][href*="fbclid="]:upward(div[role="feed"] > div)
-facebook.com##div[role="feed"] a[role="button"][href*="utm_source"]:upward(div[role="feed"] > div)
+facebook.com##div[role="feed"] a[role="button"][href*="L.facebook.com"]:upward(div[role="feed"] > div)
 
-! === 5. THE "FOLLOW" vs "FRIEND" LOGIC ===
-! Hides anything with a "Follow" button that isn't a confirmed "Following" status.
-facebook.com##div[role="feed"] > div:has(span:has-text(/^Follow$/i)):not(:has(span:has-text(/^Following$/i)))
+! === 6. UNIVERSAL TEXT PURGE (MULTI-LANGUAGE) ===
+! Covers "Sponsored", "Ad", "Sponsorizat", and "Publicitate" in all variants.
+facebook.com##div[role="feed"] > div:has-text(/\b(Ad|Sponsored|Sponsorizat|Publicitate|Suggested for you|Reels)\b/i)
 
-! === 6. SUGGESTED & REELS AUTO-PURGE ===
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Reels and short videos|People You May Know|Recommended/i)
-
-! === 7. SIDEBAR & GLOBAL AD-PREFERENCE CLEANUP ===
+! === 7. SIDEBAR & SUGGESTED AD-UNITS ===
 facebook.com##div[data-pagelet="RightRail"]
 facebook.com##div[aria-label="Ads by Facebook"]
 facebook.com##[data-testid*="sponsored"]
-facebook.com##[data-pagelet*="Ad"]
 
 
 ! --------------------------
