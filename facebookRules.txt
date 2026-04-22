@@ -12,40 +12,43 @@ facebook.com##div[aria-label*="Stories" i]
 
 
 ! ------------------------------------------------------------
-! 🌌 FB "ABSOLUTE ZERO" v30 - STRUCTURAL & SHADOW-DOM NUKER
+! 🌌 FB "ABSOLUTE ZERO" v40 - BEHAVIORAL & SSAI HARDENING
 ! ------------------------------------------------------------
 
-! === 1. PRE-EMPTIVE DATA INTERCEPTOR ===
-! Scriptlets to strip sponsored metadata from background data fetches.
-facebook.com##+js(json-prune, [].sponsored_data, data.node.sponsored_data, .is_sponsored, .sponsored_data)
+! === 1. THE DATA-STREAM KILLER (Highest Priority) ===
+! This intercepts the "SponsoredData" object before it even enters the HTML.
+facebook.com##+js(jsonl-edit-xhr-response, .data.node[?.*.__typename=="SponsoredData"], propsToMatch, /graphql)
+facebook.com##+js(json-prune, [].sponsored_data, data.node.sponsored_data, .is_sponsored)
 facebook.com##+js(set-constant, FB_LINK_SHIM_RE, /^$/)
 
-! === 2. THE FEEDUNIT CONTAINER NUKER ===
-! Targets the structural ID used for 'Suggested' and 'Sponsored' units.
-facebook.com##div[data-pagelet^="FeedUnit_"]:has(a[href*="/ads/about"]):upward(div[role="feed"] > div)
-facebook.com##div[data-pagelet^="FeedUnit_"]:has([aria-label="AdChoices"]):upward(div[role="feed"] > div)
-
-! === 3. ICON FINGERPRINTING (V5 - RE-MAPPED) ===
-! New SVG path coordinates for the 'Globe' and 'Info' circle ads use in 2025.
-facebook.com##div[role="article"]:has(svg path[d^="M12 2C6.477"], svg path[d^="M2 12C2 6.477"]):upward(div[role="feed"] > div)
-facebook.com##div[role="article"]:has(svg use[*|href^="#"]):upward(div[role="feed"] > div)
-
-! === 4. THE "GHOST PERMALINK" VALIDATION ===
-! Real posts have timestamp IDs. This nukes anything lacking an organic link.
+! === 2. THE "NON-ORGANIC" VALIDATOR ===
+! Real posts MUST have a timestamp link. Ads use a "fake" span that looks like a link.
+! This nukes anything lacking a valid permalink to a Post, Video, or Group ID.
 facebook.com##div[role="feed"] div[role="article"]:not(:has(a[href*="/posts/"], a[href*="/videos/"], a[href*="/groups/"], a[href*="permalink"], a[href*="/photos/"], a[href*="/story.php"])):upward(div[role="feed"] > div)
 
-! === 5. CTA & TRACKING SHIM DETECTION ===
-! Targets "Shop Now" and "Sign Up" buttons that use the tracking 'fbclid' parameter.
-facebook.com##div[role="feed"] a[role="button"][href*="fbclid="]:upward(div[role="feed"] > div)
-facebook.com##div[role="feed"] a[role="button"][href*="L.facebook.com"]:upward(div[role="feed"] > div)
+! === 3. THE "LINK-SHIM" TRAP ===
+! Every ad button (Shop Now, Learn More) uses an external redirect. 
+! Real posts (Like/Comment/Share) stay within Facebook's internal routing.
+facebook.com##div[role="article"]:has(a[href*="://facebook.com"]):upward(div[role="feed"] > div)
+facebook.com##div[role="article"]:has(a[href*="fbclid="]):upward(div[role="feed"] > div)
 
-! === 6. UNIVERSAL TEXT PURGE (MULTI-LANGUAGE) ===
-! Covers "Sponsored", "Ad", "Sponsorizat", and "Publicitate" in all variants.
-facebook.com##div[role="feed"] > div:has-text(/\b(Ad|Sponsored|Sponsorizat|Publicitate|Suggested for you|Reels)\b/i)
+! === 4. THE LEGAL BACKDOOR ===
+! Even with SSAI, Meta must provide an "AdChoices" or "Why am I seeing this?" menu.
+! This targets the hidden aria-labels that screen readers use to identify ads.
+facebook.com##div[role="article"]:has([aria-label*="AdChoices" i]):upward(div[role="feed"] > div)
+facebook.com##div[role="article"]:has([aria-label*="Publicitate" i]):upward(div[role="feed"] > div)
+facebook.com##div[role="article"]:has(a[href*="/ads/about"]):upward(div[role="feed"] > div)
 
-! === 7. SIDEBAR & SUGGESTED AD-UNITS ===
+! === 5. SVG COORDINATE SNIPER (APRIL 22 V3) ===
+! New coordinates for the info "i" icon that Meta rotated this morning.
+facebook.com##div[role="article"] svg path[d^="M12 2C6.477"]:upward(div[role="feed"] > div)
+facebook.com##div[role="article"] svg use[*|href]:upward(div[role="feed"] > div)
+
+! === 6. SUGGESTED / REELS / FOLLOW PURGE ===
+facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Reels and short videos|People You May Know|Follow/i)
+
+! === 7. GENERAL CLEANUP ===
 facebook.com##div[data-pagelet="RightRail"]
-facebook.com##div[aria-label="Ads by Facebook"]
 facebook.com##[data-testid*="sponsored"]
 
 
