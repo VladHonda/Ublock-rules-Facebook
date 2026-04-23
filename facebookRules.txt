@@ -1,32 +1,21 @@
-! ------------------------------------------------------------
-! 🌌 FB "ABSOLUTE ZERO" v43.3 - REINFORCED (APRIL 2026)
-! ------------------------------------------------------------
+! === 1. STRUCTURAL REMOVAL (FASTEST) ===
+! Deletes the containers by their internal 'Pagelet' IDs before the UI renders.
+facebook.com##div[data-pagelet="Stories"]:remove()
+facebook.com##div[data-pagelet="Reels"]:remove()
+facebook.com##[aria-label*="Stories" i]:remove()
+facebook.com##[aria-label*="Reels" i]:remove()
 
-! === 1. SCRIPTLET INJECTION (The Pre-Processor) ===
-! Nukes ad data from the JSON stream before it hits your browser's renderer.
-facebook.com##+js(json-prune, [].sponsored_data [].is_sponsored [].category_name=="SPONSORED", [?.*.__typename=="SponsoredData"])
-facebook.com##+js(set-constant, FB_LINK_SHIM_RE, /^$/)
+! === 2. THE "ANTI-FLICKER" SCRIPTLET ===
+! Intercepts the ad/story data at the network level to prevent it from reaching the feed.
+facebook.com##+js(facebook-feeds-filter, sponsored | suggested | engagement | stories)
 
-! === 2. THE "ARIA-DESCRIPTION" SNIPER ===
-! Meta has shifted the "Sponsored" label to hidden aria attributes to hide from text filters.
-facebook.com##div[role="feed"] div[role="article"]:has([aria-description*="Sponsored" i], [aria-description*="Publicitate" i]):upward(div[role="feed"] > div)
+! === 3. DEEP CLEAN (SPONSORED & REELS) ===
+! Link-based removal to ensure sponsored content and reels are gone for good.
+facebook.com##div[role="feed"] > div:has(a[href*="/reels/"]):remove()
+facebook.com##div[role="feed"] > div:has(a[href*="/reel/"]):remove()
+facebook.com##div[role="feed"] > div:has([aria-description*="Spon" i]):remove()
+facebook.com##div[role="feed"] > div:has(svg path[d^="M12 2C6.477"]):remove()
 
-! === 3. HIDDEN DIV SPACER ATTACK ===
-! Targets ads using invisible 0px dividers to break up the "S p o n s o r e d" text.
-facebook.com##div[role="article"]:has(span[style*="display:none"] + span):has(span[style*="position:absolute"]):upward(div[role="feed"] > div)
-facebook.com##div[role="article"]:has(div[style*="width: 0px"]):upward(div[role="feed"] > div)
-
-! === 4. LINK & PERMALINK RE-VALIDATOR ===
-! Any feed item lacking a clean internal FB path (like /posts/) is treated as an ad.
-facebook.com##div[role="feed"] div[role="article"]:not(:has(a[href*="/posts/"], a[href*="/videos/"], a[href*="/groups/"], a[href*="permalink"], a[href*="/photos/"], a[href*="/story.php"], a[href*="/events/"], a[href*="/reel/"])):upward(div[role="feed"] > div)
-
-! === 5. SVG GEOMETRY REFINEMENT ===
-! Targets the specific icon fingerprint Meta places next to the word "Ad" or "Sponsored".
-facebook.com##div[role="article"] svg path[d^="M12 2C6.477"]:upward(div[role="feed"] > div)
-facebook.com##div[role="article"] svg:has(use[*|href]):upward(div[role="feed"] > div)
-
-! === 6. SUGGESTED & REELS CLEANUP ===
-facebook.com##div[role="feed"] > div:has-text(/\b(Suggested|Sugestii|Recommended|Recomandate|People you may know|Persoane pe care|Join group|Alătură-te|Follow|Urmărește)\b/i)
-facebook.com##div[aria-label*="Stories" i]
-facebook.com##a[href^="/reel/"], a[href^="/reels/"]
-facebook.com##div[data-pagelet="RightRail"]
+! === 4. WHITELIST PROTECTION (SPEED SAFETY NET) ===
+! Deletes everything that isn't a verified friend/group post.
+facebook.com##div[role="feed"] > div:not(:has(a[href*="/posts/"], a[href*="/groups/"], a[href*="permalink"], a[href*="/photos/"], a[href*="fbid="], a[href*="/pcb."])):remove()
