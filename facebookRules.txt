@@ -1,45 +1,19 @@
-! ============================================================
-! FRIENDS-ONLY SIMULATION (GLOBAL VOID)
-! ============================================================
+! === 1. REELS & SUGGESTED (STABLE VERSION) ===
+! Only targets the specific article, not the whole feed container
+facebook.com##div[role="feed"] [role="article"]:has-text(/Suggested for you/):style(display:none !important;)
+facebook.com##div[role="feed"] [role="article"]:has-text(/Reels and short videos/):style(display:none !important;)
+facebook.com##div[aria-label="Reels"]
+facebook.com##div[aria-label="Stories"]
 
-! 1. NUKE THE ALGORITHMIC "HOME" UNIT
-! Targets the specific container used for Suggested/Reels carousels
-facebook.com##div[role="feed"] > div:not(:has([role="article"])):style(content-visibility: hidden !important; transform: scale3d(0,0,0) !important;)
+! === 2. SPONSORED CONTENT (RELIABLE) ===
+! Targets the specific 'Sponsored' text to avoid accidental feed breakage
+facebook.com##div[role="feed"] [role="article"]:has(span:has-text(/^Sponsored$/)):style(display:none !important;)
 
-! 2. REELS/SUGGESTED SIDE-CHANNELS
-! Force-collapses sections labeled "Reels", "Stories", or "Suggested"
-facebook.com##[aria-label*="Reels"], [aria-label*="Stories"], [aria-label*="Suggested"]:style(display: none !important;)
+! === 3. THE SCRIPTLET (KEEP DISABLED IF FEED STICKS) ===
+! Remove the '!' below ONLY if you have "I am an advanced user" checked in uBO
+! facebook.com##+js(facebook-feeds-filter, engagement|suggested|promotion)
 
-! 3. SCRIPTLET: INTERCEPT ENGAGEMENT DATA
-! This stops the "User X liked Y" or "Suggested because you like Z" data from populating
-facebook.com##+js(facebook-feeds-filter, engagement|suggested|friend_recommendation)
-
-
-! ============================================================
-! THE SAINT PROTOCOL: FINAL SPONSORED ELIMINATION
-! ============================================================
-
-! 1. THE ACTION-BUTTON SNIPER
-! Most ads have a specific "Shop Now", "Learn More", or "Sign Up" button. This kills the entire post if those exist.
-facebook.com##div[role="feed"] [role="article"]:has(div[aria-label="Shop Now"], div[aria-label="Learn More"], div[aria-label="Sign Up"], div[aria-label="Install Now"]):style(display: none !important;)
-
-! 2. THE ADS-INFO LINK (The "Why am I seeing this?" detector)
-! Every ad must have a link to the "Ads About" info. This is the most reliable way to catch them.
-facebook.com##div[role="feed"] [role="article"]:has(a[href*="/ads/about/"]):style(display: none !important;)
-
-! 3. THE "SPONSORED" CHARACTER BYPASS
-! Facebook hides "Sponsored" by putting every letter in a different span. This looks for those specific nested patterns.
-facebook.com##div[role="feed"] [role="article"]:has(span[style*="order"]):style(display: none !important;)
-
-! 4. ZERO-RESIDUE FEED CLEANER
-! Kills the empty gray boxes left behind where the ad used to be.
-facebook.com##div[role="feed"] > div:not(:has([aria-posinset])):style(display: none !important;)
-
-! 5. ADVANCED SCRIPTLET (Requires "Advanced User" in uBlock settings)
-! Forces the feed to filter out promotion packets before they even render.
-facebook.com##+js(facebook-feeds-filter, sponsored_post|promotion|engagement)
-
-
-
-
-
+! === 4. FEED REPAIR (THE FIX) ===
+! Removed the "div:empty" rule because it breaks infinite scroll. 
+! Instead, we ensure the feed container itself stays visible.
+facebook.com##div[role="feed"]:style(display: block !important; opacity: 1 !important;)
