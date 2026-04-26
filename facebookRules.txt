@@ -1,19 +1,24 @@
-! === 1. REELS & SUGGESTED (STABLE VERSION) ===
-! Only targets the specific article, not the whole feed container
-facebook.com##div[role="feed"] [role="article"]:has-text(/Suggested for you/):style(display:none !important;)
-facebook.com##div[role="feed"] [role="article"]:has-text(/Reels and short videos/):style(display:none !important;)
-facebook.com##div[aria-label="Reels"]
-facebook.com##div[aria-label="Stories"]
+! === 1. CORE FEED REPAIR (THE FOUNDATION) ===
+! Forces the feed to stay active and prevents "joining" or overlapping of posts
+facebook.com##div[role="feed"]:style(display: flex !important; flex-direction: column !important; visibility: visible !important; opacity: 1 !important;)
 
-! === 2. SPONSORED CONTENT (RELIABLE) ===
-! Targets the specific 'Sponsored' text to avoid accidental feed breakage
-facebook.com##div[role="feed"] [role="article"]:has(span:has-text(/^Sponsored$/)):style(display:none !important;)
+! === 2. REELS, STORIES & SUGGESTED (ZERO-HEIGHT METHOD) ===
+! We target the article but keep it in the DOM to bypass void detection
+facebook.com##div[role="feed"] [role="article"]:has-text(/Suggested for you|Reels and short videos/):style(height: 0px !important; overflow: hidden !important; visibility: hidden !important; margin: 0px !important; padding: 0px !important; border: none !important;)
+facebook.com##div[aria-label="Reels"]:style(display: none !important;)
+facebook.com##div[aria-label="Stories"]:style(display: none !important;)
 
-! === 3. THE SCRIPTLET (KEEP DISABLED IF FEED STICKS) ===
-! Remove the '!' below ONLY if you have "I am an advanced user" checked in uBO
+! === 3. SPONSORED CONTENT (RELIABLE BYPASS) ===
+! Targets the 'Sponsored' label via multiple attributes to catch obfuscated text
+facebook.com##div[role="feed"] [role="article"]:has(a[aria-label="Sponsored"]):style(height: 0px !important; overflow: hidden !important; visibility: hidden !important; margin: 0px !important;)
+facebook.com##div[role="feed"] [role="article"]:has(span:has-text(/^Sponsored$/)):style(height: 0px !important; overflow: hidden !important; visibility: hidden !important; margin: 0px !important;)
+
+! === 4. VOID PREVENTION & CLEANUP ===
+! Collapses any empty wrapper divs that Facebook leaves behind to prevent "stuttering" scroll
+facebook.com##div[role="feed"] > div:empty:style(height: 0px !important; margin: 0px !important;)
+facebook.com##div[role="feed"] > div > div:empty:style(height: 0px !important; margin: 0px !important;)
+
+! === 5. ADVANCED SCRIPTLET (REQUIRES 'ADVANCED USER' MODE) ===
+! This actively filters the data stream before it renders. 
+! Only uncomment (remove '!') if you have "I am an advanced user" checked in uBO settings.
 ! facebook.com##+js(facebook-feeds-filter, engagement|suggested|promotion)
-
-! === 4. FEED REPAIR (THE FIX) ===
-! Removed the "div:empty" rule because it breaks infinite scroll. 
-! Instead, we ensure the feed container itself stays visible.
-facebook.com##div[role="feed"]:style(display: block !important; opacity: 1 !important;)
