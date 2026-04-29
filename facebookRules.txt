@@ -1,24 +1,25 @@
-! === 1. CORE FEED REPAIR (THE FOUNDATION) ===
-! Forces the feed to stay active and prevents "joining" or overlapping of posts
-facebook.com##div[role="feed"]:style(display: flex !important; flex-direction: column !important; visibility: visible !important; opacity: 1 !important;)
+! === 1. FEED STABILIZER ===
+facebook.com##div[role="feed"]:style(display: flex !important; flex-direction: column !important; min-height: 100vh !important;)
 
-! === 2. REELS, STORIES & SUGGESTED (ZERO-HEIGHT METHOD) ===
-! We target the article but keep it in the DOM to bypass void detection
-facebook.com##div[role="feed"] [role="article"]:has-text(/Suggested for you|Reels and short videos/):style(height: 0px !important; overflow: hidden !important; visibility: hidden !important; margin: 0px !important; padding: 0px !important; border: none !important;)
-facebook.com##div[aria-label="Reels"]:style(display: none !important;)
+! === 2. DATA-LEVEL STARVATION (THE REFRESH FIX) ===
+! This intercepts the raw feed data and deletes Sponsored/Group nodes.
+! MANDATORY: uBO Dashboard > Settings > Check "I am an advanced user".
+facebook.com##+js(facebook-feeds-filter, engagement|suggested|promotion|sponsored|groups|community|video_buy_it_now|suggested_groups)
+
+! === 3. JSON SNIPER (EXPERIMENTAL BYPASS KILLER) ===
+! Targets the deep GraphQL data structures Facebook uses for "Sponsored" posts.
+facebook.com##+js(jsonl-edit-xhr-response, .data.node[?.*.__typename=="SponsoredData"], propsToMatch, /graphql)
+
+! === 4. THE GIGANTIC GHOST (VISIBILITY BYPASS) ===
+! Micro-targets metadata. If an ad somehow leaks past the scriptlet, it becomes a 100vh invisible ghost.
+facebook.com##div[role="feed"] [role="article"]:has(a[href*="/ads/about"]):style(height: 100vh !important; opacity: 0 !important; position: absolute !important; z-index: -1 !important;)
+facebook.com##div[role="feed"] [role="article"]:has(a[href*="/groups/discover"]):style(height: 100vh !important; opacity: 0 !important; position: absolute !important; z-index: -1 !important;)
+facebook.com##div[role="feed"] [role="article"]:has([aria-label^="Join"]):style(height: 100vh !important; opacity: 0 !important; position: absolute !important; z-index: -1 !important;)
+
+! === 5. ZERO-GAP COMPRESSION ===
+! Force-collapses the containers of any "Ghost" elements to keep the feed tight.
+facebook.com##div[role="feed"] > div:has(> [style*="position: absolute"]):style(height: 0px !important; margin: 0px !important; visibility: hidden !important;)
+
+! === 6. TOTAL WIPEOUT (REELS & STORIES) ===
 facebook.com##div[aria-label="Stories"]:style(display: none !important;)
-
-! === 3. SPONSORED CONTENT (RELIABLE BYPASS) ===
-! Targets the 'Sponsored' label via multiple attributes to catch obfuscated text
-facebook.com##div[role="feed"] [role="article"]:has(a[aria-label="Sponsored"]):style(height: 0px !important; overflow: hidden !important; visibility: hidden !important; margin: 0px !important;)
-facebook.com##div[role="feed"] [role="article"]:has(span:has-text(/^Sponsored$/)):style(height: 0px !important; overflow: hidden !important; visibility: hidden !important; margin: 0px !important;)
-
-! === 4. VOID PREVENTION & CLEANUP ===
-! Collapses any empty wrapper divs that Facebook leaves behind to prevent "stuttering" scroll
-facebook.com##div[role="feed"] > div:empty:style(height: 0px !important; margin: 0px !important;)
-facebook.com##div[role="feed"] > div > div:empty:style(height: 0px !important; margin: 0px !important;)
-
-! === 5. ADVANCED SCRIPTLET (REQUIRES 'ADVANCED USER' MODE) ===
-! This actively filters the data stream before it renders. 
-! Only uncomment (remove '!') if you have "I am an advanced user" checked in uBO settings.
-! facebook.com##+js(facebook-feeds-filter, engagement|suggested|promotion)
+facebook.com##div[aria-label="Reels"]:style(display: none !important;)
