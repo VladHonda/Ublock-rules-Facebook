@@ -1,25 +1,18 @@
-! === 1. FEED STABILIZER ===
-facebook.com##div[role="feed"]:style(display: flex !important; flex-direction: column !important; min-height: 100vh !important;)
+! === 1. THE AD-STRUCTURE KILLER ===
+! Targets the mandatory "About Ads" link hidden in the ad menu.
+facebook.com##div[role="feed"] [role="article"]:has(a[href*="/ads/about"]):style(display:none !important;)
 
-! === 2. DATA-LEVEL STARVATION (THE REFRESH FIX) ===
-! This intercepts the raw feed data and deletes Sponsored/Group nodes.
-! MANDATORY: uBO Dashboard > Settings > Check "I am an advanced user".
-facebook.com##+js(facebook-feeds-filter, engagement|suggested|promotion|sponsored|groups|community|video_buy_it_now|suggested_groups)
+! === 2. THE SVG ICON TARGET ===
+! FB uses icons instead of text for "Sponsored" now. This nukes those containers.
+facebook.com##div[role="feed"] [role="article"]:has(svg):has-text(/S/):has-text(/p/):has-text(/o/):style(display:none !important;)
 
-! === 3. JSON SNIPER (EXPERIMENTAL BYPASS KILLER) ===
-! Targets the deep GraphQL data structures Facebook uses for "Sponsored" posts.
-facebook.com##+js(jsonl-edit-xhr-response, .data.node[?.*.__typename=="SponsoredData"], propsToMatch, /graphql)
+! === 3. SUGGESTED & GROUPS KILLER ===
+! Kills any post with a Join/Follow button or the "Suggested" header.
+facebook.com##div[role="feed"] [role="article"]:has(div[aria-label^="Join"]):style(display:none !important;)
+facebook.com##div[role="feed"] [role="article"]:has(div[aria-label^="Follow"]):style(display:none !important;)
+facebook.com##div[role="feed"] [role="article"]:has-text(/Suggested/):style(display:none !important;)
+facebook.com##div[role="feed"] [role="article"]:has-text(/Your group suggestions/):style(display:none !important;)
 
-! === 4. THE GIGANTIC GHOST (VISIBILITY BYPASS) ===
-! Micro-targets metadata. If an ad somehow leaks past the scriptlet, it becomes a 100vh invisible ghost.
-facebook.com##div[role="feed"] [role="article"]:has(a[href*="/ads/about"]):style(height: 100vh !important; opacity: 0 !important; position: absolute !important; z-index: -1 !important;)
-facebook.com##div[role="feed"] [role="article"]:has(a[href*="/groups/discover"]):style(height: 100vh !important; opacity: 0 !important; position: absolute !important; z-index: -1 !important;)
-facebook.com##div[role="feed"] [role="article"]:has([aria-label^="Join"]):style(height: 100vh !important; opacity: 0 !important; position: absolute !important; z-index: -1 !important;)
-
-! === 5. ZERO-GAP COMPRESSION ===
-! Force-collapses the containers of any "Ghost" elements to keep the feed tight.
-facebook.com##div[role="feed"] > div:has(> [style*="position: absolute"]):style(height: 0px !important; margin: 0px !important; visibility: hidden !important;)
-
-! === 6. TOTAL WIPEOUT (REELS & STORIES) ===
-facebook.com##div[aria-label="Stories"]:style(display: none !important;)
-facebook.com##div[aria-label="Reels"]:style(display: none !important;)
+! === 4. CLEANUP ===
+facebook.com##div[aria-label="Stories"]:style(display:none !important;)
+facebook.com##div[aria-label="Reels"]:style(display:none !important;)
