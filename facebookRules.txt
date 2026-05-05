@@ -1,18 +1,23 @@
-! === 1. THE AD-STRUCTURE KILLER ===
-! Targets the mandatory "About Ads" link hidden in the ad menu.
-facebook.com##div[role="feed"] [role="article"]:has(a[href*="/ads/about"]):style(display:none !important;)
+! === 1. THE STORY & REEL TRAY KILLER ===
+! Nukes the top bar containing "Create a Story" and the Reels tray
+facebook.com##div[data-pagelet="Stories"]:style(display: none !important;)
+facebook.com##div[role="main"] div:has-text(/^Create story$/):upward(2):style(display: none !important;)
+facebook.com##div[role="main"] div:has-text(/^Reels$/):upward(2):style(display: none !important;)
 
-! === 2. THE SVG ICON TARGET ===
-! FB uses icons instead of text for "Sponsored" now. This nukes those containers.
-facebook.com##div[role="feed"] [role="article"]:has(svg):has-text(/S/):has-text(/p/):has-text(/o/):style(display:none !important;)
+! === 2. FEED-BASED REELS & SUGGESTED ===
+! Removes video units and "Suggested for you" posts from the main feed
+facebook.com##div[data-pagelet^="FeedUnit"]:has(a[href*="/reels/"]):style(display: none !important;)
+facebook.com##div[data-pagelet^="FeedUnit"]:has(a[href*="/reel/"]):style(display: none !important;)
+facebook.com##div[data-pagelet^="FeedUnit"]:has-text(/S[^\w]*u[^\w]*g[^\w]*g[^\w]*e[^\w]*s[^\w]*t[^\w]*e[^\w]*d/i):style(display: none !important;)
+facebook.com##div[data-pagelet^="FeedUnit"]:has-text(/S[^\w]*p[^\w]*o[^\w]*n[^\w]*s[^\w]*o[^\w]*r[^\w]*e[^\w]*d/i):style(display: none !important;)
 
-! === 3. SUGGESTED & GROUPS KILLER ===
-! Kills any post with a Join/Follow button or the "Suggested" header.
-facebook.com##div[role="feed"] [role="article"]:has(div[aria-label^="Join"]):style(display:none !important;)
-facebook.com##div[role="feed"] [role="article"]:has(div[aria-label^="Follow"]):style(display:none !important;)
-facebook.com##div[role="feed"] [role="article"]:has-text(/Suggested/):style(display:none !important;)
-facebook.com##div[role="feed"] [role="article"]:has-text(/Your group suggestions/):style(display:none !important;)
+! === 3. BUTTONS & UI CLEANUP ===
+! Removes the "Create Reel" and "Reels" buttons from the navigation and composer
+facebook.com##div[role="navigation"] a[href*="/reels/"]:style(display: none !important;)
+facebook.com##div[role="navigation"] a[href*="/watch/"]:style(display: none !important;)
+facebook.com##div[aria-label="Reels"]:style(display: none !important;)
+facebook.com##div:has(> i[style*="/reels/"]):upward(1):style(display: none !important;)
 
-! === 4. CLEANUP ===
-facebook.com##div[aria-label="Stories"]:style(display:none !important;)
-facebook.com##div[aria-label="Reels"]:style(display:none !important;)
+! === 4. ENGAGEMENT TRASH ===
+! People You May Know
+facebook.com##div[data-pagelet^="FeedUnit"]:has([aria-label*="People You May Know"]):style(display: none !important;)
