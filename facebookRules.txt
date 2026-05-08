@@ -5,14 +5,19 @@ facebook.com##[aria-label="Reels tray"]
 ! If the above fails, this is the most efficient text-based fallback
 facebook.com##div[role="main"] div:has-text(/^Reels$/i):xpath(ancestor::div[4])
 
-! === 2. SUGGESTED & PYMK (Fast Label Matching) ===
-! Targets the specific labels Facebook uses for accessibility (Very Fast)
-facebook.com##div[role="feed"] [aria-label="People You May Know"]:xpath(ancestor::div[1])
-facebook.com##div[role="feed"] [aria-label="Suggested for you"]:xpath(ancestor::div[1])
-
 ! Targets the "Add Friend" button containers directly
 facebook.com##div[role="feed"] div:has(> div[aria-label="Add Friend"])
 
-! === 3. PREVENTING FEED BREAKAGE (Exemptions) ===
+! === 2. PREVENTING FEED BREAKAGE (Exemptions) ===
 facebook.com#@#div[role="main"]
 facebook.com#@#div[role="feed"]
+
+! 1. Blochează scriptul de integritate al Facebook
+facebook.com##+js(set-constant, FB_SERVER_CONFIG.RELOAD_ON_ERROR, false)
+
+! 2. Ascunde PYMK/Suggested fără a le modifica dimensiunile (păstrează scroll-ul activ)
+facebook.com##div[role="feed"] > div:has-text(/Suggested for you|People You May Know/i):style(opacity: 0 !important; pointer-events: none !important; position: absolute !important; left: -9999px !important;)
+
+! 3. Șterge automat orice fereastră de eroare, indiferent unde apare
+facebook.com##div:has-text(/Something went wrong/i):xpath(ancestor::div[contains(@class, 'x')][1]):remove()
+
