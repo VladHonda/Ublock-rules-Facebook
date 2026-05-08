@@ -1,32 +1,18 @@
-! === 1. THE STORY & REEL TRAY KILLER ===
-! Nukes the top bar containing "Create a Story" and the Reels tray
-facebook.com##div[data-pagelet="Stories"]:style(display: none !important;)
-facebook.com##div[role="main"] div:has-text(/^Create story$/):upward(2):style(display: none !important;)
-facebook.com##div[role="main"] div:has-text(/^Reels$/):upward(2):style(display: none !important;)
+! === 1. STORIES & REELS (Fast Attribute Matching) ===
+facebook.com##[data-pagelet="Stories"]
+facebook.com##[aria-label="Stories"]
+facebook.com##[aria-label="Reels tray"]
+! If the above fails, this is the most efficient text-based fallback
+facebook.com##div[role="main"] div:has-text(/^Reels$/i):xpath(ancestor::div[4])
 
-! === 2. FEED-BASED REELS & SUGGESTED ===
-! Removes video units and "Suggested for you" posts from the main feed
-facebook.com##div[data-pagelet^="FeedUnit"]:has(a[href*="/reels/"]):style(display: none !important;)
-facebook.com##div[data-pagelet^="FeedUnit"]:has(a[href*="/reel/"]):style(display: none !important;)
-facebook.com##div[data-pagelet^="FeedUnit"]:has-text(/S[^\w]*u[^\w]*g[^\w]*g[^\w]*e[^\w]*s[^\w]*t[^\w]*e[^\w]*d/i):style(display: none !important;)
-facebook.com##div[data-pagelet^="FeedUnit"]:has-text(/S[^\w]*p[^\w]*o[^\w]*n[^\w]*s[^\w]*o[^\w]*r[^\w]*e[^\w]*d/i):style(display: none !important;)
+! === 2. SUGGESTED & PYMK (Fast Label Matching) ===
+! Targets the specific labels Facebook uses for accessibility (Very Fast)
+facebook.com##div[role="feed"] [aria-label="People You May Know"]:xpath(ancestor::div[1])
+facebook.com##div[role="feed"] [aria-label="Suggested for you"]:xpath(ancestor::div[1])
 
-! === 3. BUTTONS & UI CLEANUP ===
-! Removes the "Create Reel" and "Reels" buttons from the navigation and composer
-facebook.com##div[role="navigation"] a[href*="/reels/"]:style(display: none !important;)
-facebook.com##div[role="navigation"] a[href*="/watch/"]:style(display: none !important;)
-facebook.com##div[aria-label="Reels"]:style(display: none !important;)
-facebook.com##div:has(> i[style*="/reels/"]):upward(1):style(display: none !important;)
+! Targets the "Add Friend" button containers directly
+facebook.com##div[role="feed"] div:has(> div[aria-label="Add Friend"])
 
-! 1. Target the 'Suggestions' metadata attribute (very effective in 2026)
-facebook.com##div[data-pagelet^="FeedUnit"]:has([data-testid*="suggestion"]):style(display: none !important;)
-
-! 2. Target the specific 'Friend Request' icon (the silhouette) inside a feed unit
-facebook.com##div[role="feed"] > div:has(i[style*="/rsrc.php/v4/yC/r/"]):style(display: none !important;)
-
-! 3. Target any unit that contains the specific 'Add Friend' button structure
-facebook.com##div[role="feed"] > div:has(div[aria-label="Add Friend"]):style(display: none !important;)
-
-! 4. The 'Nuclear' catch-all for horizontal carousels with profile links
-facebook.com##div[role="feed"] > div:has(div[aria-label="Next"]):has(a[href*="/user/"]):style(display: none !important;)
-
+! === 3. PREVENTING FEED BREAKAGE (Exemptions) ===
+facebook.com#@#div[role="main"]
+facebook.com#@#div[role="feed"]
