@@ -1,23 +1,31 @@
-! === 1. STORIES & REELS (Fast Attribute Matching) ===
-facebook.com##[data-pagelet="Stories"]
-facebook.com##[aria-label="Stories"]
-facebook.com##[aria-label="Reels tray"]
-! If the above fails, this is the most efficient text-based fallback
-facebook.com##div[role="main"] div:has-text(/^Reels$/i):xpath(ancestor::div[4])
+! === 1. TOP-LEVEL UI (CLEANER SELECTORS) ===
+facebook.com##[data-pagelet="Stories"], [aria-label="Stories"], [aria-label="Reels tray"]
 
-! Targets the "Add Friend" button containers directly
-facebook.com##div[role="feed"] div:has(> div[aria-label="Add Friend"])
+! === 2. SUGGESTED & SPONSORED (HIGH PERFORMANCE) ===
+! Replaced opacity/height with display:none to prevent layout ghosting
+facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Sugestii pentru tine|Recommended|Sponsored|Publicitate/i):style(display: none !important;)
 
-! === 2. PREVENTING FEED BREAKAGE (Exemptions) ===
-facebook.com#@#div[role="main"]
-facebook.com#@#div[role="feed"]
-
-! 1. Blochează scriptul de integritate al Facebook
+! === 3. STABILITY ===
 facebook.com##+js(set-constant, FB_SERVER_CONFIG.RELOAD_ON_ERROR, false)
 
-! 2. Ascunde PYMK/Suggested fără a le modifica dimensiunile (păstrează scroll-ul activ)
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you|People You May Know/i):style(opacity: 0 !important; pointer-events: none !important; position: absolute !important; left: -9999px !important;)
+! === 4. REFINED FOLLOW/JOIN KILLER ===
+! Targets Feed items where "Follow/Join" appears specifically near the profile/header area
+! This prevents accidentally hiding a friend's post just because they typed the word "Join" in their caption.
+facebook.com##div[role="feed"] > div:has(span:is([role="button"], a):has-text(/(Follow|Join|Urmărește|Alătură-te)/i)):style(display: none !important;)
 
-! 3. Șterge automat orice fereastră de eroare, indiferent unde apare
-facebook.com##div:has-text(/Something went wrong/i):xpath(ancestor::div[contains(@class, 'x')][1]):remove()
+! Targets the "dot" separator followed by Follow/Join (classic Suggested format)
+facebook.com##div[role="feed"] > div:has(span:has-text(/·/)):has-text(/(Follow|Join|Urmărește|Alătură-te)/i):style(display: none !important;)
+
+! === 5. DEEP STRUCTURE PYMK KILLER (MAY 2026) ===
+! Targets the section by its unique "Add Friend" icon button structure
+facebook.com##div[role="feed"] div:has(> div[aria-label="Add Friend"]):upward(div[role="feed"] > div):style(display: none !important;)
+
+! Targets the carousel container that holds friend suggestion cards
+facebook.com##div[role="feed"] div[aria-label="Suggested"]:upward(div[role="feed"] > div):style(display: none !important;)
+
+! Targets the unit based on the "Remove" (X) button unique to suggestions
+facebook.com##div[role="feed"] div[role="button"][aria-label*="Remove"]:upward(div[role="feed"] > div):style(display: none !important;)
+
+! NEW: Specific targeting for the "Add Friend" text regardless of obfuscation
+facebook.com##div[role="feed"] div[role="button"] span:has-text(/Add Friend|Adaugă ca prieten/i):upward(div[role="feed"] > div):style(display: none !important;)
 
