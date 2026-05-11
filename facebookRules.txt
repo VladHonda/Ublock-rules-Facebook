@@ -1,31 +1,26 @@
-! === 1. TOP-LEVEL UI (CLEANER SELECTORS) ===
-facebook.com##[data-pagelet="Stories"], [aria-label="Stories"], [aria-label="Reels tray"]
+! === 1. FAST UI REMOVAL (ID & ARIA ONLY) ===
+facebook.com##[data-pagelet^="Stories"], [aria-label="Stories"], [aria-label="Reels tray"]
 
-! === 2. SUGGESTED & SPONSORED (HIGH PERFORMANCE) ===
-! Replaced opacity/height with display:none to prevent layout ghosting
-facebook.com##div[role="feed"] > div:has-text(/Suggested for you|Sugestii pentru tine|Recommended|Sponsored|Publicitate/i):style(display: none !important;)
+! === 2. SPONSORED & SUGGESTED (ZERO TEXT SCANNING) ===
+! Uses the specific data-testid or aria labels that FB uses for ads/suggestions
+facebook.com##div[role="feed"] > div:has([aria-label="Sponsored"]):style(display: none !important;)
+facebook.com##div[role="feed"] > div:has([aria-label="Publicitate"]):style(display: none !important;)
+facebook.com##div[role="feed"] > div:has([aria-label="Suggested"]):style(display: none !important;)
 
-! === 3. STABILITY ===
+! === 3. HIGH-SPEED PYMK KILLER (ATTRIBUTE-BASED) ===
+! Faster than text search: targets the 'Add Friend' button's internal structure directly
+facebook.com##div[role="feed"] div[role="button"][aria-label="Add Friend"]:upward(div[role="feed"] > div):style(display: none !important;)
+facebook.com##div[role="feed"] div[role="button"][aria-label="Adaugă ca prieten"]:upward(div[role="feed"] > div):style(display: none !important;)
+
+! Targets the horizontal scroll container (carousel) by its layout signature
+facebook.com##div[role="feed"] [aria-label="Suggested"] + div [role="group"]:upward(div[role="feed"] > div):style(display: none !important;)
+
+! === 4. FOLLOW/JOIN OPTIMIZATION ===
+! Targets the specific 'dot' character (·) and the action link without heavy regex
+facebook.com##div[role="feed"] > div:has(a[href*="/groups/"]):has(span:has-text(/·/)):style(display: none !important;)
+facebook.com##div[role="feed"] > div:has(div[role="button"] span:has-text(/Follow|Urmărește/)):style(display: none !important;)
+
+! === 5. STABILITY & ENGINE SCRIPTS ===
 facebook.com##+js(set-constant, FB_SERVER_CONFIG.RELOAD_ON_ERROR, false)
-
-! === 4. REFINED FOLLOW/JOIN KILLER ===
-! Targets Feed items where "Follow/Join" appears specifically near the profile/header area
-! This prevents accidentally hiding a friend's post just because they typed the word "Join" in their caption.
-facebook.com##div[role="feed"] > div:has(span:is([role="button"], a):has-text(/(Follow|Join|Urmărește|Alătură-te)/i)):style(display: none !important;)
-
-! Targets the "dot" separator followed by Follow/Join (classic Suggested format)
-facebook.com##div[role="feed"] > div:has(span:has-text(/·/)):has-text(/(Follow|Join|Urmărește|Alătură-te)/i):style(display: none !important;)
-
-! === 5. DEEP STRUCTURE PYMK KILLER (MAY 2026) ===
-! Targets the section by its unique "Add Friend" icon button structure
-facebook.com##div[role="feed"] div:has(> div[aria-label="Add Friend"]):upward(div[role="feed"] > div):style(display: none !important;)
-
-! Targets the carousel container that holds friend suggestion cards
-facebook.com##div[role="feed"] div[aria-label="Suggested"]:upward(div[role="feed"] > div):style(display: none !important;)
-
-! Targets the unit based on the "Remove" (X) button unique to suggestions
-facebook.com##div[role="feed"] div[role="button"][aria-label*="Remove"]:upward(div[role="feed"] > div):style(display: none !important;)
-
-! NEW: Specific targeting for the "Add Friend" text regardless of obfuscation
-facebook.com##div[role="feed"] div[role="button"] span:has-text(/Add Friend|Adaugă ca prieten/i):upward(div[role="feed"] > div):style(display: none !important;)
-
+! Prevents the 'Suggested for you' label from triggering background logic
+facebook.com##+js(remove-attr, aria-label, [aria-label="Suggested"])
