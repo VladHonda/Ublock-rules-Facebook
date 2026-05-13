@@ -1,26 +1,61 @@
-! === 1. FAST UI REMOVAL (ID & ARIA ONLY) ===
-facebook.com##[data-pagelet^="Stories"], [aria-label="Stories"], [aria-label="Reels tray"]
-
-! === 2. SPONSORED & SUGGESTED (ZERO TEXT SCANNING) ===
-! Uses the specific data-testid or aria labels that FB uses for ads/suggestions
-facebook.com##div[role="feed"] > div:has([aria-label="Sponsored"]):style(display: none !important;)
-facebook.com##div[role="feed"] > div:has([aria-label="Publicitate"]):style(display: none !important;)
-facebook.com##div[role="feed"] > div:has([aria-label="Suggested"]):style(display: none !important;)
-
-! === 3. HIGH-SPEED PYMK KILLER (ATTRIBUTE-BASED) ===
-! Faster than text search: targets the 'Add Friend' button's internal structure directly
-facebook.com##div[role="feed"] div[role="button"][aria-label="Add Friend"]:upward(div[role="feed"] > div):style(display: none !important;)
-facebook.com##div[role="feed"] div[role="button"][aria-label="Adaugă ca prieten"]:upward(div[role="feed"] > div):style(display: none !important;)
-
-! Targets the horizontal scroll container (carousel) by its layout signature
-facebook.com##div[role="feed"] [aria-label="Suggested"] + div [role="group"]:upward(div[role="feed"] > div):style(display: none !important;)
-
-! === 4. FOLLOW/JOIN OPTIMIZATION ===
-! Targets the specific 'dot' character (·) and the action link without heavy regex
-facebook.com##div[role="feed"] > div:has(a[href*="/groups/"]):has(span:has-text(/·/)):style(display: none !important;)
-facebook.com##div[role="feed"] > div:has(div[role="button"] span:has-text(/Follow|Urmărește/)):style(display: none !important;)
-
-! === 5. STABILITY & ENGINE SCRIPTS ===
+! === 1. NETWORK LEVEL GRAPHQL CLEANER ===
+! Prevents background loading of engagement metric cards and tracking arrays
+facebook.com##+js(trusted-replace-xhr-response, /\{"brs_content_label":[^\n]+?"category":"ENGAGEMENT[^\n]+?"cursor":"[^"]+"\}/g, "", /api\/graphql/)
 facebook.com##+js(set-constant, FB_SERVER_CONFIG.RELOAD_ON_ERROR, false)
-! Prevents the 'Suggested for you' label from triggering background logic
-facebook.com##+js(remove-attr, aria-label, [aria-label="Suggested"])
+
+! === 2. ADS & SUGGESTED FEED POSTS (ATTRIBUTE ENFORCED) ===
+! Eliminates text scanning by matching localized metadata tags
+facebook.com##div[role="feed"] > div:has([aria-label="Sponsored"]):style(display: none !important;)
+
+
+
+! === 5. UI CONTAINER STRIPPING (STORIES, REELS & ECOSYSTEM) ===
+! Drops top banner containers and video rows before processing the lower feed
+facebook.com##[data-pagelet="Stories"]
+facebook.com##div[aria-label="Stories"]
+facebook.com##div[aria-label="Reels"]
+facebook.com##div[aria-label*="Reels" i]:upward(div[role="feed"] > div):style(display: none !important;)
+
+! === 3. CALL TO ACTION INTERCEPTORS (FOLLOW/JOIN BUTTON FEED BLOCKS) ===
+! === 1. REGEX STRING RECONSTRUCTION (Bypasses hidden characters) ===
+facebook.com##div[role="feed"] div[data-pagelet^="FeedUnit"]:has-text(/F\s*o\s*l\s*l\s*o\s*w/i):style(display: none !important;)
+facebook.com##div[role="feed"] div[data-pagelet^="FeedUnit"]:has-text(/J\s*o\s*i\s*n/i):style(display: none !important;)
+
+! === 2. PATHWAY ISOLATION (Targets the exact layout shape of suggested posts) ===
+facebook.com##div[role="feed"] div[data-pagelet^="FeedUnit"]:has(div[role="button"] span:has-text(/^Follow$/i)):style(display: none !important;)
+facebook.com##div[role="feed"] div[data-pagelet^="FeedUnit"]:has(div[role="button"] span:has-text(/^Join$/i)):style(display: none !important;)
+
+! === 3. LINK METADATA INTERCEPTION (Blocks via backend link properties) ===
+facebook.com##div[role="feed"] div[data-pagelet^="FeedUnit"]:has(a[href*="facebook.com"]):style(display: none !important;)
+facebook.com##div[role="feed"] div[data-pagelet^="FeedUnit"]:has(div[role="button"] i[style*="background-image"]):style(display: none !important;)
+
+!== 4. Suggested
+
+facebook.com##div[role="feed"] [aria-label="Suggested"] + div [role="group"]:upward(div[role="feed"] > div):style(display: none !important;)
+! Hides 'People You May Know' via the 'Add Friend' button anchor (EN & RO)
+facebook.com##div[role="feed"] [role="button"][aria-label="Add Friend"], div[role="feed"] [role="button"][aria-label="Adaugă ca prieten"]:upward(4):style(display: none !important;)
+
+! Structural match: Hides any feed card where a structural header contains English or Romanian suggestion text
+facebook.com##div[aria-posinset] h3 span:has-text(/^(Suggested|Suggestions|Sugestii)/):upward(div[aria-posinset]):style(display: none !important;)
+
+! Deep-text fallback: Catches hidden layout spans containing the suggestion phrases
+facebook.com##div[aria-posinset] span:has-text(/^(Suggested for you|Sugestii pentru tine)/):upward(div[aria-posinset]):style(display: none !important;)
+
+! Card container block: Targets the actual grid wrapper if it bypasses standard feed post attributes
+facebook.com##div[role="feed"] [role="grid"]:has-text(/^(Suggested|Sugestii)/):upward(1):style(display: none !important;)
+
+
+!== 5 People You May Know
+! Structural anchor: Catches the PYMK section header container via text indicators
+facebook.com##div[aria-posinset]:has-text(/^(People You May Know|Oameni pe care i-ai putea cunoaște)/):style(display: none !important;)
+
+! Card grid anchor: Catches the internal friend request button layout matrix and purges the top feed container
+facebook.com##div[aria-posinset] [role="button"] :has-text(/^(Add Friend|Adaugă ca prieten)/):upward(div[aria-posinset]):style(display: none !important;)
+
+! Carousel fallback: Hides horizontal swipe rows containing add-friend shortcuts
+facebook.com##div[role="feed"] [role="grid"] [role="button"]:has-text(/^(Add Friend|Adaugă ca prieten)/):upward(div[role="feed"] > div):style(display: none !important;)
+
+
+
+
+
