@@ -33,7 +33,13 @@ facebook.com##[aria-label="Reels"]
 
 
 ! 6. JOIN 
-facebook.com##div[role="feed"] > div:has-text(/Join|Follow/):not([role="feed"])
+! Hide Join and Follow elements inside the feed
+! Hide Join and Follow elements inside the feed
+facebook.com##div[role="feed"] div:has-text(/^Join$/):xpath(./ancestor::div[parent::div[@role="feed"]]):remove()
+facebook.com##div[role="feed"] div:has-text(/^Follow$/):xpath(./ancestor::div[parent::div[@role="feed"]]):remove()
+
+! Strict alternative for Suggested posts
 facebook.com##div[role="feed"] > div:has(span:has-text(/^Suggested for you$/))
+
 
 
