@@ -1,28 +1,39 @@
 ! =========================================================
 ! 1. PREVENT FEED CRASHES (STANDARD DISPLAY HIDE)
 ! =========================================================
-facebook.com##div[role="feed"] > div:has([aria-label="Sponsored"])
+facebook.com##div[role="feed"] > div:has([aria-label="Sponsored"]):not([role="feed"])
+facebook.com##div[role="feed"] > div:has([aria-label="Advertisement"]):not([role="feed"])
+
 ! =========================================================
-! 2. ANTI-FALLBACK CARDS (JOIN / SUGGESTED GROUPS & PAGES)
+! 2. ANTI-FALLBACK CARDS SUGGESTED GROUPS & PAGES)
 ! =========================================================
-facebook.com##div[role="feed"] > div:has([aria-label*="Join" i])
-facebook.com##div[role="feed"] > div:has(a[href*="/groups/discover/"])
-facebook.com##div[role="feed"] > div:has([data-pagelet="GroupSuggestions"])
+
+facebook.com##div[role="feed"] > div:has(a[href*="/groups/discover/"]):not([role="feed"])
+facebook.com##div[role="feed"] > div:has([data-pagelet="GroupSuggestions"]):not([role="feed"])
+
 ! =========================================================
 ! 3. PYMK (PEOPLE YOU MAY KNOW) CARD REMOVAL (UPDATED)
 ! =========================================================
-www.facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has([href="/friends/"]):style(height: 0 !important; overflow: hidden !important;)
-
+facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has([href="/friends/"]):style(height: 0 !important; overflow: hidden !important;)
 
 ! =========================================================
-! 4. CLEAN RIGHT SIDEBAR ADS
+! 4. CLEAN RIGHT SIDEBAR ADS (UPDATED & FIXED)
 ! =========================================================
-facebook.com##div[data-pagelet="RightRail"] div[role="complementary"] > div:has(a[href*="/ads/"])
-facebook.com##div[data-pagelet="RightRail"] > div:has([aria-label="Sponsored"])
+facebook.com##div[data-pagelet="RightRail"] div[role="complementary"]
+facebook.com##div[data-pagelet="RightRail"] [aria-label="Sponsored"]
+facebook.com##div[data-pagelet="RightRail"] a[href*="/ads/"]:upward(3)
+facebook.com##div[data-pagelet="RightRail"] h2:has-text(/Sponsored/i):upward(2)
+
 ! =========================================================
 ! 5. CLEAN STORIES & REELS
 ! =========================================================
 facebook.com##[data-pagelet="Stories"]
 facebook.com##[aria-label="Stories"]
 facebook.com##[aria-label="Reels"]
+
+
+! 6. JOIN 
+facebook.com##div[role="feed"] > div:has-text(/Join|Follow/):not([role="feed"])
+facebook.com##div[role="feed"] > div:has(span:has-text(/^Suggested for you$/))
+
 
