@@ -1,23 +1,24 @@
 ! =========================================================
 ! 1. PREVENT FEED CRASHES (STANDARD DISPLAY HIDE)
 ! =========================================================
-facebook.com##div[role="feed"] > div:has([aria-label="Sponsored"]):not([role="feed"])
-facebook.com##div[role="feed"] > div:has([aria-label="Advertisement"]):not([role="feed"])
+facebook.com##div[role="feed"] > div:not([role="feed"]):has([aria-label="Sponsored"], [aria-label="Advertisement"])
 
 ! =========================================================
-! 2. ANTI-FALLBACK CARDS SUGGESTED GROUPS & PAGES)
+! 2. ANTI-FALLBACK CARDS (SUGGESTED GROUPS & PAGES) - UPDATED 2026
 ! =========================================================
-
+facebook.com##div[role="feed"] > div:has(span:has-text(/^Popular near you$/))
+facebook.com##div[role="feed"] > div:has(span:has-text(/^Suggested Groups$/))
 facebook.com##div[role="feed"] > div:has(a[href*="/groups/discover/"]):not([role="feed"])
-facebook.com##div[role="feed"] > div:has([data-pagelet="GroupSuggestions"]):not([role="feed"])
+facebook.com##div[role="feed"] > div:has(span:has-text(/^Join group/i))
+
 
 ! =========================================================
-! 3. PYMK (PEOPLE YOU MAY KNOW) CARD REMOVAL (UPDATED)
+! 3. PYMK (PEOPLE YOU MAY KNOW) CARD REMOVAL
 ! =========================================================
 facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has([href="/friends/"]):style(height: 0 !important; overflow: hidden !important;)
 
 ! =========================================================
-! 4. CLEAN RIGHT SIDEBAR ADS (UPDATED & FIXED)
+! 4. CLEAN RIGHT SIDEBAR ADS
 ! =========================================================
 facebook.com##div[data-pagelet="RightRail"] div[role="complementary"]
 facebook.com##div[data-pagelet="RightRail"] [aria-label="Sponsored"]
@@ -25,21 +26,20 @@ facebook.com##div[data-pagelet="RightRail"] a[href*="/ads/"]:upward(3)
 facebook.com##div[data-pagelet="RightRail"] h2:has-text(/Sponsored/i):upward(2)
 
 ! =========================================================
-! 5. CLEAN STORIES & REELS
+! 5. CLEAN STORIES, REELS & SUGGESTED FEED CONTENT
 ! =========================================================
-facebook.com##[data-pagelet="Stories"]
-facebook.com##[aria-label="Stories"]
-facebook.com##[aria-label="Reels"]
-
-
-! 6. JOIN 
-! Hide Join and Follow elements inside the feed
-! Hide Join and Follow elements inside the feed
-facebook.com##div[role="feed"] div:has-text(/^Join$/):xpath(./ancestor::div[parent::div[@role="feed"]]):remove()
-facebook.com##div[role="feed"] div:has-text(/^Follow$/):xpath(./ancestor::div[parent::div[@role="feed"]]):remove()
-
-! Strict alternative for Suggested posts
+facebook.com##[data-pagelet="Stories"], [aria-label="Stories"], [aria-label="Reels"]
 facebook.com##div[role="feed"] > div:has(span:has-text(/^Suggested for you$/))
+facebook.com##div[role="feed"] div:has-text(/^Join$/):upward(div > div[role="feed"])
+facebook.com##div[role="feed"] div:has-text(/^Follow$/):upward(div > div[role="feed"])
 
+! =========================================================
+! 6. THIRD-PARTY BLOCKS & SPECIFIC ELEMENT HIDES
+! =========================================================
+||eepower.com/uploads/thumbnails/EEPower-com_eiSos_WE-PD_1420x640px.jpg$image
+
+www.facebook.com###_r_3uk_ > span > .x78zum5.x6s0dn4
+www.facebook.com###_r_3ug_ > span > .x78zum5.x6s0dn4 > .x1g0dm76 > .x16ldp7u.xz62fqu.xdt5ytf.x78zum5 > div.x1ok221b.xu06os2 > .x1yc453h.xzsf02u.xk50ysn.xvq8zen.x1f6kntn.x3x7a5m.xudqn12.x1943h6x.x1fgarty.x1cpjm7i.x1gmr53x.xhkezso.x1s928wv.x1lliihq.x1xmvt09.x1vvkbs.x13faqbe.xeuugli.x193iq5w > .x1n2onr6.x10wlt62.x6ikm8r.x1lliihq
+www.facebook.com##.x8du52y.x1164lod.xmzvs34.xwib8y2.xf159sx.x1y1aw1k.x1yc453h.x13fj5qh.xat24cr.x1xegmmw.xdj266r.xjb2p0i.x1ypdohk.x14e42zd.x1qhh985.x10w94by.x972fbf.x1ihp6rs.xr2y4jy.x1whfx0g.x1i5p2am.x78zum5.html-div
 
 
