@@ -1,45 +1,36 @@
-! =========================================================
-! 1. PREVENT FEED CRASHES (STANDARD DISPLAY HIDE)
-! =========================================================
-facebook.com##div[role="feed"] > div:not([role="feed"]):has([aria-label="Sponsored"], [aria-label="Advertisement"])
+! =================================================================
+! THE OCEAN'S LASER DANCE (SURGICAL CAMOUFLAGE) - SPEED OPTIMIZED
+! =================================================================
 
-! =========================================================
-! 2. ANTI-FALLBACK CARDS (SUGGESTED GROUPS & PAGES) - UPDATED 2026
-! =========================================================
-facebook.com##div[role="feed"] > div:has(span:has-text(/^Popular near you$/))
-facebook.com##div[role="feed"] > div:has(span:has-text(/^Suggested Groups$/))
-facebook.com##div[role="feed"] > div:has(a[href*="/groups/discover/"]):not([role="feed"])
-facebook.com##div[role="feed"] > div:has(span:has-text(/^Join group/i))
+! FILTRU INVIZIBILITATE CHIRURGICAL (Combined & optimized to prevent dual rendering path)
+facebook.com##[role="feed"] [role="article"]:has(a[href*="/groups/"]):has(div[role="button"]):style(visibility: hidden !important; pointer-events: none !important;)
 
+! OCOLIRE RECLAME FĂRĂ DECLANȘARE ALARMĂ (Removed heavy 'i' case-insensitivity flags; Facebook uses strict casing)
+facebook.com##[aria-label="Sponsored"], [aria-label="Advertisement"], [aria-label="Publicitate"]:style(visibility: hidden !important; pointer-events: none !important;)
 
-! =========================================================
-! 3. PYMK (PEOPLE YOU MAY KNOW) CARD REMOVAL
-! =========================================================
-facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has([href="/friends/"]):style(height: 0 !important; overflow: hidden !important;)
-
-! =========================================================
-! 4. CLEAN RIGHT SIDEBAR ADS
-! =========================================================
-facebook.com##div[data-pagelet="RightRail"] div[role="complementary"]
-facebook.com##div[data-pagelet="RightRail"] [aria-label="Sponsored"]
-facebook.com##div[data-pagelet="RightRail"] a[href*="/ads/"]:upward(3)
-facebook.com##div[data-pagelet="RightRail"] h2:has-text(/Sponsored/i):upward(2)
-
-! =========================================================
-! 5. CLEAN STORIES, REELS & SUGGESTED FEED CONTENT
-! =========================================================
+! CURĂȚARE ZONE SECUNDARE (STORIES & REELS) (Pure native CSS - extremely fast)
+facebook.com##div[data-pagelet="RightRail"]
 facebook.com##[data-pagelet="Stories"], [aria-label="Stories"], [aria-label="Reels"]
-facebook.com##div[role="feed"] > div:has(span:has-text(/^Suggested for you$/))
-facebook.com##div[role="feed"] div:has-text(/^Join$/):upward(div > div[role="feed"])
-facebook.com##div[role="feed"] div:has-text(/^Follow$/):upward(div > div[role="feed"])
 
-! =========================================================
-! 6. THIRD-PARTY BLOCKS & SPECIFIC ELEMENT HIDES
-! =========================================================
-||eepower.com/uploads/thumbnails/EEPower-com_eiSos_WE-PD_1420x640px.jpg$image
+! CAMUFLAJ PENTRU TEXTE DE SUGESTIE ȘI INTERACȚIUNE
+! === 1. STRUCTURAL 'FOLLOW' & SUGGESTED REMOVAL (Fast specific attribute selectors) ===
+facebook.com##[role="article"] a[href*="focused_id="]:xpath(ancestor::div[@role="article"])
+facebook.com##[role="article"] a[href*="actionable_id="]:xpath(ancestor::div[@role="article"])
+facebook.com##[role="article"]:has(div[data-testid*="post_chevron"]):has(div[role="button"]):style(display: none !important;)
 
-www.facebook.com###_r_3uk_ > span > .x78zum5.x6s0dn4
-www.facebook.com###_r_3ug_ > span > .x78zum5.x6s0dn4 > .x1g0dm76 > .x16ldp7u.xz62fqu.xdt5ytf.x78zum5 > div.x1ok221b.xu06os2 > .x1yc453h.xzsf02u.xk50ysn.xvq8zen.x1f6kntn.x3x7a5m.xudqn12.x1943h6x.x1fgarty.x1cpjm7i.x1gmr53x.xhkezso.x1s928wv.x1lliihq.x1xmvt09.x1vvkbs.x13faqbe.xeuugli.x193iq5w > .x1n2onr6.x10wlt62.x6ikm8r.x1lliihq
-www.facebook.com##.x8du52y.x1164lod.xmzvs34.xwib8y2.xf159sx.x1y1aw1k.x1yc453h.x13fj5qh.xat24cr.x1xegmmw.xdj266r.xjb2p0i.x1ypdohk.x14e42zd.x1qhh985.x10w94by.x972fbf.x1ihp6rs.xr2y4jy.x1whfx0g.x1i5p2am.x78zum5.html-div
+! === 2. STRUCTURAL 'JOIN' REMOVAL ===
+facebook.com##[role="article"] a[href*="/groups/"]:xpath(ancestor::div[@role="article"])
 
+! === 3. STRUCTURAL PYMK CAROUSEL REMOVAL (Fast literal text matches) ===
+! Target structural feed containers based on text signature
+facebook.com##div[role="feed"] > div:has(span:has-text(/^People [Yy]ou [Mm]ay [Kn]ow$/))
+facebook.com##div[role="feed"] > div:has(h3:has-text(/^People [Yy]ou [Mm]ay [Kn]ow$/))
+
+! Catch dynamic variations using ancestor traps
+facebook.com##div[role="feed"] div:has-text(/^People [Yy]ou [Mm]ay [Kn]ow$/):xpath(ancestor::div[contains(@class, "x1y1aw1k")][1])
+facebook.com##div[role="feed"] div:has-text(/^People [Yy]ou [Mm]ay [Kn]ow$/):xpath(ancestor::div[@role="article"][1])
+
+! Legacy and background pagelet data tags
+facebook.com##div[data-pagelet*="PeopleYouMayKnow"]
+facebook.com##[id*="pymk"]
 
