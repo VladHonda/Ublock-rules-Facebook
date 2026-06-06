@@ -1,36 +1,17 @@
 ! =================================================================
-! THE OCEAN'S LASER DANCE (SURGICAL CAMOUFLAGE) - SPEED OPTIMIZED
+! THE OCEAN'S LASER DANCE - LIVE DOM SCRIPTLET PATH (NO CRASH)
 ! =================================================================
 
-! FILTRU INVIZIBILITATE CHIRURGICAL (Combined & optimized to prevent dual rendering path)
-facebook.com##[role="feed"] [role="article"]:has(a[href*="/groups/"]):has(div[role="button"]):style(visibility: hidden !important; pointer-events: none !important;)
+! --- 1. Prevent FB from detecting DOM structural changes ---
+facebook.com#@#div[role="feed"]
+facebook.com#@#div[pagelet^="FeedUnit_"]
 
-! OCOLIRE RECLAME FĂRĂ DECLANȘARE ALARMĂ (Removed heavy 'i' case-insensitivity flags; Facebook uses strict casing)
-facebook.com##[aria-label="Sponsored"], [aria-label="Advertisement"], [aria-label="Publicitate"]:style(visibility: hidden !important; pointer-events: none !important;)
+! --- 2. Remove Sponsored Posts via scriptlet injection (Safest Method) ---
+facebook.com##+js(remove-attr, data-pagelet, div[role="feed"] div[data-pagelet^="FeedUnit_"]:has(span[dir="auto"]:has-text(/Sponsored/i)))
+facebook.com##div[role="feed"] div[data-pagelet^="FeedUnit_"]:has-text(/Sponsored/i):style(visibility: hidden !important; height: 0 !important; padding: 0 !important; margin: 0 !important;)
 
-! CURĂȚARE ZONE SECUNDARE (STORIES & REELS) (Pure native CSS - extremely fast)
-facebook.com##div[data-pagelet="RightRail"]
-facebook.com##[data-pagelet="Stories"], [aria-label="Stories"], [aria-label="Reels"]
-
-! CAMUFLAJ PENTRU TEXTE DE SUGESTIE ȘI INTERACȚIUNE
-! === 1. STRUCTURAL 'FOLLOW' & SUGGESTED REMOVAL (Fast specific attribute selectors) ===
-facebook.com##[role="article"] a[href*="focused_id="]:xpath(ancestor::div[@role="article"])
-facebook.com##[role="article"] a[href*="actionable_id="]:xpath(ancestor::div[@role="article"])
-facebook.com##[role="article"]:has(div[data-testid*="post_chevron"]):has(div[role="button"]):style(display: none !important;)
-
-! === 2. STRUCTURAL 'JOIN' REMOVAL ===
-facebook.com##[role="article"] a[href*="/groups/"]:xpath(ancestor::div[@role="article"])
-
-! === 3. STRUCTURAL PYMK CAROUSEL REMOVAL (Fast literal text matches) ===
-! Target structural feed containers based on text signature
-facebook.com##div[role="feed"] > div:has(span:has-text(/^People [Yy]ou [Mm]ay [Kn]ow$/))
-facebook.com##div[role="feed"] > div:has(h3:has-text(/^People [Yy]ou [Mm]ay [Kn]ow$/))
-
-! Catch dynamic variations using ancestor traps
-facebook.com##div[role="feed"] div:has-text(/^People [Yy]ou [Mm]ay [Kn]ow$/):xpath(ancestor::div[contains(@class, "x1y1aw1k")][1])
-facebook.com##div[role="feed"] div:has-text(/^People [Yy]ou [Mm]ay [Kn]ow$/):xpath(ancestor::div[@role="article"][1])
-
-! Legacy and background pagelet data tags
-facebook.com##div[data-pagelet*="PeopleYouMayKnow"]
-facebook.com##[id*="pymk"]
-
+! --- 3. Clean up the sidebars without breaking feed memory ---
+facebook.com##[data-pagelet="RightRail"]
+facebook.com##[data-pagelet="Stories"]
+facebook.com##[aria-label="Stories"]
+facebook.com##[aria-label="Reels"]
