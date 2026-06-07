@@ -12,6 +12,17 @@ facebook.com##div[role="feed"] div[data-pagelet^="FeedUnit_"]:has-text(/Sponsore
 
 ! --- 3. Clean up the sidebars without breaking feed memory ---
 facebook.com##[data-pagelet="RightRail"]
-facebook.com##[data-pagelet="Stories"]
-facebook.com##[aria-label="Stories"]
 facebook.com##[aria-label="Reels"]
+
+! --- 4. Stories
+! Hides the horizontal top-of-feed Stories container by finding the tracking source URL
+facebook.com##[aria-posinset] [href^="/stories/"][href*="source=from_feed"]:upward([aria-posinset])
+web.facebook.com##[aria-posinset] [href^="/stories/"][href*="source=from_feed"]:upward([aria-posinset])
+
+! Aggressive procedural rule targeting elements containing the text "Stories" near the feed entry points
+facebook.com##div[role="feed"] h3:has-text(/^Stories$/):upward(2)
+facebook.com##div[role="main"] h3:has-text(/^Stories$/):upward(2)
+
+! Backup filter to grab the absolute top grid row box structure if it changes tags
+facebook.com##[role="main"] [role="grid"]:has([href^="/stories/"]):upward(1)
+
