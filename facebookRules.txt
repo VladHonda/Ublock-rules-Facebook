@@ -1,28 +1,24 @@
 ! =================================================================
-! THE OCEAN'S LASER DANCE - LIVE DOM SCRIPTLET PATH (NO CRASH)
+! THE OCEAN'S LASER DANCE - CHRONO-FEED HIGH-VELOCITY EDITION
 ! =================================================================
 
-! --- 1. Prevent FB from detecting DOM structural changes ---
-facebook.com#@#div[role="feed"]
-facebook.com#@#div[pagelet^="FeedUnit_"]
+! --- The Unified Feed Engine (Massive Speed Optimization) ---
+! Evaluates the main post container exactly once against all rule-types simultaneously
+facebook.com##[role="feed"] [role="article"]:has-text(/^Sponsored$|^Sponsorizat$|^Suggested for you$|^Sugestii pentru tine$|^People you may know$|^Persoane pe care le-ai putea cunoaște$/i)
 
-! --- 2. Remove Sponsored Posts via scriptlet injection (Safest Method) ---
-facebook.com##+js(remove-attr, data-pagelet, div[role="feed"] div[data-pagelet^="FeedUnit_"]:has(span[dir="auto"]:has-text(/Sponsored/i)))
-facebook.com##div[role="feed"] div[data-pagelet^="FeedUnit_"]:has-text(/Sponsored/i):style(visibility: hidden !important; height: 0 !important; padding: 0 !important; margin: 0 !important;)
+! --- Action-Button Engine (Merged & Optimized native :has) ---
+! Replaced all slow ':upward()' rules with native structural matching
+facebook.com##[role="feed"] [role="article"]:is(:has-text(/Follow|Join|Urmărește|Alătură/i), :has([aria-label*="Follow"], [aria-label*="Urmărește"]), :has(a[href*="/groups/"]), :has(a[href*="/discover/"]))
 
-! --- 3. Clean up the sidebars without breaking feed memory ---
-facebook.com##[data-pagelet="RightRail"]
-facebook.com##[aria-label="Reels"]
+! --- Stories & Reels Purge (Batched Layout Engine) ---
+facebook.com##[aria-label="Stories"], [aria-label="Reels"], div:has(> [aria-label="Reels"]), div[role="feed"] h3:has-text(/^Stories$/), div[role="feed"] a[href^="/stories/"]:style(display: none !important;)
 
-! --- 4. Stories
-! Hides the horizontal top-of-feed Stories container by finding the tracking source URL
-facebook.com##[aria-posinset] [href^="/stories/"][href*="source=from_feed"]:upward([aria-posinset])
-web.facebook.com##[aria-posinset] [href^="/stories/"][href*="source=from_feed"]:upward([aria-posinset])
+! --- Performance & Right Rail (Content-Visibility Native Offloading) ---
+facebook.com##[data-pagelet="RightRail"]:style(content-visibility: hidden !important;)
+facebook.com##div[role="complementary"]:has-text(/Suggested for you|Sugestii pentru tine/i):style(display: none !important;)
+facebook.com##div[role="article"]:has(a[href*="/watch/"]):style(content-visibility: hidden !important;)
 
-! Aggressive procedural rule targeting elements containing the text "Stories" near the feed entry points
-facebook.com##div[role="feed"] h3:has-text(/^Stories$/):upward(2)
-facebook.com##div[role="main"] h3:has-text(/^Stories$/):upward(2)
-
-! Backup filter to grab the absolute top grid row box structure if it changes tags
-facebook.com##[role="main"] [role="grid"]:has([href^="/stories/"]):upward(1)
-
+! --- Interface De-Clutter & Navigation ---
+facebook.com##[role="complementary"] div:has([aria-label="Contacts"]):style(display: none !important;)
+facebook.com##[role="navigation"] li:has(a[href*="/marketplace/"], a[href*="/watch/"], a[href*="/gaming/"]):style(display: none !important;)
+facebook.com##[role="navigation"]:not([aria-label*="Stories"]):not([aria-label*="Reels"]):style(display: block !important;)
