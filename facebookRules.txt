@@ -1,24 +1,31 @@
 ! =================================================================
-! THE OCEAN'S LASER DANCE - CHRONO-FEED HIGH-VELOCITY EDITION
+! THE OCEAN'S LASER DANCE - ANTI-FLICKER SHIELD v7.1 (ULTRA-LEAN)
 ! =================================================================
 
-! --- The Unified Feed Engine (Massive Speed Optimization) ---
-! Evaluates the main post container exactly once against all rule-types simultaneously
-facebook.com##[role="feed"] [role="article"]:has-text(/^Sponsored$|^Sponsorizat$|^Suggested for you$|^Sugestii pentru tine$|^People you may know$|^Persoane pe care le-ai putea cunoaște$/i)
+! 1. INSTANT STRUCTURAL PURGE (Zero text scanning = Zero flicker)
+facebook.com##[aria-label="Stories"]
+facebook.com##[aria-label="Reels"]
+facebook.com##div[data-pagelet^="Create"]
+facebook.com##[aria-label="reel"]:upward(3)
 
-! --- Action-Button Engine (Merged & Optimized native :has) ---
-! Replaced all slow ':upward()' rules with native structural matching
-facebook.com##[role="feed"] [role="article"]:is(:has-text(/Follow|Join|Urmărește|Alătură/i), :has([aria-label*="Follow"], [aria-label*="Urmărește"]), :has(a[href*="/groups/"]), :has(a[href*="/discover/"]))
+! 2. SCRIPT INJECTIONS (Engine-Level Algorithmic Blockers)
+facebook.com##+js(set-constant, Object.prototype.is_suggested_post, false)
+facebook.com##+js(set-constant, Object.prototype.is_sponsored, false)
 
-! --- Stories & Reels Purge (Batched Layout Engine) ---
-facebook.com##[aria-label="Stories"], [aria-label="Reels"], div:has(> [aria-label="Reels"]), div[role="feed"] h3:has-text(/^Stories$/), div[role="feed"] a[href^="/stories/"]:style(display: none !important;)
+! 3. STRUCTURAL LAYOUT DETECTOR (Drops suggested pages via layout composition)
+facebook.com##[role="article"]:has(div[dir="auto"] > span > a[role="link"] + span:has-text(/•/)):has([role="button"])
 
-! --- Performance & Right Rail (Content-Visibility Native Offloading) ---
-facebook.com##[data-pagelet="RightRail"]:style(content-visibility: hidden !important;)
-facebook.com##div[role="complementary"]:has-text(/Suggested for you|Sugestii pentru tine/i):style(display: none !important;)
-facebook.com##div[role="article"]:has(a[href*="/watch/"]):style(content-visibility: hidden !important;)
+! 4. DESKTOP & MOBILE MAIN FEED CLEANUP (Follow / Join / Suggestions)
+facebook.com##[role="feed"] [role="article"]:has-text(/^(Urmărește|Follow|Alătură-te|Join|Suggested for you|Sugestii pentru tine|Popular near you|Popular în apropiere)$/)
+facebook.com##[role="feed"] [role="article"] :is(div[aria-label*="Urmărește"], div[aria-label*="Follow"], div[aria-label*="Alătură-te"], div[aria-label*="Join"])
+www.facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has-text(/Follow|Join|Urmărește|Alătură-te|Suggested for you|Sugestii pentru tine/)
 
-! --- Interface De-Clutter & Navigation ---
-facebook.com##[role="complementary"] div:has([aria-label="Contacts"]):style(display: none !important;)
-facebook.com##[role="navigation"] li:has(a[href*="/marketplace/"], a[href*="/watch/"], a[href*="/gaming/"]):style(display: none !important;)
-facebook.com##[role="navigation"]:not([aria-label*="Stories"]):not([aria-label*="Reels"]):style(display: block !important;)
+! 5. MOBILE FACEBOOK SPECIFIC CLEANUP (m.facebook.com)
+m.facebook.com##article:has-text(/Follow|Join|Urmărește|Alătură-te/)
+m.facebook.com##article:has(a[href*="act=join"], a[href*="act=follow"])
+m.facebook.com##article:has(div[role="button"]:has-text(/Follow|Join|Urmărește|Alătură-te/))
+
+! 6. SUB-ELEMENT SURGERY (Hides text triggers seamlessly)
+facebook.com##[role="feed"] [role="article"] div:has(> span:has-text(/^(Urmărește|Follow|Alătură-te|Join)$/))
+facebook.com##[role="article"] div:has-text(/Suggested for you|Sugestii pentru tine|Popular near you|Popular în apropiere/)
+
