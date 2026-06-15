@@ -15,17 +15,23 @@ facebook.com##+js(set-constant, Object.prototype.is_sponsored, false)
 ! 3. STRUCTURAL LAYOUT DETECTOR (Drops suggested pages via layout composition)
 facebook.com##[role="article"]:has(div[dir="auto"] > span > a[role="link"] + span:has-text(/•/)):has([role="button"])
 
-! 4. DESKTOP & MOBILE MAIN FEED CLEANUP (Follow / Join / Suggestions)
-facebook.com##[role="feed"] [role="article"]:has-text(/^(Urmărește|Follow|Alătură-te|Join|Suggested for you|Sugestii pentru tine|Popular near you|Popular în apropiere)$/)
-facebook.com##[role="feed"] [role="article"] :is(div[aria-label*="Urmărește"], div[aria-label*="Follow"], div[aria-label*="Alătură-te"], div[aria-label*="Join"])
-www.facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has-text(/Follow|Join|Urmărește|Alătură-te|Suggested for you|Sugestii pentru tine/)
+! 4 PYMK
+! Hide People You May Know by targeting the text directly
+facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has-text(People You May Know):remove()
+www.facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) [aria-label="See all"][href="/friends/"]:upward([aria-posinset],[aria-describedby]:not([aria-posinset]))
 
-! 5. MOBILE FACEBOOK SPECIFIC CLEANUP (m.facebook.com)
-m.facebook.com##article:has-text(/Follow|Join|Urmărește|Alătură-te/)
-m.facebook.com##article:has(a[href*="act=join"], a[href*="act=follow"])
-m.facebook.com##article:has(div[role="button"]:has-text(/Follow|Join|Urmărește|Alătură-te/))
+! 5. Follow
+! Block suggestions at data layer to prevent flickering
+facebook.com##+js(facebook-feeds-filter, engagement)
 
-! 6. SUB-ELEMENT SURGERY (Hides text triggers seamlessly)
-facebook.com##[role="feed"] [role="article"] div:has(> span:has-text(/^(Urmărește|Follow|Alătură-te|Join)$/))
-facebook.com##[role="article"] div:has-text(/Suggested for you|Sugestii pentru tine|Popular near you|Popular în apropiere/)
+! Backup rules using native structural attributes instead of text scanning
+facebook.com##[role="feed"] [role="article"]:has([data-testid="post_sponsor_id"])
+facebook.com##[role="feed"] [role="article"]:has(a[href*="/ads/about"])
+
+! Jun 15, 2026 https://www.romania-actualitati.ro
+www.romania-actualitati.ro###onetrust-banner-sdk
+www.romania-actualitati.ro###onetrust-consent-sdk
+www.romania-actualitati.ro##.ot-fade-in.onetrust-pc-dark-filter
+www.romania-actualitati.ro##body:style(overflow: auto !important;)
+
 
