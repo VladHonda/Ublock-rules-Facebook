@@ -1,37 +1,69 @@
+/freshful|e(mag|-ad)|fashiondays|trafic|adocean|chefs|ferma|oala|imprime|Dab It|Camara|Samwise|Gusturi|Fenséges|imprime|oala cu bun|chefs evolution|BOROMIR|favi|superfood|sezamo|mega/
+
+! Hides "Members only" and "Members first" videos everywhere on YouTube
+youtube.com##ytd-rich-item-renderer:has(badge-shape.yt-badge-shape--commerce)
+youtube.com##ytd-rich-item-renderer:has(badge-shape.yt-badge-shape--membership)
+youtube.com##ytd-compact-video-renderer:has(badge-shape.yt-badge-shape--commerce)
+youtube.com##ytd-grid-video-renderer:has(badge-shape.yt-badge-shape--commerce)
+
 ! =================================================================
-! THE OCEAN'S LASER DANCE - ANTI-FLICKER SHIELD v7.1 (ULTRA-LEAN)
+! THE OCEAN'S LASER DANCE - ANTI-FLICKER SHIELD v7.2 (ULTRA-LEAN)
 ! =================================================================
 
-! 1. INSTANT STRUCTURAL PURGE (Zero text scanning = Zero flicker)
-facebook.com##[aria-label="Stories"]
-facebook.com##[aria-label="Reels"]
-facebook.com##div[data-pagelet^="Create"]
-facebook.com##[aria-label="reel"]:upward(3)
-
-! 2. SCRIPT INJECTIONS (Engine-Level Algorithmic Blockers)
+! --- 1. SCRIPT INJECTIONS & INTERCEPTORS ---
 facebook.com##+js(set-constant, Object.prototype.is_suggested_post, false)
 facebook.com##+js(set-constant, Object.prototype.is_sponsored, false)
+facebook.com##+js(facebook-feeds-filter, engagement, suggested, sponsored)
 
-! 3. STRUCTURAL LAYOUT DETECTOR (Drops suggested pages via layout composition)
-facebook.com##[role="article"]:has(div[dir="auto"] > span > a[role="link"] + span:has-text(/•/)):has([role="button"])
 
-! 4 PYMK
-! Hide People You May Know by targeting the text directly
-facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has-text(People You May Know):remove()
-www.facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) [aria-label="See all"][href="/friends/"]:upward([aria-posinset],[aria-describedby]:not([aria-posinset]))
 
-! 5. Follow
-! Block suggestions at data layer to prevent flickering
-facebook.com##+js(facebook-feeds-filter, engagement)
 
-! Backup rules using native structural attributes instead of text scanning
+facebook.com##div[data-pagelet^="Create"]
+
+! --- 3. HIGH-SPEED AD & SPONSORED REMOVAL ---
 facebook.com##[role="feed"] [role="article"]:has([data-testid="post_sponsor_id"])
 facebook.com##[role="feed"] [role="article"]:has(a[href*="/ads/about"])
 
-! Jun 15, 2026 https://www.romania-actualitati.ro
-www.romania-actualitati.ro###onetrust-banner-sdk
-www.romania-actualitati.ro###onetrust-consent-sdk
-www.romania-actualitati.ro##.ot-fade-in.onetrust-pc-dark-filter
-www.romania-actualitati.ro##body:style(overflow: auto !important;)
+! --- 6. PEOPLE YOU MAY KNOW (PYMK) KILLERS ---
+facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has-text(People You May Know):remove()
+www.facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) [aria-label="See all"][href="/friends/"]:upward([aria-posinset],[aria-describedby]:not([aria-posinset]))
 
+
+! --- 8. Stories
+! --- Facebook Stories Remover for uBlock Origin ---
+
+! Target the main container using the text header
+facebook.com##div[role="main"] div:has(> h3:has-text(/^Stories$/)):nth-ancestor(1)
+
+! Target the container using the internal label attribute
+facebook.com##div[role="main"] div:has(> [aria-label="Stories"])
+
+! Fail-safe: Removes the section based on text anchoring if classes change
+facebook.com##div:has-text(/^Stories$/):nth-ancestor(4)
+
+
+
+! =================================================================
+! 2. REELS & VIDEO PURGE
+! =================================================================
+facebook.com##[aria-label="Reels"]
+facebook.com##[aria-label="reel"]:upward(3)
+facebook.com##div[role="feed"] div:has(a[href*="/reel"]):style(display: none !important;)
+facebook.com##div[role="feed"] div:has(:is(h3,h4) span:has-text(/Reels/i)):style(display: none !important;)
+
+! =================================================================
+! 4. SUGGESTED PAGES, GROUPS & CLUTTER CLEANERS
+! =================================================================
+facebook.com##[role="article"]:has(div[dir="auto"] > span > a[role="link"] + span:has-text(/•/)):has([role="button"])
+facebook.com##[role="feed"] div:has(> [role="button"] [role="none"]):style(display: none !important;)
+facebook.com##div[aria-posinset] div[style*="max-height"]:style(display: none !important;)
+
+! --- Text-Based Suggestion Filters ---
+facebook.com##div[role="feed"] div:has(span:has-text(/Suggested for you|Popular near you|Suggested groups|People you may know/i)):style(display: none !important;)
+
+! =================================================================
+! 5. SUGGESTED JOIN/FOLLOW AUTOMATION FIX
+! =================================================================
+facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) :is(h3,h4) [role=button]:has-text(/Follow|Join/):upward([aria-posinset],[aria-describedby]:not([aria-posinset])):style(height: 0 !important; overflow: hidden !important;)
+facebook.com##div[role="feed"] div:has([role="button"]:has-text(/Join Group|Join/i)):style(display: none !important;)
 
