@@ -1,4 +1,6 @@
-/freshful|e(mag|-ad)|fashiondays|trafic|adocean|chefs|ferma|oala|imprime|Dab It|Camara|Samwise|Gusturi|Fenséges|imprime|oala cu bun|chefs evolution|BOROMIR|favi|superfood|sezamo|mega/
+facebook.com##div[role="feed"]>div:has-text(/\b(freshful|emag|fashiondays|trafic|e-ad|adocean|chefs|ferma|b\.?o\.?r\.?o\.?m\.?i\.?r|s\.?a\.m\.?w\.?i\.?s\.?e|d\.?i\.?a\.?b\.?l\.?o|favi|superfood|sezamo|mega|collectors|altex|dedeman|flanco|elefant|evomag|tazz|bolt|glovo|olx|publi24|autovit|anuntul|e-piesa|autokarma|vola|esky|booking|lidl|kaufland|carrefour|auchan|penny|profi|selgros|metro|brico|leroy|hornbach|mobexpert|jysk|ikea|bancatransilvania|bcr|brd|raiffeisen|digi|orange|vodafone|telekom|imprimescu|dab it|bucovinei|gusturi|mancaregatita|fenséges|cadawang|world of beer|retrotee|skates|euro-market|gourmetto|scauneonline|allasianspices|KJ Center|carpathian\s+jerky|yunus|gusturi\s+alese|evren.*enis|evren\s+plast|cel|bt|ing|cec|oala|Bacania Bucovinei|Hustiuliuc|World of Beer Distribution|)\b/i)
+
+
 
 ! Hides "Members only" and "Members first" videos everywhere on YouTube
 youtube.com##ytd-rich-item-renderer:has(badge-shape.yt-badge-shape--commerce)
@@ -66,4 +68,7 @@ facebook.com##div[role="feed"] div:has(span:has-text(/Suggested for you|Popular 
 ! =================================================================
 facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) :is(h3,h4) [role=button]:has-text(/Follow|Join/):upward([aria-posinset],[aria-describedby]:not([aria-posinset])):style(height: 0 !important; overflow: hidden !important;)
 facebook.com##div[role="feed"] div:has([role="button"]:has-text(/Join Group|Join/i)):style(display: none !important;)
+
+! Jul 18, 2026 https://skill4ltu.eu
+||img.youtube.com/vi/KufFIBx4p9E/mqdefault.jpg$image
 
