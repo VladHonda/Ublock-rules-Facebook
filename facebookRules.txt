@@ -24,7 +24,7 @@ facebook.com##[role="feed"] [role="article"]:has(a[href*="/ads/about"])
 
 ! --- 6. PEOPLE YOU MAY KNOW (PYMK) KILLERS ---
 facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has-text(People You May Know):remove()
-www.facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) [aria-label="See all"][href="/friends/"]:upward([aria-posinset],[aria-describedby]:not([aria-posinset]))
+://facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) [aria-label="See all"][href="/friends/"]:upward([aria-posinset],[aria-describedby]:not([aria-posinset]))
 
 
 ! --- 8. Stories
@@ -58,6 +58,7 @@ facebook.com##div[aria-posinset] div[style*="max-height"]:style(display: none !i
 
 ! --- Text-Based Suggestion Filters ---
 facebook.com##div[role="feed"] div:has(span:has-text(/Suggested for you|Popular near you|Suggested groups|People you may know/i)):style(display: none !important;)
+facebook.com##[role="feed"] [role="article"]:has-text(/Suggested for you|Popular near you|Suggested groups|Sugeror pentru tine|Grupuri sugerate/i)
 
 ! =================================================================
 ! 5. SUGGESTED JOIN/FOLLOW AUTOMATION FIX
@@ -65,4 +66,12 @@ facebook.com##div[role="feed"] div:has(span:has-text(/Suggested for you|Popular 
 facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) :is(h3,h4) [role=button]:has-text(/Follow|Join/):upward([aria-posinset],[aria-describedby]:not([aria-posinset])):style(height: 0 !important; overflow: hidden !important;)
 facebook.com##div[role="feed"] div:has([role="button"]:has-text(/Join Group|Join/i)):style(display: none !important;)
 
-facebook.com#@#div[role="feed"]>div:has-text(/\b(freshful|emag|fashiondays|trafic|e-ad|adocean|chefs|ferma|b\.?o\.?r\.?o\.?m\.?i\.?r|s\.?a\.m\.?w\.?i\.?s\.?e|d\.?i\.?a\.?b\.?l\.?o|favi|superfood|sezamo|mega|collectors|altex|dedeman|flanco|elefant|evomag|tazz|bolt|glovo|olx|publi24|autovit|anuntul|e-piesa|autokarma|vola|esky|booking|lidl|kaufland|carrefour|auchan|penny|profi|selgros|metro|brico|leroy|hornbach|mobexpert|jysk|ikea|bancatransilvania|bcr|brd|raiffeisen|digi|orange|vodafone|telekom|imprimescu|dab it|bucovinei|gusturi|mancaregatita|fenséges|cadawang|world of beer|retrotee|skates|euro-market|gourmetto|scauneonline|allasianspices|KJ Center|carpathian\s+jerky|yunus|gusturi\s+alese|evren.*enis|evren\s+plast|cel|bt|ing|cec|oala|Bacania Bucovinei|Hustiuliuc|World of Beer Distribution|)\b/i)
+facebook.com##[role="feed"] [role="article"]:has-text(/\b(freshful|emag|fashiondays|trafic|e-ad|adocean|chefs|ferma|b\.?o\.?r\.?o\.?m\.?i\.?r|s\.?a\.m\.?w\.?i\.?s\.?e|d\.?i\.?a\.?b\.?l\.?o|favi|superfood|sezamo|mega|collectors|altex|dedeman|flanco|elefant|evomag|tazz|bolt|glovo|olx|publi24|autovit|anuntul|e-piesa|autokarma|vola|esky|booking|lidl|kaufland|carrefour|auchan|penny|profi|selgros|metro|brico|leroy|hornbach|mobexpert|jysk|ikea|bancatransilvania|bcr|brd|raiffeisen|digi|orange|vodafone|telekom|imprimescu|dab it|bucovinei|gusturi|mancaregatita|fenséges|cadawang|world of beer|retrotee|skates|euro-market|gourmetto|scauneonline|allasianspices|KJ Center|carpathian\s+jerky|yunus|gusturi\s+alese|evren.*enis|evren\s+plast|cel|bt|ing|cec|oala|Bacania Bucovinei|Hustiuliuc|World of Beer Distribution|)\b/i)
+
+! Jul 18, 2026 https://skill4ltu.eu
+||://youtube.com
+
+! Jul 21, 2026 https://op.gg
+||s-opgg-kit.op.gg/gnb/config/images/home-card/a98a2c4ebaefd5759902be5ddc85f569.png$image
+||s-opgg-kit.op.gg/gnb/config/images/home-card/a98a2c4ebaefd5759902be5ddc85f569.png$image
+
