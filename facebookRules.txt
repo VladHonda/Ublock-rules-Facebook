@@ -1,9 +1,3 @@
-! Hides "Members only" and "Members first" videos everywhere on YouTube
-youtube.com##ytd-rich-item-renderer:has(badge-shape.yt-badge-shape--commerce)
-youtube.com##ytd-rich-item-renderer:has(badge-shape.yt-badge-shape--membership)
-youtube.com##ytd-compact-video-renderer:has(badge-shape.yt-badge-shape--commerce)
-youtube.com##ytd-grid-video-renderer:has(badge-shape.yt-badge-shape--commerce)
-
 ! =================================================================
 ! THE OCEAN'S LASER DANCE - ANTI-FLICKER SHIELD v7.2 (ULTRA-LEAN)
 ! =================================================================
@@ -13,19 +7,22 @@ facebook.com##+js(set-constant, Object.prototype.is_suggested_post, false)
 facebook.com##+js(set-constant, Object.prototype.is_sponsored, false)
 facebook.com##+js(facebook-feeds-filter, engagement, suggested, sponsored)
 
-
-
-
 facebook.com##div[data-pagelet^="Create"]
 
 ! --- 3. HIGH-SPEED AD & SPONSORED REMOVAL ---
 facebook.com##[role="feed"] [role="article"]:has([data-testid="post_sponsor_id"])
 facebook.com##[role="feed"] [role="article"]:has(a[href*="/ads/about"])
+facebook.com##[role="feed"] [role="article"]:has(:is(svg[aria-label], a[role="link"] > span):has-text(/^Sponsored$|^Sponsorizat$/))
+facebook.com##[role="feed"] [role="article"]:has(span[style*="position: absolute"]):has-text(/S/):has-text(/p/):has-text(/o/):has-text(/n/):has-text(/s/):has-text(/o/):has-text(/r/):has-text(/e|i/):has-text(/d|z/)
+facebook.com##[role="feed"] [role="article"]:has(a[role="link"][target="_blank"]):has([role="button"])
 
-! --- 6. PEOPLE YOU MAY KNOW (PYMK) KILLERS ---
+! --- MECHANIC'S GRIP: LAYOUT STRUCTURAL FILTERS ---
+facebook.com##[role="feed"] [role="article"]:has(span:has-text(/Shop Now|Learn More|Sign Up|Book Now|Order Now|Cumpără acum|Află mai multe|Înscrie-te/i))
+facebook.com##[role="feed"] [role="article"]:has(a[href*="://facebook.com"])
+
+! --- 6. PEOPLE YOU MAY KNOW (PYWK) KILLERS ---
 facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has-text(People You May Know):remove()
-://facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) [aria-label="See all"][href="/friends/"]:upward([aria-posinset],[aria-describedby]:not([aria-posinset]))
-
+facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) [aria-label="See all"][href="/friends/"]:upward([aria-posinset],[aria-describedby]:not([aria-posinset]))
 
 ! --- 8. Stories
 ! --- Facebook Stories Remover for uBlock Origin ---
@@ -38,8 +35,6 @@ facebook.com##div[role="main"] div:has(> [aria-label="Stories"])
 
 ! Fail-safe: Removes the section based on text anchoring if classes change
 facebook.com##div:has-text(/^Stories$/):nth-ancestor(4)
-
-
 
 ! =================================================================
 ! 2. REELS & VIDEO PURGE
@@ -59,19 +54,15 @@ facebook.com##div[aria-posinset] div[style*="max-height"]:style(display: none !i
 ! --- Text-Based Suggestion Filters ---
 facebook.com##div[role="feed"] div:has(span:has-text(/Suggested for you|Popular near you|Suggested groups|People you may know/i)):style(display: none !important;)
 facebook.com##[role="feed"] [role="article"]:has-text(/Suggested for you|Popular near you|Suggested groups|Sugeror pentru tine|Grupuri sugerate/i)
+facebook.com##[role="feed"] [role="article"]:has-text(/Recomandat pentru tine|Pagini sugerate|Suggested pages/i)
 
 ! =================================================================
 ! 5. SUGGESTED JOIN/FOLLOW AUTOMATION FIX
 ! =================================================================
 facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) :is(h3,h4) [role=button]:has-text(/Follow|Join/):upward([aria-posinset],[aria-describedby]:not([aria-posinset])):style(height: 0 !important; overflow: hidden !important;)
 facebook.com##div[role="feed"] div:has([role="button"]:has-text(/Join Group|Join/i)):style(display: none !important;)
+facebook.com##[role="feed"] [role="article"]:has([role="button"] > span:has-text(/^Follow$|^Urmărește$/))
 
 facebook.com##[role="feed"] [role="article"]:has-text(/\b(freshful|emag|fashiondays|trafic|e-ad|adocean|chefs|ferma|b\.?o\.?r\.?o\.?m\.?i\.?r|s\.?a\.m\.?w\.?i\.?s\.?e|d\.?i\.?a\.?b\.?l\.?o|favi|superfood|sezamo|mega|collectors|altex|dedeman|flanco|elefant|evomag|tazz|bolt|glovo|olx|publi24|autovit|anuntul|e-piesa|autokarma|vola|esky|booking|lidl|kaufland|carrefour|auchan|penny|profi|selgros|metro|brico|leroy|hornbach|mobexpert|jysk|ikea|bancatransilvania|bcr|brd|raiffeisen|digi|orange|vodafone|telekom|imprimescu|dab it|bucovinei|gusturi|mancaregatita|fenséges|cadawang|world of beer|retrotee|skates|euro-market|gourmetto|scauneonline|allasianspices|KJ Center|carpathian\s+jerky|yunus|gusturi\s+alese|evren.*enis|evren\s+plast|cel|bt|ing|cec|oala|Bacania Bucovinei|Hustiuliuc|World of Beer Distribution|)\b/i)
 
-! Jul 18, 2026 https://skill4ltu.eu
-||://youtube.com
-
-! Jul 21, 2026 https://op.gg
-||s-opgg-kit.op.gg/gnb/config/images/home-card/a98a2c4ebaefd5759902be5ddc85f569.png$image
-||s-opgg-kit.op.gg/gnb/config/images/home-card/a98a2c4ebaefd5759902be5ddc85f569.png$image
 
