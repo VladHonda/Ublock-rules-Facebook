@@ -5,16 +5,9 @@
 ! --- 1. SCRIPT INJECTIONS & INTERCEPTORS ---
 facebook.com##+js(set-constant, Object.prototype.is_suggested_post, false)
 facebook.com##+js(set-constant, Object.prototype.is_sponsored, false)
-facebook.com##+js(facebook-feeds-filter, engagement, suggested, sponsored)
+
 
 facebook.com##div[data-pagelet^="Create"]
-
-! --- 3. HIGH-SPEED AD & SPONSORED REMOVAL ---
-facebook.com##[role="feed"] [role="article"]:has([data-testid="post_sponsor_id"])
-facebook.com##[role="feed"] [role="article"]:has(a[href*="/ads/about"])
-facebook.com##[role="feed"] [role="article"]:has(:is(svg[aria-label], a[role="link"] > span):has-text(/^Sponsored$|^Sponsorizat$/))
-facebook.com##[role="feed"] [role="article"]:has(span[style*="position: absolute"]):has-text(/S/):has-text(/p/):has-text(/o/):has-text(/n/):has-text(/s/):has-text(/o/):has-text(/r/):has-text(/e|i/):has-text(/d|z/)
-facebook.com##[role="feed"] [role="article"]:has(a[role="link"][target="_blank"]):has([role="button"])
 
 ! --- MECHANIC'S GRIP: LAYOUT STRUCTURAL FILTERS ---
 facebook.com##[role="feed"] [role="article"]:has(span:has-text(/Shop Now|Learn More|Sign Up|Book Now|Order Now|Cumpără acum|Află mai multe|Înscrie-te/i))
@@ -26,6 +19,9 @@ facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) [aria
 
 ! --- 8. Stories
 ! --- Facebook Stories Remover for uBlock Origin ---
+! === 6. ANTI-FLICKER & INLINE WATCHERS ===
+facebook.com##[role="feed"] [role="article"]:has(span:not([style*="display: none"]):not([style*="display:none"])):watch-attr(style)
+facebook.com##[role="feed"] div[aria-label="Reels"] div:has(a[href*="/ads/about"
 
 ! Target the main container using the text header
 facebook.com##div[role="main"] div:has(> h3:has-text(/^Stories$/)):nth-ancestor(1)
@@ -44,25 +40,36 @@ facebook.com##[aria-label="reel"]:upward(3)
 facebook.com##div[role="feed"] div:has(a[href*="/reel"]):style(display: none !important;)
 facebook.com##div[role="feed"] div:has(:is(h3,h4) span:has-text(/Reels/i)):style(display: none !important;)
 
-! =================================================================
-! 4. SUGGESTED PAGES, GROUPS & CLUTTER CLEANERS
-! =================================================================
-facebook.com##[role="article"]:has(div[dir="auto"] > span > a[role="link"] + span:has-text(/•/)):has([role="button"])
-facebook.com##[role="feed"] div:has(> [role="button"] [role="none"]):style(display: none !important;)
-facebook.com##div[aria-posinset] div[style*="max-height"]:style(display: none !important;)
+! --- NOU: Blocare Reclame în interiorul Reels (Reels & Sponsored) ---
 
-! --- Text-Based Suggestion Filters ---
-facebook.com##div[role="feed"] div:has(span:has-text(/Suggested for you|Popular near you|Suggested groups|People you may know/i)):style(display: none !important;)
-facebook.com##[role="feed"] [role="article"]:has-text(/Suggested for you|Popular near you|Suggested groups|Sugeror pentru tine|Grupuri sugerate/i)
-facebook.com##[role="feed"] [role="article"]:has-text(/Recomandat pentru tine|Pagini sugerate|Suggested pages/i)
+facebook.com##[role="feed"] [role="article"]:has-text(/\b(freshful|emag|fashiondays|trafic|e-ad|adocean|chefs|ferma|b\.?o\.?r\.?o\.?m\.?i\.?r|s\.?a\.m\.?w\.?i\.?s\.?e|d\.?i\.?a\.?b\.?l\.?o|favi|superfood|sezamo|mega|collectors|altex|dedeman|flanco|elefant|evomag|tazz|bolt|glovo|olx|publi24|autovit|anuntul|e-piesa|autokarma|vola|esky|booking|lidl|kaufland|carrefour|auchan|penny|profi|selgros|metro|brico|leroy|hornbach|mobexpert|jysk|ikea|bancatransilvania|bcr|brd|raiffeisen|digi|orange|vodafone|telekom|imprimescu|dab it|bucovinei|gusturi|mancaregatita|fenséges|cadawang|world of beer|retrotee|skates|euro-market|gourmetto|scauneonline|allasianspices|KJ Center|carpathian\s+jerky|yunus|gusturi\s+alese|evren.*enis|evren\s+plast|cel|bt|ing|cec|oala|Bacania Bucovinei|Hustiuliuc|World of Beer Distribution|)\b/i)
 
 ! =================================================================
-! 5. SUGGESTED JOIN/FOLLOW AUTOMATION FIX
+! 3. SUGGESTED JOIN/FOLLOW AUTOMATION FIX
 ! =================================================================
 facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) :is(h3,h4) [role=button]:has-text(/Follow|Join/):upward([aria-posinset],[aria-describedby]:not([aria-posinset])):style(height: 0 !important; overflow: hidden !important;)
 facebook.com##div[role="feed"] div:has([role="button"]:has-text(/Join Group|Join/i)):style(display: none !important;)
 facebook.com##[role="feed"] [role="article"]:has([role="button"] > span:has-text(/^Follow$|^Urmărește$/))
 
-facebook.com##[role="feed"] [role="article"]:has-text(/\b(freshful|emag|fashiondays|trafic|e-ad|adocean|chefs|ferma|b\.?o\.?r\.?o\.?m\.?i\.?r|s\.?a\.m\.?w\.?i\.?s\.?e|d\.?i\.?a\.?b\.?l\.?o|favi|superfood|sezamo|mega|collectors|altex|dedeman|flanco|elefant|evomag|tazz|bolt|glovo|olx|publi24|autovit|anuntul|e-piesa|autokarma|vola|esky|booking|lidl|kaufland|carrefour|auchan|penny|profi|selgros|metro|brico|leroy|hornbach|mobexpert|jysk|ikea|bancatransilvania|bcr|brd|raiffeisen|digi|orange|vodafone|telekom|imprimescu|dab it|bucovinei|gusturi|mancaregatita|fenséges|cadawang|world of beer|retrotee|skates|euro-market|gourmetto|scauneonline|allasianspices|KJ Center|carpathian\s+jerky|yunus|gusturi\s+alese|evren.*enis|evren\s+plast|cel|bt|ing|cec|oala|Bacania Bucovinei|Hustiuliuc|World of Beer Distribution|)\b/i)
 
+! =================================================================
+4. Ads GROUPS & CLUTTER CLEANERS
+! =================================================================
+
+! === FACEBOOK ZERO-TRACE AD ENGINE BYPASS ===
+! 1. Primary feed structural wipe based on Facebook's internal tracking attributes
+facebook.com##[role="feed"] [role="article"]:has(div[data-testid="story_advertiser_name"])
+facebook.com##[role="feed"] [role="article"]:has(a[href*="/ads/about/"])
+
+! 2. Reverse Link Isolation: Blocks posts that do not contain standard user timestamp hyperlinks
+facebook.com##[role="feed"] [role="article"]:not(:has(a[href*="/posts/"])):not(:has(a[href*="/photos/"])):not(:has(a[href*="/videos/"])):not(:has(a[href*="permalink"])):not(:has(a[href*="/groups/"]))
+
+! 3. Advanced DOM Text-Stitch Splicer (Requires Firefox / Full uBO)
+facebook.com##[role="feed"] [role="article"]:has-text(/^Sponsored$/)
+facebook.com##[role="feed"] [role="article"]:has-text(/^Publicitate$/)
+facebook.com##[role="feed"] [role="article"]:has-text(/^Sugestii$/)
+
+! 4. Algorithmic Recommendations and Suggested Pages Block
+facebook.com##[role="feed"] div:has(> h3):has-text(/Suggested for you|Sugestii pentru tine|Recommended for you/i)
+facebook.com##[role="feed"] [role="article"]:has([role="button"] span:has-text(/^Follow$|^Urmărește$|^Join$/))
 
