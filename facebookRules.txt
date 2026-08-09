@@ -6,7 +6,6 @@
 facebook.com##+js(set-constant, Object.prototype.is_suggested_post, false)
 facebook.com##+js(set-constant, Object.prototype.is_sponsored, false)
 
-
 facebook.com##div[data-pagelet^="Create"]
 
 ! --- MECHANIC'S GRIP: LAYOUT STRUCTURAL FILTERS ---
@@ -21,7 +20,7 @@ facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) [aria
 ! --- Facebook Stories Remover for uBlock Origin ---
 ! === 6. ANTI-FLICKER & INLINE WATCHERS ===
 facebook.com##[role="feed"] [role="article"]:has(span:not([style*="display: none"]):not([style*="display:none"])):watch-attr(style)
-facebook.com##[role="feed"] div[aria-label="Reels"] div:has(a[href*="/ads/about"
+facebook.com##[role="feed"] div[aria-label="Reels"] div:has(a[href*="/ads/about"])
 
 ! Target the main container using the text header
 facebook.com##div[role="main"] div:has(> h3:has-text(/^Stories$/)):nth-ancestor(1)
@@ -41,35 +40,33 @@ facebook.com##div[role="feed"] div:has(a[href*="/reel"]):style(display: none !im
 facebook.com##div[role="feed"] div:has(:is(h3,h4) span:has-text(/Reels/i)):style(display: none !important;)
 
 ! --- NOU: Blocare Reclame în interiorul Reels (Reels & Sponsored) ---
-
-facebook.com##[role="feed"] [role="article"]:has-text(/\b(freshful|emag|fashiondays|trafic|e-ad|adocean|chefs|ferma|b\.?o\.?r\.?o\.?m\.?i\.?r|s\.?a\.m\.?w\.?i\.?s\.?e|d\.?i\.?a\.?b\.?l\.?o|favi|superfood|sezamo|mega|collectors|altex|dedeman|flanco|elefant|evomag|tazz|bolt|glovo|olx|publi24|autovit|anuntul|e-piesa|autokarma|vola|esky|booking|lidl|kaufland|carrefour|auchan|penny|profi|selgros|metro|brico|leroy|hornbach|mobexpert|jysk|ikea|bancatransilvania|bcr|brd|raiffeisen|digi|orange|vodafone|telekom|imprimescu|dab it|bucovinei|gusturi|mancaregatita|fenséges|cadawang|world of beer|retrotee|skates|euro-market|gourmetto|scauneonline|allasianspices|KJ Center|carpathian\s+jerky|yunus|gusturi\s+alese|evren.*enis|evren\s+plast|cel|bt|ing|cec|oala|Bacania Bucovinei|Hustiuliuc|World of Beer Distribution|)\b/i)
+facebook.com##[role="feed"] [role="article"]:has-text(/\b(freshful|emag|fashiondays|trafic|e-ad|adocean|chefs|ferma|b\.?o\.?r\.?o\.?m\.?i\.?r|s\.?a\.m\.?w\.?i\.?s\.?e|d\.?i\.?a\.?b\.?l\.?o|favi|superfood|sezamo|mega|collectors|altex|dedeman|flanco|elefant|evomag|tazz|bolt|glovo|olx|publi24|autovit|anuntul|e-piesa|autokarma|vola|esky|booking|lidl|kaufland|carrefour|auchan|penny|profi|selgros|metro|brico|leroy|hornmach|mobexpert|jysk|ikea|bancatransilvania|bcr|brd|raiffeisen|digi|orange|vodafone|telekom|imprimescu|dab it|bucovinei|gusturi|mancaregatita|fenséges|cadawang|world of beer|retrotee|skates|euro-market|gourmetto|scauneonline|allasianspices|KJ Center|carpathian\s+jerky|yunus|gusturi\s+alese|evren.*enis|evren\s+plast|cel|bt|ing|cec|oala|Bacania Bucovinei|Hustiuliuc|World of Beer Distribution)\b/i)
 
 ! =================================================================
 ! 3. SUGGESTED JOIN/FOLLOW AUTOMATION FIX
 ! =================================================================
-facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) :is(h3,h4) [role=button]:has-text(/Follow|Join/):upward([aria-posinset],[aria-describedby]:not([aria-posinset])):style(height: 0 !important; overflow: hidden !important;)
+facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) :is(h3,h4) [role="button"]:has-text(/Follow|Join/):upward([aria-posinset],[aria-describedby]:not([aria-posinset])):style(height: 0 !important; overflow: hidden !important;)
 facebook.com##div[role="feed"] div:has([role="button"]:has-text(/Join Group|Join/i)):style(display: none !important;)
-facebook.com##[role="feed"] [role="article"]:has([role="button"] > span:has-text(/^Follow$|^Urmărește$/))
-
-
-! =================================================================
-4. Ads GROUPS & CLUTTER CLEANERS
-! =================================================================
-
-! === FACEBOOK ZERO-TRACE AD ENGINE BYPASS ===
-! 1. Primary feed structural wipe based on Facebook's internal tracking attributes
-facebook.com##[role="feed"] [role="article"]:has(div[data-testid="story_advertiser_name"])
-facebook.com##[role="feed"] [role="article"]:has(a[href*="/ads/about/"])
-
-! 2. Reverse Link Isolation: Blocks posts that do not contain standard user timestamp hyperlinks
-facebook.com##[role="feed"] [role="article"]:not(:has(a[href*="/posts/"])):not(:has(a[href*="/photos/"])):not(:has(a[href*="/videos/"])):not(:has(a[href*="permalink"])):not(:has(a[href*="/groups/"]))
-
-! 3. Advanced DOM Text-Stitch Splicer (Requires Firefox / Full uBO)
-facebook.com##[role="feed"] [role="article"]:has-text(/^Sponsored$/)
-facebook.com##[role="feed"] [role="article"]:has-text(/^Publicitate$/)
-facebook.com##[role="feed"] [role="article"]:has-text(/^Sugestii$/)
-
-! 4. Algorithmic Recommendations and Suggested Pages Block
-facebook.com##[role="feed"] div:has(> h3):has-text(/Suggested for you|Sugestii pentru tine|Recommended for you/i)
 facebook.com##[role="feed"] [role="article"]:has([role="button"] span:has-text(/^Follow$|^Urmărește$|^Join$/))
+facebook.com##[role="feed"] div:has(> h3):has-text(/Suggested for you|Sugestii pentru tine|Recommended for you/i)
+
+! =================================================================
+! 4. FACEBOOK DEEP RE-ORDERING & STREAM PURGE (2026)
+! =================================================================
+
+! === 1. TARGET THE "SUGGESTED/SPONSORED" HOVER POPUP LAYOUT ===
+! Blocks the post container if it utilizes specific tracking hover menus
+facebook.com##[role="feed"] [role="article"]:has(div[data-visualcompletion="ignore-dynamic"])
+facebook.com##[role="feed"] [role="article"]:has(span[data-content-len])
+
+! === 2. LEGAL & METADATA SIGNATURES (Immune to class randomization) ===
+! Catches the underlying compliance tags that Facebook legally must include
+facebook.com##[role="feed"] [role="article"]:has(a[href*="/ads/about"])
+facebook.com##[role="feed"] [role="article"]:has(a[href*="/about/ads"])
+facebook.com##[role="feed"] [role="article"]:has([id^="feed_subtitle_"])
+
+! === 3. FORCE SCRIPTLET CLEANING ===
+! Strips out the data streams delivering sponsored nodes entirely
+facebook.com##+js(json-prune, *.sponsored_data)
+facebook.com##+js(json-prune, *..sponsored_data)
 
