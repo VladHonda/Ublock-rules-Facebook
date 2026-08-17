@@ -1,10 +1,15 @@
 ! =================================================================
-! THE OCEAN'S LASER DANCE - ANTI-FLICKER SHIELD v7.2 (ULTRA-LEAN)
+! THE OCEAN'S LASER DANCE - ANTI-FLICKER SHIELD v7.6 (ULTRA-LEAN)
 ! =================================================================
 
 ! --- 1. SCRIPT INJECTIONS & INTERCEPTORS ---
 facebook.com##+js(set-constant, Object.prototype.is_suggested_post, false)
-facebook.com##+js(set-constant, Object.prototype.is_sponsored, false)
+facebook.com##+js(set-constant, Object.prototype.is_sponsored, undefined)
+facebook.com##+js(set-constant, Object.prototype.sponsored_data, undefined)
+facebook.com##+js(set-constant, Object.prototype.client_handler_data, undefined)
+facebook.com##+js(set, fbPlatformConfig.adPlatformConfig, undefined)
+facebook.com##+js(set, requireLazy("XFBAdDeliveryConfig").config, undefined)
+facebook.com##+js(set, requireLazy("CometModernFeedAdSecondaryActionMenu").react, undefined)
 
 facebook.com##div[data-pagelet^="Create"]
 
@@ -53,20 +58,16 @@ facebook.com##[role="feed"] div:has(> h3):has-text(/Suggested for you|Sugestii p
 ! =================================================================
 ! 4. FACEBOOK DEEP RE-ORDERING & STREAM PURGE (2026)
 ! =================================================================
+! === 1. THE INVISIBLE NET ===
+! Stealthily drops ad payloads out of memory at the network layer. Zero CPU footprint.
+facebook.com##+js(json-prune, *.sponsored_data *.is_sponsored)
 
-! === 1. TARGET THE "SUGGESTED/SPONSORED" HOVER POPUP LAYOUT ===
-! Blocks the post container if it utilizes specific tracking hover menus
-facebook.com##[role="feed"] [role="article"]:has(div[data-visualcompletion="ignore-dynamic"])
-facebook.com##[role="feed"] [role="article"]:has(span[data-content-len])
+! === 2. THE COMPLIANCE TRAP ===
+! Targets permanent, un-alterable legal pathways. No text scanning, completely silent.
+facebook.com##[role="article"]:has(a[href*="/ads/about"])
+facebook.com##[role="article"]:has(a[href*="/ad_campaign"])
+facebook.com##[role="article"]:has([data-ad-rendering-role="story"])
 
-! === 2. LEGAL & METADATA SIGNATURES (Immune to class randomization) ===
-! Catches the underlying compliance tags that Facebook legally must include
-facebook.com##[role="feed"] [role="article"]:has(a[href*="/ads/about"])
-facebook.com##[role="feed"] [role="article"]:has(a[href*="/about/ads"])
-facebook.com##[role="feed"] [role="article"]:has([id^="feed_subtitle_"])
-
-! === 3. FORCE SCRIPTLET CLEANING ===
-! Strips out the data streams delivering sponsored nodes entirely
-facebook.com##+js(json-prune, *.sponsored_data)
-facebook.com##+js(json-prune, *..sponsored_data)
+! === 3. FLANK CLEANUP ===
+facebook.com##[data-pagelet="RightRail"] div:has(a[href*="/ads/about"])
 
