@@ -1,8 +1,9 @@
 ! =================================================================
-! THE OCEAN'S LASER DANCE - ANTI-FLICKER SHIELD v7.6 (ULTRA-LEAN)
+! THE OCEAN'S LASER DANCE - STEALTH SHIELD v14.0 (RAW SPEED)
 ! =================================================================
+! English only. Stealth, silent, compressed, condensed, fast. Minimal resource footprint, maximum execution speed.
 
-! --- 1. SCRIPT INJECTIONS & INTERCEPTORS ---
+! --- 1. ENGINE MEMORY INJECTIONS (KILL ADS IN MEMORY FLUID) ---
 facebook.com##+js(set-constant, Object.prototype.is_suggested_post, false)
 facebook.com##+js(set-constant, Object.prototype.is_sponsored, undefined)
 facebook.com##+js(set-constant, Object.prototype.sponsored_data, undefined)
@@ -11,116 +12,30 @@ facebook.com##+js(set, fbPlatformConfig.adPlatformConfig, undefined)
 facebook.com##+js(set, requireLazy("XFBAdDeliveryConfig").config, undefined)
 facebook.com##+js(set, requireLazy("CometModernFeedAdSecondaryActionMenu").react, undefined)
 
+! --- 2. ANTI-OBFUSCATION SHADOW DOM ADS BYPASS ---
+facebook.com##[data-pagelet="RightRail"]
+facebook.com##div[aria-label="Ads"]
+facebook.com##[role="article"] a[href*="/ads/about"]:upward([role="article"])
+facebook.com##[role="article"] a[aria-label="Sponsored"]:upward([role="article"])
+facebook.com##[role="article"] :is(div,span)[data-label="Sponsored"]:upward([role="article"])
+facebook.com##[role="article"] div[data-testid*="sponsor"]:upward([role="article"])
+facebook.com##[role="article"]:has(svg use[*|href]):has-text(/^S/):has-text(/d$/)
+facebook.com##[data-testid="fbfeed_story"]:has-text(/Sponsored/i)
 facebook.com##div[data-pagelet^="Create"]
 
-! --- MECHANIC'S GRIP: LAYOUT STRUCTURAL FILTERS ---
-facebook.com##[role="feed"] [role="article"]:has(span:has-text(/Shop Now|Learn More|Sign Up|Book Now|Order Now|Cumpără acum|Află mai multe|Înscrie-te/i))
-facebook.com##[role="feed"] [role="article"]:has(a[href*="://facebook.com"])
-
-
-! --- 6. PEOPLE YOU MAY KNOW (PYWK) KILLERS ---
-! Anti-flicker: :remove() eliminat; elementul este doar ascuns.
-facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])):has-text(People You May Know):style(display: none !important;)
-facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) [aria-label="See all"][href="/friends/"]:upward([aria-posinset],[aria-describedby]:not([aria-posinset])):style(display: none !important;)
-
-
-! --- 8. Stories
-! === BLOCARE STORIES ȘI REELS FACEBOOK ===
-
-! Targetare principală bazată pe roluri de regiune și etichete (Engleză și Română)
-facebook.com##div[role="region"][aria-label="Stories"]
-facebook.com##div[role="region"][aria-label="Povești"]
-facebook.com##div[role="main"] div[aria-label="Stories"]
-
-! Targetare de rezervă bazată pe textul antetului (dacă etichetele se schimbă)
-facebook.com##div[role="main"] div:has(> h3:has-text(/^Stories$/)):nth-ancestor(1)
-facebook.com##div[role="main"] div:has(> h3:has-text(/^Povești$/)):nth-ancestor(1)
-
-! Fail-safe: Elimină containerul extins bazat pe ancorarea textului
-facebook.com##div:has-text(/^Stories$/):nth-ancestor(4)
-facebook.com##div:has-text(/^Povești$/):nth-ancestor(4)
-
-! Eliminare Reels (Videoclipuri scurte) din feed-ul principal
-facebook.com##[role="feed"] div[aria-label="Reels"]
-facebook.com##[role="feed"] div[aria-label="Videoclipuri scurte"]
-
-
-! === BLOCARE STORIES ȘI REELS FACEBOOK ===
-
-! Targetare principală bazată pe roluri de regiune și etichete (Engleză și Română)
-facebook.com##div[role="region"][aria-label="Stories"]
-facebook.com##div[role="region"][aria-label="Povești"]
-facebook.com##div[role="main"] div[aria-label="Stories"]
-
-! Targetare de rezervă bazată pe textul antetului (dacă etichetele se schimbă)
-facebook.com##div[role="main"] div:has(> h3:has-text(/^Stories$/)):nth-ancestor(1)
-facebook.com##div[role="main"] div:has(> h3:has-text(/^Povești$/)):nth-ancestor(1)
-
-! Fail-safe: Elimină containerul extins bazat pe ancorarea textului
-facebook.com##div:has-text(/^Stories$/):nth-ancestor(4)
-facebook.com##div:has-text(/^Povești$/):nth-ancestor(4)
-
-! Eliminare Reels (Videoclipuri scurte) din feed-ul principal
-facebook.com##[role="feed"] div[aria-label="Reels"]
-facebook.com##[role="feed"] div[aria-label="Videoclipuri scurte"]
-
-
-
-! =================================================================
-! 2. REELS & VIDEO PURGE
-! =================================================================
+! --- 3. CLUTTER ELIMINATION (PYWK, REELS, STORIES) ---
+facebook.com##[data-pagelet^="PeopleYouMayKnow"]
 facebook.com##[aria-label="Reels"]
-facebook.com##[aria-label="reel"]:upward(3)
-facebook.com##div[role="feed"] div:has(a[href*="/reel"]):style(display: none !important;)
-facebook.com##div[role="feed"] div:has(:is(h3,h4) span:has-text(/Reels/i)):style(display: none !important;)
+facebook.com##div[role="region"][aria-label="Stories"]
+facebook.com##[role="feed"] div[aria-label="Reels"]
 
-! --- NOU: Blocare Reclame în interiorul Reels (Reels & Sponsored) ---
-facebook.com##[role="feed"] [role="article"]:has-text(/\b(freshful|emag|fashiondays|trafic|e-ad|adocean|chefs|ferma|b\.?o\.?r\.?o\.?m\.?i\.?r|s\.?a\.m\.?w\.?i\.?s\.?e|d\.?i\.?a\.?b\.?l\.?o|favi|superfood|sezamo|mega|collectors|altex|dedeman|flanco|elefant|evomag|tazz|bolt|glovo|olx|publi24|autovit|anuntul|e-piesa|autokarma|vola|esky|booking|lidl|kaufland|carrefour|auchan|penny|profi|selgros|metro|brico|leroy|hornmach|mobexpert|jysk|ikea|bancatransilvania|bcr|brd|raiffeisen|digi|orange|vodafone|telekom|imprimescu|dab it|bucovinei|gusturi|mancaregatita|fenséges|cadawang|world of beer|retrotee|skates|euro-market|gourmetto|scauneonline|allasianspices|KJ Center|carpathian\s+jerky|yunus|gusturi\s+alese|evren.*enis|evren\s+plast|cel|bt|ing|cec|oala|Bacania Bucovinei|Hustiuliuc|World of Beer Distribution)\b/i):style(display: none !important;)
-
-
-! =================================================================
-! 3. SUGGESTED JOIN/FOLLOW AUTOMATION FIX
-! =================================================================
-facebook.com##:is([aria-posinset],[aria-describedby]:not([aria-posinset])) :is(h3,h4) [role="button"]:has-text(/Follow|Join/):upward([aria-posinset],[aria-describedby]:not([aria-posinset])):style(height: 0 !important; overflow: hidden !important;)
-
-!facebook.com##div[role="feed"] div:has([role="button"]:has-text(/Join Group|Join/i)):style(display: none !important;)
-
-facebook.com##[role="feed"] [role="article"]:has([role="button"] span:has-text(/^Follow$|^Urmărește$|^Join$/))
-
-facebook.com##[role="feed"] div:has(> h3):has-text(/Suggested for you|Sugestii pentru tine|Recommended for you/i)
-
-
-
-! =======================================================
-! FIREWALL PSIHOLOGIC AUTOMAT - UPDATE TOTAL 2026
-! =======================================================
-
-! 1. Filtru Cuvinte Toxice Extins (Include Logan, Revolut, Mașină, Bani, Bănci, Conturi)
-facebook.com,messenger.com##div[role="row"]:has-text(/cuțit|cuţit|proști|proşti|biker|bicheri|salariu|fostul|brad|cont|card|bancă|banca|tata|maica|mașină|masina|logan|alternator|electrician|rabla|îngrop|ingrop|revolut|tranzacții|tranzactii|google|cloud|50 de lei/i)
-messenger.com##div[role="gridcell"]:has-text(/cuțit|cuţit|proști|proşti|biker|bicheri|salariu|fostul|brad|cont|card|bancă|banca|tata|maica|mașină|masina|logan|alternator|electrician|rabla|îngrop|ingrop|revolut|tranzacții|tranzactii|google|cloud|50 de lei/i)
-
-! 2. Filtru Link-uri Oarbe (Fără Previzualizare/Thumbnail)
-facebook.com,messenger.com##div[role="row"]:has(a[href*="http"]):not(:has(img, div[style*="background-image"], [class*="thumbnail"]))
-messenger.com##div[role="gridcell"]:has(a[href*="http"]):not(:has(img, div[style*="background-image"], [class*="thumbnail"]))
-
-! 3. Filtru Anti-Buline Roșii (Notificări Globale)
-facebook.com##div[aria-label*="notificări"] span:has-text(/^[0-9]+$/)
-facebook.com##a[href*="/notifications"] span:has-text(/^[0-9]+$/)
+! --- 4. FAST NOTIFICATION STRIP ---
+facebook.com##div[aria-label*="notification"] span
+facebook.com##a[href*="/notifications"] span
 facebook.com##div[role="navigation"] span[class*="badge"]
-facebook.com##div[style*="background-color: rgb(240, 40, 73)"]
 facebook.com##div[style*="background-color: var(--notification-badge-bg)"]
 
-! Nov 4, 2026 https://www.commencal.com
-www.commencal.com##.px-lg-5.modal-body
-www.commencal.com###rich-text-01M48RFERA5Q8XMQC8VVTK5T61 > h1
-
-! =================================================================
-! 4. FACEBOOK DEEP RE-ORDERING & STREAM PURGE (2026) just for english, less is more, stealth, silent, compressed, condensed, fast, consume less resources yet be faster
-! =================================================================
-
-! === HYPER-OPTIMIZED ULTRA-STEALTH FB PURGE ===
-facebook.com##[data-pagelet="RightRail"], div[aria-label="Ads"], div[aria-label*="Sponsor" i]
-facebook.com##[role="article"]:has(a[href*="/ads/"], a[href*="utm_"])
-facebook.com##[role="article"]:has-text(/Black ?Friday|Sale|Suggested for you|People you may know|Join the group/i)
-facebook.com##div > span:has-text(/^[S|s]ponsor/)
-
+! --- 5. FIXED NETWORKS ---
+youtube.com##ytd-rich-shelf-renderer:has(#rich-shelf-header-container:has-text(Playables))
+commencal.com##.px-lg-5.modal-body
+commencal.com###rich-text-01M48RFERA5Q8XMQC8VVTK5T61
